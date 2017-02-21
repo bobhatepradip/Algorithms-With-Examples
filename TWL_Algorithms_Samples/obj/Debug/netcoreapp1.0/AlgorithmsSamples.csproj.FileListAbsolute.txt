@@ -1,0 +1,9 @@
+C:\Users\pradi\OneDrive\MyProjects\AlgorithmsSamples\AlgorithmsSamples\bin\Debug\netcoreapp1.0\TWL_Algorithms_Samples.deps.json
+C:\Users\pradi\OneDrive\MyProjects\AlgorithmsSamples\AlgorithmsSamples\bin\Debug\netcoreapp1.0\TWL_Algorithms_Samples.runtimeconfig.json
+C:\Users\pradi\OneDrive\MyProjects\AlgorithmsSamples\AlgorithmsSamples\bin\Debug\netcoreapp1.0\TWL_Algorithms_Samples.runtimeconfig.dev.json
+C:\Users\pradi\OneDrive\MyProjects\AlgorithmsSamples\AlgorithmsSamples\bin\Debug\netcoreapp1.0\TWL_Algorithms_Samples.dll
+C:\Users\pradi\OneDrive\MyProjects\AlgorithmsSamples\AlgorithmsSamples\bin\Debug\netcoreapp1.0\TWL_Algorithms_Samples.pdb
+C:\Users\pradi\OneDrive\MyProjects\AlgorithmsSamples\AlgorithmsSamples\obj\Debug\netcoreapp1.0\AlgorithmsSamples.csprojResolveAssemblyReference.cache
+C:\Users\pradi\OneDrive\MyProjects\AlgorithmsSamples\AlgorithmsSamples\obj\Debug\netcoreapp1.0\AlgorithmsSamples.AssemblyInfo.cs
+C:\Users\pradi\OneDrive\MyProjects\AlgorithmsSamples\AlgorithmsSamples\obj\Debug\netcoreapp1.0\TWL_Algorithms_Samples.dll
+C:\Users\pradi\OneDrive\MyProjects\AlgorithmsSamples\AlgorithmsSamples\obj\Debug\netcoreapp1.0\TWL_Algorithms_Samples.pdb
