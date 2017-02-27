@@ -1,11 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace TWL_Algorithms_Samples.Arrays.Strings
 {
-    class Is_Unique
+    internal class Is_Unique
     {
+        public void Run()
+        {
+            string[] words = { "abcde", "hello", "lol", "apple", "kite", "padle" };
+
+            foreach (var word in words)
+            {
+                Console.WriteLine(word + ": "
+                    + IsUniqueChars(word) + " "
+                    + IsUniqueChars2(word));
+                Console.WriteLine("--------------------------------------------------------------");
+            }
+        }
+
         private bool IsUniqueChars(string str)
         {
             Console.WriteLine("IsUniqueChars: str=" + str);
@@ -55,19 +66,6 @@ namespace TWL_Algorithms_Samples.Arrays.Strings
                 charSet[val] = true;
             }
             return true;
-        }
-
-        public void Run()
-        {
-            string[] words = { "abcde", "hello", "lol", "apple", "kite", "padle" };
-
-            foreach (var word in words)
-            {
-                Console.WriteLine(word + ": "
-                    // + IsUniqueChars(word) + " " 
-                    + IsUniqueChars2(word));
-                Console.WriteLine("--------------------------------------------------------------");
-            }
         }
     }
 }

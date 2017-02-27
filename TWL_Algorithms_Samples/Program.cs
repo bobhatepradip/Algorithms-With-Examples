@@ -1,9 +1,9 @@
 ﻿using System;
 using TWL_Algorithms_Samples.Arrays.Strings;
 
-class Program
+internal class Program
 {
-    static void Main(string[] args)
+    private static void Main(string[] args)
     {
         new Is_Unique().Run();
 

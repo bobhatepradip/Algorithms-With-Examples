@@ -9,4 +9,7 @@
     <Product>TWL_Algorithms_Samples</Product>
     <Company>TWL_Algorithms_Samples</Company>
   </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="Graph\Tree\" />
+  </ItemGroup>
 </Project>
