@@ -46,7 +46,6 @@
     <Compile Include="Arrays\ArrayExtensions.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="IntegerExtension.cs" />
-    <Compile Include="Sorting\Sorting.cs" />
     <Compile Include="Arrays\Strings\Is_Unique.cs" />
     <Compile Include="LinkedList\DoublyLinkedListNode.cs" />
     <Compile Include="LinkedList\IDoublyLinkedListNode.cs" />
@@ -54,12 +53,14 @@
     <Compile Include="LinkedList\SinglyLinkedListNode.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sorting.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Graph\Tree\" />
+    <Folder Include="Sorting\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -6,7 +6,7 @@ internal class Program
 {
     private static void Main(string[] args)
     {
-        /*new Is_Unique().Run()*/;
+        new Is_Unique().Run();
         new Sorting().Run();
 
         //Console.WriteLine();

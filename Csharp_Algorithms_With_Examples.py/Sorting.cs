@@ -11,9 +11,10 @@ namespace TWL_Algorithms_Samples.Sorting
         public void Run()
         {
             Console.WriteLine($"Start {this.GetType().Name}.Run");
-            //Constants.cArrayNumbers.Print("Input:\n");
-            //QuickSort.Sort(Constants.cArrayNumbers, 0, Constants.cArrayNumbers.Length);
-            //Console.WriteLine($"End {this.GetType().Name}.Run");
+            int[] array = Constants.cArrayNumbers;
+            array.Print("Input:\n");
+            QuickSort.Sort(array, 0, array.Length);
+            Console.WriteLine($"End {this.GetType().Name}.Run");
         }
 
         internal class QuickSort
@@ -22,6 +23,14 @@ namespace TWL_Algorithms_Samples.Sorting
             {
                 int i = 100;
                 int index = Partition(array, left, right);
+                if (left < index - 1)
+                {
+                    Sort(array, left, index - 1);
+                }
+                if (index <right)
+                {
+                    Sort(array, index, right);
+                }
             }
 
             internal static int Partition(int[] array, int left, int right)
@@ -44,13 +53,13 @@ namespace TWL_Algorithms_Samples.Sorting
                         //left.Print("Right:\n");
                     }
 
-                    //if (left <= right)
-                    //{
+                    if (left <= right)
+                    {
+                        //swap(array, left, right);
+                        left++;
+                        right--;
 
-                    //    left++;
-                    //    right--;
-
-                    //}
+                    }
                 }
 
                 left.Print("Median:\n");
