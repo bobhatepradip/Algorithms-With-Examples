@@ -13970,10 +13970,10 @@
   },
   "project": {
     "restore": {
-      "projectUniqueName": "C:\\Users\\pradi\\OneDrive\\MyProjects\\TWL_Algorithms_Samples\\TWL_Algorithms_Samples\\TWL_Algorithms_Samples.csproj",
+      "projectUniqueName": "C:\\GitHub\\Algorithms-With-Examples\\TWL_Algorithms_Samples\\TWL_Algorithms_Samples.csproj",
       "projectName": "TWL_Algorithms_Samples",
-      "projectPath": "C:\\Users\\pradi\\OneDrive\\MyProjects\\TWL_Algorithms_Samples\\TWL_Algorithms_Samples\\TWL_Algorithms_Samples.csproj",
-      "outputPath": "C:\\Users\\pradi\\OneDrive\\MyProjects\\TWL_Algorithms_Samples\\TWL_Algorithms_Samples\\obj\\",
+      "projectPath": "C:\\GitHub\\Algorithms-With-Examples\\TWL_Algorithms_Samples\\TWL_Algorithms_Samples.csproj",
+      "outputPath": "C:\\GitHub\\Algorithms-With-Examples\\TWL_Algorithms_Samples\\obj\\",
       "projectStyle": "PackageReference",
       "originalTargetFrameworks": [
         "netcoreapp1.0"
