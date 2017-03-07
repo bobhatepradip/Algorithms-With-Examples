@@ -43,9 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="01_Arrays\MyArray.cs" />
+    <Compile Include="01_Arrays\ArrayUtility.cs" />
     <Compile Include="01_Arrays\ArrayExtensions.cs" />
-    <Compile Include="01_Arrays\Q1_02_Check_Permutation.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="IntegerExtension.cs" />
     <Compile Include="01_Arrays\Strings\StringUtility.cs" />

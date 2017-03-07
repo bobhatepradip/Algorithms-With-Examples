@@ -6,7 +6,24 @@ namespace TWL_Algorithms_Samples.Arrays
     {
         public static void Print(this int[] array, String header)
         {
-            string printString = header + "\n{";
+            Console.WriteLine(header);
+            array.Print();
+        }
+
+        public static void Print(this int[] array)
+        {
+            string printString = "{";
+            foreach (int arrayElemnt in array)
+            {
+                printString = printString + "'" + arrayElemnt + "'";
+            }
+            printString = printString + "}";
+            Console.WriteLine(printString);
+        }
+
+        public static void Print(this char[] array)
+        {
+            string printString = "{";
             foreach (int arrayElemnt in array)
             {
                 printString = printString + "'" + arrayElemnt + "'";
@@ -17,13 +34,8 @@ namespace TWL_Algorithms_Samples.Arrays
 
         public static void Print(this char[] array, String header)
         {
-            string printString = header + "\n{";
-            foreach (int arrayElemnt in array)
-            {
-                printString = printString + "'" + arrayElemnt + "'";
-            }
-            printString = printString + "}";
-            Console.WriteLine(printString);
+            Console.WriteLine(header);
+            array.Print();
         }
 
         public static void Print(this int[] array, String header, int firstIndex, int secondIndex)
