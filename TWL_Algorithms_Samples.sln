@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26119.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TWL_Algorithms_Samples", "TWL_Algorithms_Samples\TWL_Algorithms_Samples.csproj", "{304D8AED-7393-4DDE-9E56-8823A3A70D0F}"
-EndProject
-Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Phython-Algorithms_With_Examples", "Phython-Algorithms_With_Examples\Phython-Algorithms_With_Examples.pyproj", "{34337F8D-1668-4F93-A9FE-A78222200D2D}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cpp-Algorithms_With_Examples", "cpp-Algorithms_With_Examples\cpp-Algorithms_With_Examples.vcxproj", "{00A70C34-2741-490F-9FE2-4C84893EF205}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Csharp_Algorithms_With_Examples.py", "Csharp_Algorithms_With_Examples.py\Csharp_Algorithms_With_Examples.py.csproj", "{8DD5AEB7-984B-465C-B215-F60A1FB37778}"
+# Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TWL_Algorithms_Samples", "TWL_Algorithms_Samples\TWL_Algorithms_Samples.csproj", "{304D8AED-7393-4DDE-9E56-8823A3A70D0F}"
+# EndProject
+# Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Phython-Algorithms_With_Examples", "Phython-Algorithms_With_Examples\Phython-Algorithms_With_Examples.pyproj", "{34337F8D-1668-4F93-A9FE-A78222200D2D}"
+# EndProject
+# Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cpp-Algorithms_With_Examples", "cpp-Algorithms_With_Examples\cpp-Algorithms_With_Examples.vcxproj", "{00A70C34-2741-490F-9FE2-4C84893EF205}"
+# EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Csharp_Algorithms_With_Examples", "Csharp_Algorithms_With_Examples\Csharp_Algorithms_With_Examples.csproj", "{8DD5AEB7-984B-465C-B215-F60A1FB37778}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
