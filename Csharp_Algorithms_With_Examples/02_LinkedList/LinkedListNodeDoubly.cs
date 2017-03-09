@@ -4,29 +4,34 @@ using System.Diagnostics;
 namespace TWL_Algorithms_Samples.LinkedList
 {
     [DebuggerDisplay("Data = {Data}")]
-    public class DoublyLinkedListNode : LinkedListNode, IDoublyLinkedListNode
+    public class LinkedListNodeDoubly : LinkedListNode, ILinkedListNodeDoubly
     {
-        public DoublyLinkedListNode(object d, DoublyLinkedListNode n, DoublyLinkedListNode p)
+        public LinkedListNodeDoubly(object d, LinkedListNodeDoubly n, LinkedListNodeDoubly p)
         {
             Data = d;
             SetNext(n);
             SetPrevious(p);
         }
 
-        public DoublyLinkedListNode()
+        public LinkedListNodeDoubly()
         { }
 
-        public DoublyLinkedListNode Prev { get; set; }
+        public LinkedListNodeDoubly Prev { get; set; }
 
         public override LinkedListNode Clone()
         {
-            DoublyLinkedListNode next2 = null;
+            return (LinkedListNode)CloneLinkedListNodeDoubly();
+        }
+
+        public LinkedListNodeDoubly CloneLinkedListNodeDoubly()
+        {
+            LinkedListNodeDoubly next2 = null;
             if (Next != null)
             {
-                next2 = (DoublyLinkedListNode)((LinkedListNode)Next).Clone();
+                next2 = (LinkedListNodeDoubly)((LinkedListNode)Next).Clone();
             }
-            DoublyLinkedListNode head2 = new DoublyLinkedListNode(Data, next2, null);
-            return (LinkedListNode)head2;
+            LinkedListNodeDoubly head2 = new LinkedListNodeDoubly(Data, next2, null);
+            return head2;
         }
 
         public override String PrintForward()
@@ -43,7 +48,7 @@ namespace TWL_Algorithms_Samples.LinkedList
 
         public override void SetNext(LinkedListNode n)
         {
-            DoublyLinkedListNode newNextNode = (DoublyLinkedListNode)n;
+            LinkedListNodeDoubly newNextNode = (LinkedListNodeDoubly)n;
             Next = newNextNode;
             if (this == CurrentNode)
             {
@@ -55,7 +60,7 @@ namespace TWL_Algorithms_Samples.LinkedList
             }
         }
 
-        public void SetPrevious(DoublyLinkedListNode p)
+        public void SetPrevious(LinkedListNodeDoubly p)
         {
             Prev = p;
             if (p != null && p.Next != this)

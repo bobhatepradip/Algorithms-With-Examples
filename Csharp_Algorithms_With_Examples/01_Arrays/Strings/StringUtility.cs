@@ -7,7 +7,8 @@ namespace TWL_Algorithms_Samples.Arrays.Strings
         public void Run()
         {
             //IsUniqueChars_Test();
-            IsPermutation_Test();
+            //IsPermutation_Test();
+            //URLEncoding_Run();
         }
 
         public string Sort(string str)
@@ -16,6 +17,13 @@ namespace TWL_Algorithms_Samples.Arrays.Strings
             char[] chars = str.ToCharArray();
             ///???
             return chars.ToString();
+        }
+
+        public void URLEncoding_Run()
+        {
+            const string input = "abc d e f";
+            string encodedURL = URLEncoding_ReplaceSpaces(input, input.Length);
+            Console.WriteLine("{0} -> {1}", input, encodedURL);
         }
 
         public void Void()
@@ -186,6 +194,48 @@ namespace TWL_Algorithms_Samples.Arrays.Strings
                 charSet[val] = true;
             }
             return true;
+        }
+
+        private char[] URLEncoding_ReplaceSpaces(char[] input, int length)
+        {
+            var spaceCount = 0;
+
+            // count the number of spaces
+            foreach (var character in input)
+            {
+                if (character == ' ')
+                {
+                    spaceCount++;
+                }
+            }
+
+            // calculate new string size
+            var outputIndex = length + spaceCount * 2;
+            char[] output = new char[outputIndex];
+            // copying the characters backwards and inserting %20
+            for (var i = length - 1; i >= 0; i--)
+            {
+                if (input[i] == ' ')
+                {
+                    output[outputIndex - 1] = '0';
+                    output[outputIndex - 2] = '2';
+                    output[outputIndex - 3] = '%';
+                    outputIndex -= 3;
+                }
+                else
+                {
+                    output[outputIndex - 1] = input[i];
+                    outputIndex--;
+                }
+            }
+
+            return output;
+        }
+
+        private string URLEncoding_ReplaceSpaces(string input, int length)
+        {
+            char[] output = URLEncoding_ReplaceSpaces(input.ToCharArray(), length);
+            return new string(output);
         }
     }
 }

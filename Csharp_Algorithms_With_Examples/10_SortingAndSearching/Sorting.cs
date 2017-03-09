@@ -1,21 +1,20 @@
-﻿using System;
-using TWL_Algorithms_Samples;
+﻿using TWL_Algorithms_Samples;
 using TWL_Algorithms_Samples.Arrays;
 
-namespace TWL_Algorithms_Samples.Sorting
+namespace TWL_Algorithms_Samples.SortingAndSearching
 {
     internal class Sorting
     {
         public void Run()
         {
-            Console.WriteLine($"Start {this.GetType().Name}.Run");
-            int[] array = Constants.cArrayNumbers;
+            //Console.WriteLine($"Start {this.GetType().Name}.Run");
+            //int[] array = Constants.cArrayNumbers;
 
-            //QuickSort.Sort(array, 0, array.Length - 1);
-            //HeapSort.Sort(array, 0, array.Length - 1);
-            HeapSort.Sort(new int[] { 10, 20, 25, 60, 30, 58, 71, 99, 70, 82, 50, 90, 85 });
-            //HeapSort.Sort(Constants.cArrayNumbersHeap);
-            Console.WriteLine($"End {this.GetType().Name}.Run");
+            ////QuickSort.Sort(array, 0, array.Length - 1);
+            ////HeapSort.Sort(array, 0, array.Length - 1);
+            //HeapSort.Sort(new int[] { 10, 20, 25, 60, 30, 58, 71, 99, 70, 82, 50, 90, 85 });
+            ////HeapSort.Sort(Constants.cArrayNumbersHeap);
+            //Console.WriteLine($"End {this.GetType().Name}.Run");
         }
 
         internal class HeapSort

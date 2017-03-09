@@ -4,26 +4,31 @@ using System.Diagnostics;
 namespace TWL_Algorithms_Samples.LinkedList
 {
     [DebuggerDisplay("Data = {Data}")]
-    public class SinglyLinkedListNode : LinkedListNode
+    public class LinkedListNodeSingly : LinkedListNode
     {
-        public SinglyLinkedListNode(object d, SinglyLinkedListNode n)
+        public LinkedListNodeSingly(object d, LinkedListNodeSingly n)
         {
             Data = d;
             SetNext(n);
-            //SetPrevious(p);
         }
 
-        public SinglyLinkedListNode()
+        public LinkedListNodeSingly(int d, LinkedListNode n)
+        {
+            Data = d;
+            SetNext(n);
+        }
+
+        public LinkedListNodeSingly()
         { }
 
         public override LinkedListNode Clone()
         {
-            SinglyLinkedListNode next2 = null;
+            LinkedListNodeSingly next2 = null;
             if (Next != null)
             {
-                next2 = (SinglyLinkedListNode)((LinkedListNode)Next).Clone();
+                next2 = (LinkedListNodeSingly)((LinkedListNode)Next).Clone();
             }
-            SinglyLinkedListNode head2 = new SinglyLinkedListNode(Data, next2);
+            LinkedListNodeSingly head2 = new LinkedListNodeSingly(Data, next2);
             return (LinkedListNode)head2;
         }
 
@@ -41,11 +46,11 @@ namespace TWL_Algorithms_Samples.LinkedList
 
         public override void SetNext(LinkedListNode n)
         {
-            SinglyLinkedListNode newNextNode = (SinglyLinkedListNode)n;
+            LinkedListNodeSingly newNextNode = (LinkedListNodeSingly)n;
             Next = newNextNode;
             if (this == CurrentNode)
             {
-                CurrentNode = (SinglyLinkedListNode)n;
+                CurrentNode = (LinkedListNodeSingly)n;
             }
         }
     }
