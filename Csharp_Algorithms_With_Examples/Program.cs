@@ -1,6 +1,7 @@
 ﻿using System;
 using TWL_Algorithms_Samples.Arrays;
 using TWL_Algorithms_Samples.Arrays.Strings;
+using TWL_Algorithms_Samples.LinkedList;
 using TWL_Algorithms_Samples.SortingAndSearching;
 
 internal class Program
@@ -9,7 +10,7 @@ internal class Program
     {
         Console.WriteLine("======================================================================");
         new ArrayUtility().Run();
-        new ArrayUtility().Run();
+        new LinkedListUtility().Run();
         new StringUtility().Run();
         new Sorting().Run();
         Console.WriteLine("======================================================================");

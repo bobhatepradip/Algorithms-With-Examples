@@ -12,15 +12,14 @@ namespace TWL_Algorithms_Samples.LinkedList
             SetNext(n);
         }
 
-        public LinkedListNodeSingly(int d, LinkedListNode n)
-        {
-            Data = d;
-            SetNext(n);
-        }
-
         public LinkedListNodeSingly()
         { }
 
+        //public LinkedListNodeSingly(int d, LinkedListNode n)
+        //{
+        //    Data = d;
+        //    SetNext(n);
+        //}
         public override LinkedListNode Clone()
         {
             LinkedListNodeSingly next2 = null;
@@ -32,6 +31,19 @@ namespace TWL_Algorithms_Samples.LinkedList
             return (LinkedListNode)head2;
         }
 
+        public override bool DeleteNode(LinkedListNode node)
+        {
+            if (node == null || node.Next == null)
+            {
+                return false; // Failure
+            }
+
+            var next = node.Next;
+            node.Data = next.Data;
+            node.Next = next.Next;
+
+            return true;
+        }
         public override String PrintForward()
         {
             if (Next != null)
@@ -42,6 +54,12 @@ namespace TWL_Algorithms_Samples.LinkedList
             {
                 return string.Format("{0}", Data);
             }
+        }
+
+        public override String PrintForward(string header)
+        {
+            Console.WriteLine(header);
+            return PrintForward();
         }
 
         public override void SetNext(LinkedListNode n)

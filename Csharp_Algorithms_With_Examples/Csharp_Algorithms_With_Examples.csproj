@@ -45,7 +45,10 @@
   <ItemGroup>
     <Compile Include="01_Arrays\ArrayUtility.cs" />
     <Compile Include="01_Arrays\ArrayExtensions.cs" />
+    <Compile Include="CharUtility.cs" />
     <Compile Include="02_LinkedList\LinkedListUtility.cs" />
+    <Compile Include="05_BitManipulation\BitVictor.cs" />
+    <Compile Include="AssortedMethods.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="IntegerExtension.cs" />
     <Compile Include="01_Arrays\Strings\StringUtility.cs" />
@@ -62,7 +65,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="10_SortingAndSearching\05_BitManipulation\" />
     <Folder Include="Graph\Tree\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
