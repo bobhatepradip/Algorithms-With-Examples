@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using TWL_Algorithms_Samples.Arrays;
 
 namespace TWL_Algorithms_Samples.LinkedList
 {
@@ -35,17 +36,158 @@ namespace TWL_Algorithms_Samples.LinkedList
         public void DeleteNode_Run()
         {
             var head = AssortedMethods.RandomLinkedListSingly(10, 0, 10);
-            Console.WriteLine(head.PrintForward());
+            head.PrintForward();
             var deleted = head.DeleteNode(head.Next.Next.Next.Next); // delete node 4
             Console.WriteLine("deleted? {0}", deleted);
-            Console.WriteLine(head.PrintForward());
+            head.PrintForward();
         }
 
         public void Run()
         {
             //new Q2_01_Remove_Dups().Run();
             //DeleteNode_Run();
+            //new Q2_02_Return_Kth_To_Last().Run();
         }
+
+        public class Q2_02_Return_Kth_To_Last : IQuestion
+        {
+            internal class Result
+            {
+                public LinkedListNode Node { get; set; }
+                public int Count { get; set; }
+
+                public Result(LinkedListNode node, int count)
+                {
+                    Node = node;
+                    Count = count;
+                }
+            }
+
+            private int NthToLastR1(LinkedListNode head, int n)
+            {
+                if (n == 0 || head == null)
+                {
+                    return 0;
+                }
+
+                var k = NthToLastR1(head.Next, n) + 1;
+
+                if (k == n)
+                {
+                    Console.WriteLine(n + "th to last node is " + head.Data);
+                }
+
+                return k;
+            }
+
+            private LinkedListNode NthToLastR2(LinkedListNode head, int n, ref int i)
+            {
+                if (head == null)
+                {
+                    return null;
+                }
+
+                var node = NthToLastR2(head.Next, n, ref i);
+                i = i + 1;
+
+                if (i == n)
+                {
+                    return head;
+                }
+
+                return node;
+            }
+
+            private Result NthToLastR3Helper(LinkedListNode head, int k)
+            {
+                if (head == null)
+                {
+                    return new Result(null, 0);
+                }
+
+                var result = NthToLastR3Helper(head.Next, k);
+
+                if (result.Node == null)
+                {
+                    result.Count++;
+
+                    if (result.Count == k)
+                    {
+                        result.Node = head;
+                    }
+                }
+
+                return result;
+            }
+
+            private LinkedListNode NthToLastR3(LinkedListNode head, int k)
+            {
+                var result = NthToLastR3Helper(head, k);
+
+                if (result != null)
+                {
+                    return result.Node;
+                }
+
+                return null;
+            }
+
+            private LinkedListNode NthToLast(LinkedListNode head, int n)
+            {
+                var p1 = head;
+                var p2 = head;
+
+                if (n <= 0) return null;
+
+                // Move p2 n nodes into the list.  Keep n1 in the same position.
+                for (var i = 0; i < n - 1; i++)
+                {
+                    if (p2 == null)
+                    {
+                        return null; // Error: list is too small.
+                    }
+
+                    p2 = p2.Next;
+                }
+                if (p2 == null)
+                { // Another error check.
+                    return null;
+                }
+
+                // Move them at the same pace.  When p2 hits the end,
+                // p1 will be at the right element.
+                while (p2.Next != null)
+                {
+                    p1 = p1.Next;
+                    p2 = p2.Next;
+                }
+
+                return p1;
+            }
+
+            public void Run()
+            {
+                int[] nthCounts = new int[] { 1, 2, 9, 10, 11 };
+                nthCounts.Print("Get Positions:");
+                var head = AssortedMethods.RandomLinkedListSingly(10, 0, 10);
+                head.PrintForward("\nLink List:");
+                foreach (int nth in nthCounts)
+                {
+                    var node = NthToLastR3(head, nth);
+                    NthToLastR1(head, nth);
+
+                    if (node != null)
+                    {
+                        Console.WriteLine(nth + "th to last node is " + node.Data);
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Null.  n='{nth}' is out of bounds.");
+                    }
+                }
+            }
+        }
+
         public class Remove_Dups : IQuestion
         {
             private int _tapB = 0;
@@ -65,7 +207,7 @@ namespace TWL_Algorithms_Samples.LinkedList
                     second.SetPrevious(first);
                     first = second;
                 }
-                Console.WriteLine(originalList.PrintForward("originalList"));
+                originalList.PrintForward("originalList");
 
                 var list1 = originalList.CloneLinkedListNodeDoubly();
                 var list2 = originalList.Clone();
@@ -85,7 +227,7 @@ namespace TWL_Algorithms_Samples.LinkedList
             /// <param name="head"></param>
             private void DeleteDups_UsingDictionary(LinkedListNodeDoubly head)
             {
-                Console.WriteLine(head.PrintForward("List-Before\n"));
+                head.PrintForward("List-Before\n");
                 Console.WriteLine($"{this.GetType().FullName}.{System.Reflection.MethodBase.GetCurrentMethod().Name}\n");
                 var table = new Dictionary<int, bool>();
                 LinkedListNodeDoubly previous = null;
@@ -107,13 +249,13 @@ namespace TWL_Algorithms_Samples.LinkedList
 
                     head = (LinkedListNodeDoubly)head.Next;
                 }
-                Console.WriteLine(head.PrintForward("List-After\n"));
+                head.PrintForward("List-After\n");
                 Console.WriteLine("-------------------------------------------------------");
             }
 
             private void DeleteDupsB(LinkedListNode head)
             {
-                Console.WriteLine(head.PrintForward("List-Before\n"));
+                head.PrintForward("List-Before\n");
                 Console.WriteLine($"{this.GetType().FullName}.{System.Reflection.MethodBase.GetCurrentMethod().Name}\n");
                 if (head == null) return;
 
@@ -133,7 +275,7 @@ namespace TWL_Algorithms_Samples.LinkedList
                         {
                             Console.WriteLine($"Removing runner '{runner.Next.Data}'");
                             runner.Next = runner.Next.Next;
-                            Console.WriteLine($"{head.PrintForward()}");
+                            head.PrintForward();
                         }
                         else
                         {
@@ -142,13 +284,13 @@ namespace TWL_Algorithms_Samples.LinkedList
                     }
                     current = current.Next;
                 }
-                Console.WriteLine(head.PrintForward("List-After\n"));
+                head.PrintForward("List-After\n");
                 Console.WriteLine("-------------------------------------------------------");
             }
 
             private void DeleteDupsC(LinkedListNode head)
             {
-                Console.WriteLine(head.PrintForward("List-Before\n"));
+                head.PrintForward("List-Before\n");
                 Console.WriteLine($"{this.GetType().FullName}.{System.Reflection.MethodBase.GetCurrentMethod().Name}\n");
 
                 if (head == null) return;
@@ -162,21 +304,21 @@ namespace TWL_Algorithms_Samples.LinkedList
                     // Look backwards for dups, and remove any that you see.
                     var runner = head;
 
-                    Console.WriteLine($"head {head.PrintForward()}");
-                    Console.WriteLine($"current {current.PrintForward()}");
-                    Console.WriteLine($"runner {runner.PrintForward()}");
+                    head.PrintForward();
+                    current.PrintForward();
+                    runner.PrintForward();
 
                     while (runner != current && current != null)
                     {
-                        Console.WriteLine($"@@Inner runner {runner.PrintForward()}");
+                        runner.PrintForward();
 
                         Tap(1);
                         Console.WriteLine($"@@current.Data '{current.Data}' runner.Data: '{runner.Data}'");
                         if (runner.Data.Equals(current.Data))
                         {
-                            Console.WriteLine($"@@Inner head {head.PrintForward()}");
-                            Console.WriteLine($"@@Inner current {current.PrintForward()}");
-                            Console.WriteLine($"@@Inner previous {previous.PrintForward()}");
+                            head.PrintForward();
+                            current.PrintForward();
+                            previous.PrintForward();
                             //Console.WriteLine($"@@Removing current '{current.Data}'");
                             //urrent = current.Next;
 
@@ -194,7 +336,7 @@ namespace TWL_Algorithms_Samples.LinkedList
                         }
 
                         runner = runner.Next;
-                        Console.WriteLine($"Inner runner {runner.PrintForward()}");
+                        runner.PrintForward();
                     }
 
                     /* If runner == current, then we didn�t find any duplicate
@@ -205,23 +347,23 @@ namespace TWL_Algorithms_Samples.LinkedList
                      * already been incremented.*/
                     if (runner == current)
                     {
-                        Console.WriteLine($"****head {head.PrintForward()}");
-                        Console.WriteLine($"****previous {previous.PrintForward()}");
-                        Console.WriteLine($"****current {current.PrintForward()}");
-                        Console.WriteLine($"****runner {runner.PrintForward()}");
+                        head.PrintForward();
+                        previous.PrintForward();
+                        current.PrintForward();
+                        runner.PrintForward();
                         previous = current;
                         current = current.Next;
-                        Console.WriteLine($"@@@previous {previous.PrintForward()}");
+                        previous.PrintForward();
                         //Console.WriteLine($"@@@current {current.PrintForward()}");
                     }
                 }
-                Console.WriteLine(head.PrintForward("List-After\n"));
+                head.PrintForward("List-After\n");
                 Console.WriteLine("-------------------------------------------------------");
             }
 
             private void DeleteDupsC2(LinkedListNode head)
             {
-                Console.WriteLine(head.PrintForward("List-Before\n"));
+                head.PrintForward("List-Before\n");
                 Console.WriteLine($"{this.GetType().FullName}.{System.Reflection.MethodBase.GetCurrentMethod().Name}\n");
 
                 if (head == null) return;
@@ -263,7 +405,7 @@ namespace TWL_Algorithms_Samples.LinkedList
                         current = current.Next;
                     }
                 }
-                Console.WriteLine(head.PrintForward("List-After\n"));
+                head.PrintForward("List-After\n");
                 Console.WriteLine("-------------------------------------------------------");
             }
 

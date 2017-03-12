@@ -1,5 +1,4 @@
 ﻿using System;
-using TWL_Algorithms_Samples.Arrays;
 
 namespace TWL_Algorithms_Samples.BitManipulation
 {

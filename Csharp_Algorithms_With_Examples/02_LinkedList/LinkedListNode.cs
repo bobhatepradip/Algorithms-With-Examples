@@ -12,10 +12,14 @@ namespace TWL_Algorithms_Samples.LinkedList
 
         public abstract bool DeleteNode(LinkedListNode node);
 
-        public abstract String PrintForward();
+        public abstract String ReadForward();
 
-        public abstract String PrintForward(string header);
+        public abstract void PrintForward();
+
+        public abstract void PrintForward(string header);
 
         public abstract void SetNext(LinkedListNode n);
+
+        public abstract int Size();
     }
 }

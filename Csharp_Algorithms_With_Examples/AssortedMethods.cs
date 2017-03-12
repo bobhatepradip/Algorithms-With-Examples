@@ -2226,6 +2226,7 @@ namespace TWL_Algorithms_Samples
         {
             return RandomInt(max + 1 - min) + min;
         }
+
         public static LinkedListNode RandomLinkedListDoubly(int N, int min, int max)
         {
             LinkedListNode root = new LinkedListNodeDoubly(RandomIntInRange(min, max), null, null);
@@ -2267,6 +2268,7 @@ namespace TWL_Algorithms_Samples
             }
             return matrix;
         }
+
         //public static LinkedListNode LinkedListWithValue(int N, int value)
         //{
         //    LinkedListNode root = new LinkedListNode(value, null, null);
@@ -2316,6 +2318,7 @@ namespace TWL_Algorithms_Samples
 
             return binaryString;
         }
+
         /* Creates tree by mapping the array left to right, top to bottom. */
     }
 }

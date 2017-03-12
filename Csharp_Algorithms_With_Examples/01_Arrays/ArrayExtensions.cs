@@ -21,6 +21,23 @@ namespace TWL_Algorithms_Samples.Arrays
             Console.WriteLine(printString);
         }
 
+        public static void Print(this object[] array, String header)
+        {
+            Console.WriteLine(header);
+            array.Print();
+        }
+
+        public static void Print(this object[] array)
+        {
+            string printString = "{";
+            foreach (object arrayElemnt in array)
+            {
+                printString = printString + "'" + arrayElemnt + "',";
+            }
+            printString = printString + "}";
+            Console.WriteLine(printString);
+        }
+
         public static void Print(this char[] array)
         {
             string printString = "{";

@@ -45,6 +45,10 @@
   <ItemGroup>
     <Compile Include="01_Arrays\ArrayUtility.cs" />
     <Compile Include="01_Arrays\ArrayExtensions.cs" />
+    <Compile Include="03_Stack\StackUtility.cs" />
+    <Compile Include="03_Stack\StackAsLinkList.cs" />
+    <Compile Include="03_Stack\StackAsArray.cs" />
+    <Compile Include="03_Stack\Stack.cs" />
     <Compile Include="CharUtility.cs" />
     <Compile Include="02_LinkedList\LinkedListUtility.cs" />
     <Compile Include="05_BitManipulation\BitVictor.cs" />
