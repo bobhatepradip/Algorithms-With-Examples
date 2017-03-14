@@ -4,6 +4,59 @@ namespace TWL_Algorithms_Samples.Arrays
 {
     internal class ArrayUtility
     {
+        public static void Matrix_Display(int[][] matrix, string header = "")
+        {
+            Console.WriteLine($"------------------------------------{header}----------------------------------");
+            for (int i = 0; i < matrix.Length; i++)
+            {
+                for (int j = 0; j < matrix[i].Length; j++)
+                {
+                    if (matrix[i][j] < 100 && matrix[i][j] > -100)
+                    {
+                        Console.Write(" ");
+                    }
+                    if (matrix[i][j] < 10 && matrix[i][j] > -10)
+                    {
+                        Console.Write(" ");
+                    }
+                    if (matrix[i][j] >= 0)
+                    {
+                        Console.Write(" ");
+                    }
+                    Console.Write(" " + matrix[i][j]);
+                }
+                Console.WriteLine();
+            }
+        }
+
+        public static int[][] Matrix_Get2DArrayRandom(int rowsCount, int columnCounts, int minNumber, int maxNumber)
+        {
+            int[][] matrix = new int[rowsCount][];
+            for (int i = 0; i < rowsCount; i++)
+            {
+                matrix[i] = new int[columnCounts];
+                for (int j = 0; j < columnCounts; j++)
+                {
+                    matrix[i][j] = AssortedMethods.RandomIntInRange(minNumber, maxNumber);
+                }
+            }
+            return matrix;
+        }
+
+        public static int[][] Matrix_Get2DArraySerial(int rowsCount, int columnCounts)
+        {
+            int[][] matrix = new int[rowsCount][];
+            for (int i = 0; i < rowsCount; i++)
+            {
+                matrix[i] = new int[columnCounts];
+                for (int j = 0; j < columnCounts; j++)
+                {
+                    matrix[i][j] = (i + 1) * 10 + (j + 1);
+                }
+            }
+            return matrix;
+        }
+
         /// <summary>
         /// Merges array
         /// </summary>
@@ -57,6 +110,8 @@ namespace TWL_Algorithms_Samples.Arrays
             //this.Merge_Run();
             //Search_in_Rotated_Array_Run();
             //new OneEditChecker().Run();
+            //new MatrixRotation().Run();
+            new Zero_Matrix().Run();
         }
 
         /// <summary>
@@ -137,6 +192,177 @@ namespace TWL_Algorithms_Samples.Arrays
             a.Print($"Input array (search for '{searchInput}'):");
             int searchIndex = Search_in_Rotated_Array(a, 0, a.Length - 1, searchInput);
             Console.WriteLine($"\nIndex of {searchInput} in array is {searchIndex}");
+        }
+
+        public class MatrixRotation : IQuestion
+        {
+            public void Run()
+            {
+                const int size = 3;
+                var matrix = Matrix_Get2DArraySerial(size, size);
+                Matrix_Display(matrix);
+                Matrix_Rotate(matrix);
+                Matrix_Display(matrix);
+            }
+
+            private void Matrix_Rotate(int[][] matrix)
+            {
+                int n = matrix.Length;
+                for (var layer = 0; layer < n / 2; ++layer)
+                {
+                    var first = layer;
+                    var last = (n - 1) - layer;
+
+                    for (var i = first; i < last; ++i)
+                    {
+                        Console.WriteLine($"Step--> {layer}:{i}");
+                        var offset = i - first;
+                        var top = matrix[first][i];
+                        // save top
+                        //Console.WriteLine($"layer:{layer} first:{first} last:{last} top:{top} offset:{offset}");
+                        // left -> top
+                        //Console.WriteLine($"left([last - offset][first]) [{last} - {offset}][{first}] -> top([first][i]) [{first}][{i}]");
+                        matrix[first][i] = matrix[last - offset][first];
+                        // bottom -> left
+                        //Console.WriteLine($"bottom([last][last - offset]) [{last}][{last} - {offset}] -> left([last - offset][first]) [{last} - {offset}][{first}]");
+                        matrix[last - offset][first] = matrix[last][last - offset];
+                        // right -> bottom
+                        //Console.WriteLine($"right([i][last]) [{i}][{last}] --> bottom([last][last - offset]) [{last}][{last} - {offset}]");
+                        matrix[last][last - offset] = matrix[i][last];
+                        // top -> right
+                        //Console.WriteLine($"top={top}  --> right([i][last]) [{i}][{last}]");
+                        matrix[i][last] = top; // right <- saved top
+                        Matrix_Display(matrix);
+                    }
+                }
+            }
+        }
+
+        public class OneEditChecker : IQuestion
+        {
+            public static bool OneEditAway_OneIteration(String first, String second)
+            {
+                /* Length checks. */
+                if (Math.Abs(first.Length - second.Length) > 1)
+                {
+                    return false;
+                }
+
+                /* Get shorter and longer string.*/
+                String shorterString = first.Length < second.Length ? first : second;
+                String longerString = first.Length < second.Length ? second : first;
+
+                int shorterStringIndex = 0;
+                int longerStringIndex = 0;
+                bool foundDifference = false;
+                while (longerStringIndex < longerString.Length && shorterStringIndex < shorterString.Length)
+                {
+                    if (shorterString[shorterStringIndex] != longerString[longerStringIndex])
+                    {
+                        /* Ensure that this is the first difference found.*/
+                        if (foundDifference)
+                        {
+                            return false;
+                        }
+                        foundDifference = true;
+                        if (shorterString.Length == longerString.Length)
+                        { // On replace, move shorter pointer
+                            shorterStringIndex++;
+                        }
+                    }
+                    else
+                    {
+                        shorterStringIndex++; // If matching, move shorter pointer
+                    }
+                    longerStringIndex++; // Always move pointer for longer string
+                }
+                return true;
+            }
+
+            public static bool OneEditAway_OneIterationWtihSerparateFunctions(String first, String second)
+            {
+                if (first.Length == second.Length)
+                {
+                    return OneEditReplace(first, second);
+                }
+                else if (first.Length + 1 == second.Length)
+                {
+                    return OneEditInsert(first, second);
+                }
+                else if (first.Length - 1 == second.Length)
+                {
+                    return OneEditInsert(second, first);
+                }
+                return false;
+            }
+
+            public static bool OneEditInsert(String s1, String s2)
+            {
+                int index1 = 0;
+                int index2 = 0;
+                while (index2 < s2.Length && index1 < s1.Length)
+                {
+                    if (s1[index1] != s2[index2])
+                    {
+                        if (index1 != index2)
+                        {
+                            return false;
+                        }
+                        index2++;
+                    }
+                    else
+                    {
+                        index1++;
+                        index2++;
+                    }
+                }
+                return true;
+            }
+
+            public static bool OneEditReplace(String s1, String s2)
+            {
+                bool foundDifference = false;
+                for (int i = 0; i < s1.Length; i++)
+                {
+                    if (s1[i] != s2[i])
+                    {
+                        if (foundDifference)
+                        {
+                            return false;
+                        }
+
+                        foundDifference = true;
+                    }
+                }
+                return true;
+            }
+
+            /* Check if you can insert a character into s1 to make s2. */
+
+            public void Run()
+            {
+                string[][] stringPairs =             {
+                new string[]{ "pse", "pale"},
+                new string[]{ "pale", "zpale"},//1 insert
+                new string[]{ "palez", "pale"},//1 insert
+                new string[]{ "pale", "ale"},//1 edit
+                new string[]{ "pal", "pale"},//1 edit
+                new string[]{ "pale", "zzpale"},//2 insert
+                 new string[]{ "palezz", "pale"},//2 insert
+                 new string[]{ "pale", "zpalz"},//1 insert and 1 edit
+            };
+                foreach (string[] stringPair in stringPairs)
+                {
+                    var a = stringPair[0];
+                    var b = stringPair[1];
+                    bool isOneEdit = OneEditAway_OneIteration(a, b);
+                    Console.WriteLine("OneEditAway: {0}, {1}: {2}", a, b, isOneEdit);
+
+                    bool isOneEdit2 = OneEditAway_OneIteration(a, b);
+                    Console.WriteLine("stringPair[0]: {0}, {1}: {2}", a, b, isOneEdit2);
+                    Console.WriteLine("----------------------------------------------------");
+                }
+            }
         }
 
         public class Peaks_and_Valleys : IQuestion
@@ -224,198 +450,22 @@ namespace TWL_Algorithms_Samples.Arrays
                 }
             }
         }
-
-        public class OneEditChecker : IQuestion
-        {
-            public static bool OneEditAway_OneIterationWtihSerparateFunctions(String first, String second)
-            {
-                if (first.Length == second.Length)
-                {
-                    return OneEditReplace(first, second);
-                }
-                else if (first.Length + 1 == second.Length)
-                {
-                    return OneEditInsert(first, second);
-                }
-                else if (first.Length - 1 == second.Length)
-                {
-                    return OneEditInsert(second, first);
-                }
-                return false;
-            }
-
-            public static bool OneEditAway_OneIteration(String first, String second)
-            {
-                /* Length checks. */
-                if (Math.Abs(first.Length - second.Length) > 1)
-                {
-                    return false;
-                }
-
-                /* Get shorter and longer string.*/
-                String shorterString = first.Length < second.Length ? first : second;
-                String longerString = first.Length < second.Length ? second : first;
-
-                int shorterStringIndex = 0;
-                int longerStringIndex = 0;
-                bool foundDifference = false;
-                while (longerStringIndex < longerString.Length && shorterStringIndex < shorterString.Length)
-                {
-                    if (shorterString[shorterStringIndex] != longerString[longerStringIndex])
-                    {
-                        /* Ensure that this is the first difference found.*/
-                        if (foundDifference)
-                        {
-                            return false;
-                        }
-                        foundDifference = true;
-                        if (shorterString.Length == longerString.Length)
-                        { // On replace, move shorter pointer
-                            shorterStringIndex++;
-                        }
-                    }
-                    else
-                    {
-                        shorterStringIndex++; // If matching, move shorter pointer
-                    }
-                    longerStringIndex++; // Always move pointer for longer string
-                }
-                return true;
-            }
-
-            public static bool OneEditInsert(String s1, String s2)
-            {
-                int index1 = 0;
-                int index2 = 0;
-                while (index2 < s2.Length && index1 < s1.Length)
-                {
-                    if (s1[index1] != s2[index2])
-                    {
-                        if (index1 != index2)
-                        {
-                            return false;
-                        }
-                        index2++;
-                    }
-                    else
-                    {
-                        index1++;
-                        index2++;
-                    }
-                }
-                return true;
-            }
-
-            public static bool OneEditReplace(String s1, String s2)
-            {
-                bool foundDifference = false;
-                for (int i = 0; i < s1.Length; i++)
-                {
-                    if (s1[i] != s2[i])
-                    {
-                        if (foundDifference)
-                        {
-                            return false;
-                        }
-
-                        foundDifference = true;
-                    }
-                }
-                return true;
-            }
-
-            /* Check if you can insert a character into s1 to make s2. */
-
-            public void Run()
-            {
-                string[][] stringPairs =             {
-                new string[]{ "pse", "pale"},
-                new string[]{ "pale", "zpale"},//1 insert
-                new string[]{ "palez", "pale"},//1 insert
-                new string[]{ "pale", "ale"},//1 edit
-                new string[]{ "pal", "pale"},//1 edit
-                new string[]{ "pale", "zzpale"},//2 insert
-                 new string[]{ "palezz", "pale"},//2 insert
-                 new string[]{ "pale", "zpalz"},//1 insert and 1 edit
-
-            };
-                foreach (string[] stringPair in stringPairs)
-                {
-                    var a = stringPair[0];
-                    var b = stringPair[1];
-                    bool isOneEdit = OneEditAway_OneIteration(a, b);
-                    Console.WriteLine("OneEditAway: {0}, {1}: {2}", a, b, isOneEdit);
-
-                    bool isOneEdit2 = OneEditAway_OneIteration(a, b);
-                    Console.WriteLine("stringPair[0]: {0}, {1}: {2}", a, b, isOneEdit2);
-                    Console.WriteLine("----------------------------------------------------");
-                }
-            }
-        }
-
-        public class Q1_07_Rotate_Matrix : IQuestion
+        public class Zero_Matrix : IQuestion
         {
             public void Run()
             {
-                const int size = 3;
-
-                var matrix = AssortedMethods.RandomMatrix(size, size, 0, 9);
-
-                AssortedMethods.PrintMatrix(matrix);
-
-                Rotate(matrix, size);
-                Console.WriteLine();
-                AssortedMethods.PrintMatrix(matrix);
-            }
-
-            private void Rotate(int[][] matrix, int n)
-            {
-                for (var layer = 0; layer < n / 2; ++layer)
-                {
-                    var first = layer;
-                    var last = n - 1 - layer;
-
-                    for (var i = first; i < last; ++i)
-                    {
-                        var offset = i - first;
-                        var top = matrix[first][i]; // save top
-
-                        // left -> top
-                        matrix[first][i] = matrix[last - offset][first];
-
-                        // bottom -> left
-                        matrix[last - offset][first] = matrix[last][last - offset];
-
-                        // right -> bottom
-                        matrix[last][last - offset] = matrix[i][last];
-
-                        // top -> right
-                        matrix[i][last] = top; // right <- saved top
-                    }
-                }
-            }
-        }
-
-        public class Q1_08_Zero_Matrix : IQuestion
-        {
-            public void Run()
-            {
-                const int numberOfRows = 10;
-                const int numberOfColumns = 15;
-                var matrix1 = AssortedMethods.RandomMatrix(numberOfRows, numberOfColumns, 0, 100);
+                const int numberOfRows = 5;
+                const int numberOfColumns = 5;
+                //var matrix1 = Matrix_Get2DArraySerial(numberOfRows, numberOfColumns);
+                var matrix1 = Matrix_Get2DArrayRandom(numberOfRows, numberOfColumns, 0, 9);
                 var matrix2 = CloneMatrix(matrix1);
-
-                AssortedMethods.PrintMatrix(matrix1);
-
+                Matrix_Display(matrix1, "matrix1");
                 SetZeros(matrix1);
+                Matrix_Display(matrix1, "matrix1 after SetZeros");
                 SetZeros2(matrix2);
-
+                Matrix_Display(matrix2, "matrix2  after SetZeros2");
                 Console.WriteLine();
-
-                AssortedMethods.PrintMatrix(matrix1);
-                Console.WriteLine();
-                AssortedMethods.PrintMatrix(matrix2);
-
+                Matrix_Display(matrix2, "matrix2");
                 Console.WriteLine(MatricesAreEqual(matrix1, matrix2) ? "Equal" : "Not Equal");
             }
 
@@ -487,6 +537,7 @@ namespace TWL_Algorithms_Samples.Arrays
                         {
                             row[i] = true;
                             column[j] = true;
+                            Console.WriteLine($"metrix 1: row:{i} column:{j} -Store the row and column index with value 0");
                         }
                     }
                 }
@@ -497,6 +548,7 @@ namespace TWL_Algorithms_Samples.Arrays
                     if (row[i])
                     {
                         NullifyRow(matrix, i);
+                        Matrix_Display(matrix, $"matrix1 after -NullifyRow row:{i} Store the row and column index with value 0");
                     }
                 }
 
@@ -506,21 +558,23 @@ namespace TWL_Algorithms_Samples.Arrays
                     if (column[j])
                     {
                         NullifyColumn(matrix, j);
+                        Matrix_Display(matrix, $"matrix1 after -NullifyColumn column:{j} Store the row and column index with value 0");
                     }
                 }
             }
 
             private void SetZeros2(int[][] matrix)
             {
-                var rowHasZero = false;
-                var colHasZero = false;
+                Matrix_Display(matrix, $"matrix2 ");
+                var firstRowHasZero = false;
+                var firstColumnHasZero = false;
 
                 // Check if first row has a zero
                 for (var j = 0; j < matrix[0].Length; j++)
                 {
                     if (matrix[0][j] == 0)
                     {
-                        rowHasZero = true;
+                        firstRowHasZero = true;
                         break;
                     }
                 }
@@ -530,7 +584,7 @@ namespace TWL_Algorithms_Samples.Arrays
                 {
                     if (matrix[i][0] == 0)
                     {
-                        colHasZero = true;
+                        firstColumnHasZero = true;
                         break;
                     }
                 }
@@ -548,6 +602,8 @@ namespace TWL_Algorithms_Samples.Arrays
                     }
                 }
 
+                Matrix_Display(matrix, $"matrix2 after - Check for zeros in the rest of the array");
+
                 // Nullify rows based on values in first column
                 for (var i = 1; i < matrix.Length; i++)
                 {
@@ -556,6 +612,7 @@ namespace TWL_Algorithms_Samples.Arrays
                         NullifyRow(matrix, i);
                     }
                 }
+                Matrix_Display(matrix, $"matrix2 after - Nullify rows based on values in first column");
 
                 // Nullify columns based on values in first row
                 for (var j = 1; j < matrix[0].Length; j++)
@@ -565,22 +622,23 @@ namespace TWL_Algorithms_Samples.Arrays
                         NullifyColumn(matrix, j);
                     }
                 }
-
+                Matrix_Display(matrix, $"matrix2 after - Nullify columns based on values in first row");
                 // Nullify first row
-                if (rowHasZero)
+                if (firstRowHasZero)
                 {
                     NullifyRow(matrix, 0);
                 }
 
+                Matrix_Display(matrix, $"matrix2 after - Nullify first row if firstRowHasZero in original merix");
+
                 // Nullify first column
-                if (colHasZero)
+                if (firstColumnHasZero)
                 {
                     NullifyColumn(matrix, 0);
                 }
+                Matrix_Display(matrix, $"matrix2 after - Nullify first column if firstColumnHasZero in original merix");
             }
         }
-
-        
 
         /* Another way is to do a pivoted binary search, where you first identify the problematic area, basically start of the originally
          * sorted array. */

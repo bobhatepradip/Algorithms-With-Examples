@@ -62,7 +62,7 @@ namespace TWL_Algorithms_Samples.Arrays.Strings
             //URLEncoding_Run();
             //Compression_Run();
             //new Palindrome_Permutation().Run();
-            IsRotation_Run();
+            //IsRotation_Run();
         }
 
         public string Sort(string str)
