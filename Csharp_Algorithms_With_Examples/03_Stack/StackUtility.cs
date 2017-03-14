@@ -4,14 +4,18 @@
     {
         public void Run()
         {
-            //StackAsLinkList stackAsLinkList = new StackAsLinkList();
-            ////stackAsLinkList.Create();
-            //stackAsLinkList.Push(10);
-            //stackAsLinkList.Push(20);
-            //stackAsLinkList.Push(30);
-            //stackAsLinkList.Print();
-            //stackAsLinkList.Pop();
-            //stackAsLinkList.Print();
+            //RunBasicOperations();
+        }
+
+        public void RunBasicOperations()
+        {
+            StackAsLinkList stackAsLinkList = new StackAsLinkList();
+            stackAsLinkList.Push(10);
+            stackAsLinkList.Push(20);
+            stackAsLinkList.Push(30);
+            stackAsLinkList.Print();
+            stackAsLinkList.Pop();
+            stackAsLinkList.Print();
 
             StackAsArray stackAsArray = new StackAsArray(10);
             stackAsArray.Push(10);

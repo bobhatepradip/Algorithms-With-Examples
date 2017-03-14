@@ -6,6 +6,26 @@ namespace TWL_Algorithms_Samples.Arrays.Strings
 {
     internal class StringUtility
     {
+        public static bool IsRotation(String s1, String s2)
+        {
+            var string1Length = s1.Length;
+
+            /* check that s1 and s2 are equal length and not empty */
+            if (string1Length == s2.Length && string1Length > 0)
+            {
+                /* concatenate s1 and s1 within new buffer */
+                var s1S1 = s1 + s1;
+                return IsSubstring(s1S1, s2);
+            }
+
+            return false;
+        }
+
+        public static bool IsSubstring(String big, String small)
+        {
+            return big.IndexOf(small) >= 0;
+        }
+
         public void Compression_Run()
         {
             string[] testStrings = new string[] { "abbccccccde", "abbccccccdeeee" };
@@ -17,6 +37,24 @@ namespace TWL_Algorithms_Samples.Arrays.Strings
             }
         }
 
+        public void IsRotation_Run()
+        {
+            string[][] pairs =
+            {
+                new string[]{"apple", "pleap"},
+                new string[]{"waterbottle", "erbottlewat"},
+                new string[]{"camera", "macera"}
+            };
+
+            foreach (var pair in pairs)
+            {
+                var word1 = pair[0];
+                var word2 = pair[1];
+                var isRotation = IsRotation(word1, word2);
+                Console.WriteLine("{0}, {1}: {2}", word1, word2, isRotation);
+            }
+        }
+
         public void Run()
         {
             //IsUniqueChars_Run();
@@ -24,6 +62,7 @@ namespace TWL_Algorithms_Samples.Arrays.Strings
             //URLEncoding_Run();
             //Compression_Run();
             //new Palindrome_Permutation().Run();
+            IsRotation_Run();
         }
 
         public string Sort(string str)

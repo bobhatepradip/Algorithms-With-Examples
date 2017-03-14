@@ -44,147 +44,720 @@ namespace TWL_Algorithms_Samples.LinkedList
 
         public void Run()
         {
-            //new Q2_01_Remove_Dups().Run();
+            //new Remove_Dups().Run();
             //DeleteNode_Run();
-            //new Q2_02_Return_Kth_To_Last().Run();
+            //new Return_Kth_To_Last().Run();
         }
 
-        public class Q2_02_Return_Kth_To_Last : IQuestion
+        public class Q2_04_Partition : IQuestion
         {
-            internal class Result
+            public void Run()
             {
-                public LinkedListNode Node { get; set; }
-                public int Count { get; set; }
+                /* Create linked list */
+                int[] vals = { 1, 3, 7, 5, 2, 9, 4 };
+                var head = new LinkedListNodeDoubly(vals[0], null, null);
+                var current = head;
 
-                public Result(LinkedListNode node, int count)
+                for (var i = 1; i < vals.Length; i++)
                 {
-                    Node = node;
-                    Count = count;
+                    current = new LinkedListNodeDoubly(vals[i], null, current);
                 }
+                head.PrintForward();
+
+                var head2 = head.Clone();
+                var head3 = head.Clone();
+                var head4 = head.Clone();
+
+                /* Partition */
+                var h = Partition(head, 5);
+                var h2 = Partition2(head2, 5);
+                var h3 = Partition3(head3, 5);
+                var h4 = Partition4(head4, 5);
+
+                /* Print Result */
+                h.PrintForward();
+                h2.PrintForward();
+                h3.PrintForward();
+                h4.PrintForward();
             }
 
-            private int NthToLastR1(LinkedListNode head, int n)
+            private LinkedListNode Partition(LinkedListNode node, int pivot)
             {
-                if (n == 0 || head == null)
+                LinkedListNode beforeStart = null;
+                LinkedListNode beforeEnd = null;
+                LinkedListNode afterStart = null;
+                LinkedListNode afterEnd = null;
+
+                /* Partition list */
+                while (node != null)
                 {
-                    return 0;
+                    var next = node.Next;
+                    node.Next = null;
+
+                    if ((int)node.Data < pivot)
+                    {
+                        if (beforeStart == null)
+                        {
+                            beforeStart = node;
+                            beforeEnd = beforeStart;
+                        }
+                        else
+                        {
+                            beforeEnd.Next = node;
+                            beforeEnd = node;
+                        }
+                    }
+                    else
+                    {
+                        if (afterStart == null)
+                        {
+                            afterStart = node;
+                            afterEnd = afterStart;
+                        }
+                        else
+                        {
+                            afterEnd.Next = node;
+                            afterEnd = node;
+                        }
+                    }
+                    node = next;
                 }
 
-                var k = NthToLastR1(head.Next, n) + 1;
-
-                if (k == n)
+                /* Merge before list and after list */
+                if (beforeStart == null)
                 {
-                    Console.WriteLine(n + "th to last node is " + head.Data);
+                    return afterStart;
                 }
 
-                return k;
+                beforeEnd.Next = afterStart;
+
+                return beforeStart;
             }
 
-            private LinkedListNode NthToLastR2(LinkedListNode head, int n, ref int i)
+            private LinkedListNode Partition2(LinkedListNode node, int pivot)
             {
-                if (head == null)
+                LinkedListNode beforeStart = null;
+                LinkedListNode afterStart = null;
+
+                /* Partition list */
+                while (node != null)
+                {
+                    var next = node.Next;
+
+                    if ((int)node.Data < pivot)
+                    {
+                        /* Insert node into start of before list */
+                        node.Next = beforeStart;
+                        beforeStart = node;
+                    }
+                    else
+                    {
+                        /* Insert node into front of after list */
+                        node.Next = afterStart;
+                        afterStart = node;
+                    }
+                    node = next;
+                }
+
+                /* Merge before list and after list */
+                if (beforeStart == null)
+                {
+                    return afterStart;
+                }
+
+                var head = beforeStart;
+
+                while (beforeStart.Next != null)
+                {
+                    beforeStart = beforeStart.Next;
+                }
+
+                beforeStart.Next = afterStart;
+
+                return head;
+            }
+
+            private LinkedListNode Partition3(LinkedListNode listHead, int pivot)
+            {
+                var leftList = new LinkedListNodeDoubly(); // empty temp node to not have an IF inside the loop
+                var rightList = new LinkedListNodeDoubly(pivot, null, null);
+
+                var leftListHead = leftList; // Used at the end to remove the empty node.
+                var rightListHead = rightList; // Used at the end to merge lists.
+
+                var currentNode = listHead;
+
+                while (currentNode != null)
+                {
+                    if ((int)currentNode.Data < pivot)
+                    {
+                        leftList = new LinkedListNodeDoubly(currentNode.Data, null, leftList);
+                    }
+                    else if ((int)currentNode.Data > pivot)
+                    {
+                        rightList = new LinkedListNodeDoubly(currentNode.Data, null, rightList);
+                    }
+
+                    currentNode = currentNode.Next;
+                }
+
+                leftList.Next = rightListHead;
+
+                var finalList = leftListHead.Next;
+                leftListHead.Next = null; // remove the temp node, GC will release the mem
+
+                return finalList;
+            }
+
+            private LinkedListNode Partition4(LinkedListNode listHead, int pivot)
+            {
+                LinkedListNode leftSubList = null;
+                LinkedListNode rightSubList = null;
+                LinkedListNode rightSubListHead = null;
+                LinkedListNode pivotNode = null;
+
+                var currentNode = listHead;
+
+                while (currentNode != null)
+                {
+                    var nextNode = currentNode.Next;
+                    currentNode.Next = null;
+
+                    if ((int)currentNode.Data < pivot)
+                    {
+                        leftSubList = leftSubList == null
+                            ? currentNode
+                            : leftSubList = leftSubList.Next = currentNode;
+                    }
+                    else if ((int)currentNode.Data > pivot)
+                    {
+                        rightSubList = rightSubList == null
+                            ? rightSubListHead = currentNode
+                            : rightSubList = rightSubList.Next = currentNode;
+                    }
+                    else
+                    {
+                        pivotNode = currentNode;
+                    }
+
+                    currentNode = nextNode;
+                }
+
+                pivotNode.Next = rightSubListHead;
+                rightSubListHead = pivotNode;
+                leftSubList.Next = rightSubListHead;
+
+                return listHead;
+            }
+        }
+
+        public class Q2_05_Sum_Lists : IQuestion
+        {
+            #region First Part
+
+            private LinkedListNode AddLists(LinkedListNode list1, LinkedListNode list2, int carry)
+            {
+                if (list1 == null && list2 == null && carry == 0)
                 {
                     return null;
                 }
 
-                var node = NthToLastR2(head.Next, n, ref i);
-                i = i + 1;
+                var result = new LinkedListNodeDoubly();
+                var value = carry;
 
-                if (i == n)
+                if (list1 != null)
                 {
-                    return head;
+                    value += (int)list1.Data;
+                }
+                if (list2 != null)
+                {
+                    value += (int)list2.Data;
                 }
 
-                return node;
-            }
+                result.Data = value % 10;
 
-            private Result NthToLastR3Helper(LinkedListNode head, int k)
-            {
-                if (head == null)
+                if (list1 != null || list2 != null)
                 {
-                    return new Result(null, 0);
-                }
-
-                var result = NthToLastR3Helper(head.Next, k);
-
-                if (result.Node == null)
-                {
-                    result.Count++;
-
-                    if (result.Count == k)
-                    {
-                        result.Node = head;
-                    }
+                    var more = AddLists(list1 == null ? null : list1.Next,
+                                                   list2 == null ? null : list2.Next,
+                                                   value >= 10 ? 1 : 0);
+                    result.SetNext(more);
                 }
 
                 return result;
             }
 
-            private LinkedListNode NthToLastR3(LinkedListNode head, int k)
+            private int LinkedListToInt(LinkedListNode node)
             {
-                var result = NthToLastR3Helper(head, k);
+                int value = 0;
 
-                if (result != null)
+                if (node.Next != null)
                 {
-                    return result.Node;
+                    value = 10 * LinkedListToInt(node.Next);
                 }
 
-                return null;
+                return value + (int)node.Data;
             }
 
-            private LinkedListNode NthToLast(LinkedListNode head, int n)
+            #endregion First Part
+
+            #region Followup
+
+            private LinkedListNode AddLists2(LinkedListNode list1, LinkedListNode list2)
             {
-                var p1 = head;
-                var p2 = head;
+                var len1 = Length(list1);
+                var len2 = Length(list2);
 
-                if (n <= 0) return null;
-
-                // Move p2 n nodes into the list.  Keep n1 in the same position.
-                for (var i = 0; i < n - 1; i++)
+                if (len1 < len2)
                 {
-                    if (p2 == null)
+                    list1 = PadList(list1, len2 - len1);
+                }
+                else
+                {
+                    list2 = PadList(list2, len1 - len2);
+                }
+
+                var sum = AddListsHelper(list1, list2);
+
+                if (sum.Carry == 0)
+                {
+                    return sum.Sum;
+                }
+                else
+                {
+                    var result = insertBefore(sum.Sum, sum.Carry);
+                    return result;
+                }
+            }
+
+            private PartialSum AddListsHelper(LinkedListNode list1, LinkedListNode list2)
+            {
+                if (list1 == null && list2 == null)
+                {
+                    return new PartialSum();
+                }
+
+                var sum = new PartialSum();
+                var val = 0;
+
+                if (list1 != null)
+                {
+                    sum = AddListsHelper(list1.Next, list2.Next);
+                    val = sum.Carry + (int)list1.Data + (int)list2.Data;
+                }
+
+                var fullResult = insertBefore(sum.Sum, val % 10);
+                sum.Sum = fullResult;
+                sum.Carry = val / 10;
+
+                return sum;
+            }
+
+            private LinkedListNode insertBefore(LinkedListNode list, int data)
+            {
+                var listD = (LinkedListNodeDoubly)list;
+                var node = new LinkedListNodeDoubly(data, null, null);
+
+                if (listD != null)
+                {
+                    listD.Prev = node;
+                    node.Next = listD;
+                }
+
+                return node;
+            }
+
+            private int Length(LinkedListNode l)
+            {
+                if (l == null)
+                {
+                    return 0;
+                }
+                else
+                {
+                    return 1 + Length(l.Next);
+                }
+            }
+
+            private int linkedListToInt(LinkedListNode node)
+            {
+                int value = 0;
+
+                while (node != null)
+                {
+                    value = value * 10 + (int)node.Data;
+                    node = node.Next;
+                }
+
+                return value;
+            }
+
+            private LinkedListNode PadList(LinkedListNode listNode, int padding)
+            {
+                var head = (LinkedListNodeDoubly)listNode;
+
+                for (var i = 0; i < padding; i++)
+                {
+                    var n = new LinkedListNodeDoubly(0, null, null);
+                    head.Prev = n;
+                    n.Next = head;
+                    head = n;
+                }
+
+                return head;
+            }
+
+            private class PartialSum
+            {
+                public int Carry = 0;
+                public LinkedListNode Sum = null;
+            }
+
+            #endregion Followup
+
+            public void Run()
+            {
+                #region First Part
+
+                {
+                    var lA1 = new LinkedListNodeDoubly(9, null, null);
+                    var lA2 = new LinkedListNodeDoubly(9, null, lA1);
+                    var lA3 = new LinkedListNodeDoubly(9, null, lA2);
+
+                    var lB1 = new LinkedListNodeDoubly(1, null, null);
+                    var lB2 = new LinkedListNodeDoubly(0, null, lB1);
+                    var lB3 = new LinkedListNodeDoubly(0, null, lB2);
+
+                    var list3 = AddLists(lA1, lB1, 0);
+
+                    lA1.PrintForward("");
+                    lB1.PrintForward("+");
+                    list3.PrintForward("=");
+
+                    var l1 = LinkedListToInt(lA1);
+                    var l2 = LinkedListToInt(lB1);
+                    var l3 = LinkedListToInt(list3);
+
+                    Console.Write(l1 + " + " + l2 + " = " + l3 + "\n");
+                    Console.WriteLine(l1 + " + " + l2 + " = " + (l1 + l2));
+                }
+
+                #endregion First Part
+
+                #region Followup
+
+                {
+                    var lA1 = new LinkedListNodeDoubly(3, null, null);
+                    var lA2 = new LinkedListNodeDoubly(1, null, lA1);
+                    //LinkedListNode lA3 = new LinkedListNode(5, null, lA2);
+
+                    var lB1 = new LinkedListNodeDoubly(5, null, null);
+                    var lB2 = new LinkedListNodeDoubly(9, null, lB1);
+                    var lB3 = new LinkedListNodeDoubly(1, null, lB2);
+
+                    var list3 = AddLists2(lA1, lB1);
+
+                    lA1.PrintForward("");
+                    lB1.PrintForward("+");
+                    list3.PrintForward("=");
+
+                    var l1 = linkedListToInt(lA1);
+                    var l2 = linkedListToInt(lB1);
+                    var l3 = linkedListToInt(list3);
+
+                    Console.Write(l1 + " + " + l2 + " = " + l3 + "\n");
+                    Console.WriteLine(l1 + " + " + l2 + " = " + (l1 + l2));
+                }
+
+                #endregion Followup
+            }
+        }
+
+        public class Q2_06_Palindrome : IQuestion
+        {
+            public void Run()
+            {
+                const int length = 10;
+                var nodes = new LinkedListNodeDoubly[length];
+
+                for (var i = 0; i < length; i++)
+                {
+                    nodes[i] = new LinkedListNodeDoubly(i >= length / 2 ? length - i - 1 : i, null, null);
+                }
+
+                for (var i = 0; i < length; i++)
+                {
+                    if (i < length - 1)
                     {
-                        return null; // Error: list is too small.
+                        nodes[i].SetNext(nodes[i + 1]);
                     }
 
-                    p2 = p2.Next;
+                    if (i > 0)
+                    {
+                        nodes[i].SetPrevious(nodes[i - 1]);
+                    }
                 }
-                if (p2 == null)
-                { // Another error check.
+                // nodes[length - 2].data = 9; // Uncomment to ruin palindrome
+
+                var head = nodes[0];
+                head.PrintForward();
+                Console.WriteLine(IsPalindrome(head));
+                Console.WriteLine(IsPalindrome2(head));
+            }
+
+            private bool IsPalindrome(LinkedListNode head)
+            {
+                var size = 0;
+                var node = head;
+
+                while (node != null)
+                {
+                    size++;
+                    node = node.Next;
+                }
+
+                var palindrome = IsPalindromeRecurse(head, size);
+
+                return palindrome.result;
+            }
+
+            private bool IsPalindrome2(LinkedListNode head)
+            {
+                var fast = head;
+                var slow = head;
+
+                var stack = new Stack<int>();
+
+                while (fast != null && fast.Next != null)
+                {
+                    stack.Push((int)slow.Data);
+                    slow = slow.Next;
+                    fast = fast.Next.Next;
+                }
+
+                /* Has odd number of elements, so skip the middle */
+                if (fast != null)
+                {
+                    slow = slow.Next;
+                }
+
+                while (slow != null)
+                {
+                    var top = stack.Pop();
+                    Console.WriteLine(slow.Data + " " + top);
+
+                    if (top != (int)slow.Data)
+                    {
+                        return false;
+                    }
+                    slow = slow.Next;
+                }
+
+                return true;
+            }
+
+            private Result IsPalindromeRecurse(LinkedListNode head, int length)
+            {
+                if (head == null || length == 0)
+                {
+                    return new Result(null, true);
+                }
+
+                if (length == 1)
+                {
+                    return new Result(head.Next, true);
+                }
+
+                if (length == 2)
+                {
+                    return new Result(head.Next.Next, head.Data == head.Next.Data);
+                }
+
+                var res = IsPalindromeRecurse(head.Next, length - 2);
+
+                if (!res.result || res.Node == null)
+                {
+                    return res; // Only "result" member is actually used in the call stack.
+                }
+
+                res.result = head.Data == res.Node.Data;
+                res.Node = res.Node.Next;
+
+                return res;
+            }
+
+            private class Result
+            {
+                public LinkedListNode Node;
+                public bool result;
+
+                public Result(LinkedListNode node, bool res)
+                {
+                    Node = node;
+                    result = res;
+                }
+            }
+        }
+
+        public class Q2_07_Intersection : IQuestion
+        {
+            public static LinkedListNode findIntersection(LinkedListNode list1, LinkedListNode list2)
+            {
+                if (list1 == null || list2 == null) return null;
+
+                /* Get tail and sizes. */
+                Result result1 = getTailAndSize(list1);
+                Result result2 = getTailAndSize(list2);
+
+                /* If different tail nodes, then there's no intersection. */
+                if (result1.tail != result2.tail)
+                {
                     return null;
                 }
 
-                // Move them at the same pace.  When p2 hits the end,
-                // p1 will be at the right element.
-                while (p2.Next != null)
+                /* Set pointers to the start of each linked list. */
+                LinkedListNode shorter = result1.size < result2.size ? list1 : list2;
+                LinkedListNode longer = result1.size < result2.size ? list2 : list1;
+
+                /* Advance the pointer for the longer linked list by the difference in lengths. */
+                longer = getKthNode(longer, Math.Abs(result1.size - result2.size));
+
+                /* Move both pointers until you have a collision. */
+                while (shorter != longer)
                 {
-                    p1 = p1.Next;
-                    p2 = p2.Next;
+                    shorter = shorter.Next;
+                    longer = longer.Next;
                 }
 
-                return p1;
+                /* Return either one. */
+                return longer;
+            }
+
+            public static LinkedListNode getKthNode(LinkedListNode head, int k)
+            {
+                LinkedListNode current = head;
+                while (k > 0 && current != null)
+                {
+                    current = current.Next;
+                    k--;
+                }
+                return current;
+            }
+
+            public static Result getTailAndSize(LinkedListNode list)
+            {
+                if (list == null) return null;
+
+                int size = 1;
+                LinkedListNode current = list;
+                while (current.Next != null)
+                {
+                    size++;
+                    current = current.Next;
+                }
+                return new Result(current, size);
             }
 
             public void Run()
             {
-                int[] nthCounts = new int[] { 1, 2, 9, 10, 11 };
-                nthCounts.Print("Get Positions:");
-                var head = AssortedMethods.RandomLinkedListSingly(10, 0, 10);
-                head.PrintForward("\nLink List:");
-                foreach (int nth in nthCounts)
-                {
-                    var node = NthToLastR3(head, nth);
-                    NthToLastR1(head, nth);
+                /* Create linked list */
+                int[] vals = { -1, -2, 0, 1, 2, 3, 4, 5, 6, 7, 8 };
+                LinkedListNode list1 = AssortedMethods.CreateLinkedListFromArray(vals);
 
-                    if (node != null)
+                int[] vals2 = { 12, 14, 15 };
+                LinkedListNode list2 = AssortedMethods.CreateLinkedListFromArray(vals2);
+
+                list2.Next.Next = list1.Next.Next.Next.Next;
+
+                list1.PrintForward();
+                list2.PrintForward();
+
+                LinkedListNode intersection = findIntersection(list1, list2);
+
+                intersection.PrintForward();
+            }
+
+            public class Result
+            {
+                public int size;
+                public LinkedListNode tail;
+
+                public Result(LinkedListNode tail, int size)
+                {
+                    this.tail = tail;
+                    this.size = size;
+                }
+            }
+        }
+
+        public class Q2_08_Loop_Detection : IQuestion
+        {
+            public void Run()
+            {
+                const int listLength = 10;
+                const int k = 3;
+
+                // Create linked list
+                var nodes = new LinkedListNode[listLength];
+
+                for (var i = 1; i <= listLength; i++)
+                {
+                    nodes[i - 1] = new LinkedListNodeDoubly(i, null, i - 1 > 0 ? (LinkedListNodeDoubly)nodes[i - 2] : null);
+                    Console.Write("{0} -> ", nodes[i - 1].Data);
+                }
+                Console.WriteLine();
+
+                // Create loop;
+                nodes[listLength - 1].Next = nodes[listLength - k - 1];
+                Console.WriteLine("{0} -> {1}", nodes[listLength - 1].Data, nodes[listLength - k - 1].Data);
+
+                var loop = FindBeginning(nodes[0]);
+
+                if (loop == null)
+                {
+                    Console.WriteLine("No Cycle.");
+                }
+                else
+                {
+                    Console.WriteLine(loop.Data);
+                }
+            }
+
+            private LinkedListNode FindBeginning(LinkedListNode head)
+            {
+                var slow = head;
+                var fast = head;
+
+                // Find meeting point
+                while (fast != null && fast.Next != null)
+                {
+                    slow = slow.Next;
+                    fast = fast.Next.Next;
+
+                    if (slow == fast)
                     {
-                        Console.WriteLine(nth + "th to last node is " + node.Data);
-                    }
-                    else
-                    {
-                        Console.WriteLine($"Null.  n='{nth}' is out of bounds.");
+                        break;
                     }
                 }
+
+                // Error check - there is no meeting point, and therefore no loop
+                if (fast == null || fast.Next == null)
+                {
+                    return null;
+                }
+
+                /* Move slow to Head. Keep fast at Meeting Point. Each are k steps
+                /* from the Loop Start. If they move at the same pace, they must
+                 * meet at Loop Start. */
+                slow = head;
+                while (slow != fast)
+                {
+                    slow = slow.Next;
+                    fast = fast.Next;
+                }
+
+                // Both now point to the start of the loop.
+                return fast;
             }
         }
 
@@ -420,6 +993,192 @@ namespace TWL_Algorithms_Samples.LinkedList
                     _tapC++;
                 }
             }
+        }
+
+        public class Return_Kth_To_Last : IQuestion
+        {
+            public void Run()
+            {
+                //int[] nthCounts = new int[] { 1, 2, 9, 10, 11,12 };
+                int[] nthCounts = new int[] { 1 };
+                nthCounts.Print("Get Positions:");
+                var head = AssortedMethods.RandomLinkedListSingly(10, 0, 10);
+                head.PrintForward("\nLink List:");
+                var node = head;
+                foreach (int nth in nthCounts)
+                {
+                    int i = 0;
+                    NthToLastR1(head, nth);
+                    node = NthToLastR2(head, nth, ref i);
+                    node = NthToLastR3(head, nth);
+
+                    if (node != null)
+                    {
+                        Console.WriteLine("***" + nth + "th to last node is " + node.Data);
+                    }
+                    else
+                    {
+                        Console.WriteLine($"***Null.  n='{nth}' is out of bounds.");
+                    }
+
+                    Console.WriteLine("-----------------------------------------------------------");
+                }
+            }
+
+            private LinkedListNode NthToLast(LinkedListNode head, int n)
+            {
+                var p1 = head;
+                var p2 = head;
+
+                if (n <= 0) return null;
+
+                // Move p2 n nodes into the list.  Keep n1 in the same position.
+                for (var i = 0; i < n - 1; i++)
+                {
+                    if (p2 == null)
+                    {
+                        return null; // Error: list is too small.
+                    }
+
+                    p2 = p2.Next;
+                }
+                if (p2 == null)
+                { // Another error check.
+                    return null;
+                }
+
+                // Move them at the same pace.  When p2 hits the end,
+                // p1 will be at the right element.
+                while (p2.Next != null)
+                {
+                    p1 = p1.Next;
+                    p2 = p2.Next;
+                }
+
+                return p1;
+            }
+
+            private int NthToLastR1(LinkedListNode head, int n)
+            {
+                if (head != null)
+                {
+                    head.PrintForward($"***n='{n}'");
+                }
+
+                if (n == 0 || head == null)
+                {
+                    return 0;
+                }
+
+                var k = NthToLastR1(head.Next, n) + 1;
+
+                if (k == n)
+                {
+                    Console.WriteLine(n + "th to last node is " + head.Data);
+                }
+                //else
+                //{
+                //    Console.WriteLine($"Null.  n='{n}' is out of bounds.");
+                //}
+                Console.WriteLine($"n='{n}' k='{k}'");
+                return k;
+            }
+
+            private LinkedListNode NthToLastR2(LinkedListNode head, int n, ref int i)
+            {
+                if (head == null)
+                {
+                    return null;
+                }
+
+                var node = NthToLastR2(head.Next, n, ref i);
+                i = i + 1;
+
+                if (i == n)
+                {
+                    return head;
+                }
+
+                return node;
+            }
+
+            private LinkedListNode NthToLastR3(LinkedListNode head, int k)
+            {
+                head.PrintForward("@");
+                var result = NthToLastR3Helper(head, k);
+
+                if (result != null)
+                {
+                    return result.Node;
+                }
+
+                return null;
+            }
+
+            //    if (k == n)
+            //    {
+            //        Console.WriteLine(n + "th to last node is " + head.Data);
+            //    }
+            //    //else
+            //    //{
+            //    //    Console.WriteLine($"Null.  n='{n}' is out of bounds.");
+            //    //}
+            //    Console.WriteLine($"n='{n}' k='{k}'");
+            //    return k;
+            //}
+            private Result NthToLastR3Helper(LinkedListNode head, int k)
+            {
+                if (head == null)
+                {
+                    return new Result(null, 0);
+                }
+                else
+                {
+                    head.PrintForward("@**");
+                }
+
+                var result = NthToLastR3Helper(head.Next, k);
+
+                head.PrintForward($"@*** k='{k}' result.Count='{result.Count}' result.Node='{result.Node}'");
+
+                if (result.Node == null)
+                {
+                    result.Count++;
+
+                    if (result.Count == k)
+                    {
+                        result.Node = head;
+                    }
+                }
+
+                return result;
+            }
+
+            internal class Result
+            {
+                public Result(LinkedListNode node, int count)
+                {
+                    Node = node;
+                    Count = count;
+                }
+
+                public int Count { get; set; }
+                public LinkedListNode Node { get; set; }
+            }
+
+            //private LinkedListNode NthToLastR1(LinkedListNode head, int n)
+            //{
+            //    if (head != null)
+            //    {
+            //        head.PrintForward($"***n='{n}'");
+            //    }
+
+            //    if (n == 0 || head == null)
+            //    {
+            //        return head;
+            //    }
+
+            //    var k = NthToLastR1(head.Next, n) + 1;
         }
     }
 }

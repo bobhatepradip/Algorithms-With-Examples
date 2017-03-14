@@ -56,6 +56,7 @@ namespace TWL_Algorithms_Samples.Arrays
             //new Peaks_and_Valleys().Run();
             //this.Merge_Run();
             //Search_in_Rotated_Array_Run();
+            //new OneEditChecker().Run();
         }
 
         /// <summary>
@@ -128,9 +129,6 @@ namespace TWL_Algorithms_Samples.Arrays
             }
             return -1;
         }
-
-        /* Another way is to do a pivoted binary search, where you first identify the problematic area, basically start of the originally
-         * sorted array. */
 
         public void Search_in_Rotated_Array_Run()
         {
@@ -226,5 +224,365 @@ namespace TWL_Algorithms_Samples.Arrays
                 }
             }
         }
+
+        public class OneEditChecker : IQuestion
+        {
+            public static bool OneEditAway_OneIterationWtihSerparateFunctions(String first, String second)
+            {
+                if (first.Length == second.Length)
+                {
+                    return OneEditReplace(first, second);
+                }
+                else if (first.Length + 1 == second.Length)
+                {
+                    return OneEditInsert(first, second);
+                }
+                else if (first.Length - 1 == second.Length)
+                {
+                    return OneEditInsert(second, first);
+                }
+                return false;
+            }
+
+            public static bool OneEditAway_OneIteration(String first, String second)
+            {
+                /* Length checks. */
+                if (Math.Abs(first.Length - second.Length) > 1)
+                {
+                    return false;
+                }
+
+                /* Get shorter and longer string.*/
+                String shorterString = first.Length < second.Length ? first : second;
+                String longerString = first.Length < second.Length ? second : first;
+
+                int shorterStringIndex = 0;
+                int longerStringIndex = 0;
+                bool foundDifference = false;
+                while (longerStringIndex < longerString.Length && shorterStringIndex < shorterString.Length)
+                {
+                    if (shorterString[shorterStringIndex] != longerString[longerStringIndex])
+                    {
+                        /* Ensure that this is the first difference found.*/
+                        if (foundDifference)
+                        {
+                            return false;
+                        }
+                        foundDifference = true;
+                        if (shorterString.Length == longerString.Length)
+                        { // On replace, move shorter pointer
+                            shorterStringIndex++;
+                        }
+                    }
+                    else
+                    {
+                        shorterStringIndex++; // If matching, move shorter pointer
+                    }
+                    longerStringIndex++; // Always move pointer for longer string
+                }
+                return true;
+            }
+
+            public static bool OneEditInsert(String s1, String s2)
+            {
+                int index1 = 0;
+                int index2 = 0;
+                while (index2 < s2.Length && index1 < s1.Length)
+                {
+                    if (s1[index1] != s2[index2])
+                    {
+                        if (index1 != index2)
+                        {
+                            return false;
+                        }
+                        index2++;
+                    }
+                    else
+                    {
+                        index1++;
+                        index2++;
+                    }
+                }
+                return true;
+            }
+
+            public static bool OneEditReplace(String s1, String s2)
+            {
+                bool foundDifference = false;
+                for (int i = 0; i < s1.Length; i++)
+                {
+                    if (s1[i] != s2[i])
+                    {
+                        if (foundDifference)
+                        {
+                            return false;
+                        }
+
+                        foundDifference = true;
+                    }
+                }
+                return true;
+            }
+
+            /* Check if you can insert a character into s1 to make s2. */
+
+            public void Run()
+            {
+                string[][] stringPairs =             {
+                new string[]{ "pse", "pale"},
+                new string[]{ "pale", "zpale"},//1 insert
+                new string[]{ "palez", "pale"},//1 insert
+                new string[]{ "pale", "ale"},//1 edit
+                new string[]{ "pal", "pale"},//1 edit
+                new string[]{ "pale", "zzpale"},//2 insert
+                 new string[]{ "palezz", "pale"},//2 insert
+                 new string[]{ "pale", "zpalz"},//1 insert and 1 edit
+
+            };
+                foreach (string[] stringPair in stringPairs)
+                {
+                    var a = stringPair[0];
+                    var b = stringPair[1];
+                    bool isOneEdit = OneEditAway_OneIteration(a, b);
+                    Console.WriteLine("OneEditAway: {0}, {1}: {2}", a, b, isOneEdit);
+
+                    bool isOneEdit2 = OneEditAway_OneIteration(a, b);
+                    Console.WriteLine("stringPair[0]: {0}, {1}: {2}", a, b, isOneEdit2);
+                    Console.WriteLine("----------------------------------------------------");
+                }
+            }
+        }
+
+        public class Q1_07_Rotate_Matrix : IQuestion
+        {
+            public void Run()
+            {
+                const int size = 3;
+
+                var matrix = AssortedMethods.RandomMatrix(size, size, 0, 9);
+
+                AssortedMethods.PrintMatrix(matrix);
+
+                Rotate(matrix, size);
+                Console.WriteLine();
+                AssortedMethods.PrintMatrix(matrix);
+            }
+
+            private void Rotate(int[][] matrix, int n)
+            {
+                for (var layer = 0; layer < n / 2; ++layer)
+                {
+                    var first = layer;
+                    var last = n - 1 - layer;
+
+                    for (var i = first; i < last; ++i)
+                    {
+                        var offset = i - first;
+                        var top = matrix[first][i]; // save top
+
+                        // left -> top
+                        matrix[first][i] = matrix[last - offset][first];
+
+                        // bottom -> left
+                        matrix[last - offset][first] = matrix[last][last - offset];
+
+                        // right -> bottom
+                        matrix[last][last - offset] = matrix[i][last];
+
+                        // top -> right
+                        matrix[i][last] = top; // right <- saved top
+                    }
+                }
+            }
+        }
+
+        public class Q1_08_Zero_Matrix : IQuestion
+        {
+            public void Run()
+            {
+                const int numberOfRows = 10;
+                const int numberOfColumns = 15;
+                var matrix1 = AssortedMethods.RandomMatrix(numberOfRows, numberOfColumns, 0, 100);
+                var matrix2 = CloneMatrix(matrix1);
+
+                AssortedMethods.PrintMatrix(matrix1);
+
+                SetZeros(matrix1);
+                SetZeros2(matrix2);
+
+                Console.WriteLine();
+
+                AssortedMethods.PrintMatrix(matrix1);
+                Console.WriteLine();
+                AssortedMethods.PrintMatrix(matrix2);
+
+                Console.WriteLine(MatricesAreEqual(matrix1, matrix2) ? "Equal" : "Not Equal");
+            }
+
+            private int[][] CloneMatrix(int[][] matrix)
+            {
+                var clone = new int[matrix.Length][];
+
+                for (var i = 0; i < matrix.Length; i++)
+                {
+                    clone[i] = new int[matrix[0].Length];
+
+                    for (var j = 0; j < matrix[0].Length; j++)
+                    {
+                        clone[i][j] = matrix[i][j];
+                    }
+                }
+
+                return clone;
+            }
+
+            private bool MatricesAreEqual(int[][] matrix1, int[][] matrix2)
+            {
+                if (matrix1.Length != matrix2.Length || matrix1[0].Length != matrix2[0].Length)
+                {
+                    return false;
+                }
+
+                for (var k = 0; k < matrix1.Length; k++)
+                {
+                    for (var j = 0; j < matrix1[0].Length; j++)
+                    {
+                        if (matrix1[k][j] != matrix2[k][j])
+                        {
+                            return false;
+                        }
+                    }
+                }
+
+                return true;
+            }
+
+            private void NullifyColumn(int[][] matrix, int col)
+            {
+                for (var i = 0; i < matrix.Length; i++)
+                {
+                    matrix[i][col] = 0;
+                }
+            }
+
+            private void NullifyRow(int[][] matrix, int row)
+            {
+                for (var j = 0; j < matrix[0].Length; j++)
+                {
+                    matrix[row][j] = 0;
+                }
+            }
+
+            private void SetZeros(int[][] matrix)
+            {
+                var row = new bool[matrix.Length];
+                var column = new bool[matrix[0].Length];
+
+                // Store the row and column index with value 0
+                for (var i = 0; i < matrix.Length; i++)
+                {
+                    for (var j = 0; j < matrix[0].Length; j++)
+                    {
+                        if (matrix[i][j] == 0)
+                        {
+                            row[i] = true;
+                            column[j] = true;
+                        }
+                    }
+                }
+
+                // Nullify rows
+                for (var i = 0; i < row.Length; i++)
+                {
+                    if (row[i])
+                    {
+                        NullifyRow(matrix, i);
+                    }
+                }
+
+                // Nullify columns
+                for (var j = 0; j < column.Length; j++)
+                {
+                    if (column[j])
+                    {
+                        NullifyColumn(matrix, j);
+                    }
+                }
+            }
+
+            private void SetZeros2(int[][] matrix)
+            {
+                var rowHasZero = false;
+                var colHasZero = false;
+
+                // Check if first row has a zero
+                for (var j = 0; j < matrix[0].Length; j++)
+                {
+                    if (matrix[0][j] == 0)
+                    {
+                        rowHasZero = true;
+                        break;
+                    }
+                }
+
+                // Check if first column has a zero
+                for (var i = 0; i < matrix.Length; i++)
+                {
+                    if (matrix[i][0] == 0)
+                    {
+                        colHasZero = true;
+                        break;
+                    }
+                }
+
+                // Check for zeros in the rest of the array
+                for (var i = 1; i < matrix.Length; i++)
+                {
+                    for (var j = 1; j < matrix[0].Length; j++)
+                    {
+                        if (matrix[i][j] == 0)
+                        {
+                            matrix[i][0] = 0;
+                            matrix[0][j] = 0;
+                        }
+                    }
+                }
+
+                // Nullify rows based on values in first column
+                for (var i = 1; i < matrix.Length; i++)
+                {
+                    if (matrix[i][0] == 0)
+                    {
+                        NullifyRow(matrix, i);
+                    }
+                }
+
+                // Nullify columns based on values in first row
+                for (var j = 1; j < matrix[0].Length; j++)
+                {
+                    if (matrix[0][j] == 0)
+                    {
+                        NullifyColumn(matrix, j);
+                    }
+                }
+
+                // Nullify first row
+                if (rowHasZero)
+                {
+                    NullifyRow(matrix, 0);
+                }
+
+                // Nullify first column
+                if (colHasZero)
+                {
+                    NullifyColumn(matrix, 0);
+                }
+            }
+        }
+
+        
+
+        /* Another way is to do a pivoted binary search, where you first identify the problematic area, basically start of the originally
+         * sorted array. */
     }
 }
