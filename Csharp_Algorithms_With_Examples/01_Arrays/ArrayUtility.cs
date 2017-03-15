@@ -111,7 +111,7 @@ namespace TWL_Algorithms_Samples.Arrays
             //Search_in_Rotated_Array_Run();
             //new OneEditChecker().Run();
             //new MatrixRotation().Run();
-            new Zero_Matrix().Run();
+            //new Zero_Matrix().Run();
         }
 
         /// <summary>

@@ -47,6 +47,10 @@ namespace TWL_Algorithms_Samples.LinkedList
             //new Remove_Dups().Run();
             //DeleteNode_Run();
             //new Return_Kth_To_Last().Run();
+            //new Sum_Lists_Numbers().Run();
+            //new Q2_04_Partition().Run();
+            //new CheckIfPalindrome().Run();
+            new Q2_07_Intersection().Run();
         }
 
         public class Q2_04_Partition : IQuestion
@@ -62,7 +66,7 @@ namespace TWL_Algorithms_Samples.LinkedList
                 {
                     current = new LinkedListNodeDoubly(vals[i], null, current);
                 }
-                head.PrintForward();
+                head.PrintForward("Original:");
 
                 var head2 = head.Clone();
                 var head3 = head.Clone();
@@ -75,10 +79,10 @@ namespace TWL_Algorithms_Samples.LinkedList
                 var h4 = Partition4(head4, 5);
 
                 /* Print Result */
-                h.PrintForward();
-                h2.PrintForward();
-                h3.PrintForward();
-                h4.PrintForward();
+                h.PrintForward("Partition:");
+                h2.PrintForward("Partition2");
+                h3.PrintForward("Partition3");
+                h4.PrintForward("Partition4");
             }
 
             private LinkedListNode Partition(LinkedListNode node, int pivot)
@@ -251,7 +255,7 @@ namespace TWL_Algorithms_Samples.LinkedList
             }
         }
 
-        public class Q2_05_Sum_Lists : IQuestion
+        public class Sum_Lists_Numbers : IQuestion
         {
             #region First Part
 
@@ -473,7 +477,7 @@ namespace TWL_Algorithms_Samples.LinkedList
             }
         }
 
-        public class Q2_06_Palindrome : IQuestion
+        public class CheckIfPalindrome : IQuestion
         {
             public void Run()
             {
@@ -500,9 +504,9 @@ namespace TWL_Algorithms_Samples.LinkedList
                 // nodes[length - 2].data = 9; // Uncomment to ruin palindrome
 
                 var head = nodes[0];
-                head.PrintForward();
-                Console.WriteLine(IsPalindrome(head));
-                Console.WriteLine(IsPalindrome2(head));
+                head.PrintForward("Original:");
+                Console.WriteLine("\nIsPalindrome: " + IsPalindrome(head));
+                Console.WriteLine("\nIsPalindrome2: " + IsPalindrome_UsingStack(head));
             }
 
             private bool IsPalindrome(LinkedListNode head)
@@ -521,7 +525,7 @@ namespace TWL_Algorithms_Samples.LinkedList
                 return palindrome.result;
             }
 
-            private bool IsPalindrome2(LinkedListNode head)
+            private bool IsPalindrome_UsingStack(LinkedListNode head)
             {
                 var fast = head;
                 var slow = head;
@@ -532,15 +536,17 @@ namespace TWL_Algorithms_Samples.LinkedList
                 {
                     stack.Push((int)slow.Data);
                     slow = slow.Next;
+                    //traverse with two elements so that stack will have half values
                     fast = fast.Next.Next;
                 }
-
+                
                 /* Has odd number of elements, so skip the middle */
                 if (fast != null)
                 {
                     slow = slow.Next;
                 }
 
+                //Traverse other half stack and compare elements
                 while (slow != null)
                 {
                     var top = stack.Pop();
@@ -556,33 +562,44 @@ namespace TWL_Algorithms_Samples.LinkedList
                 return true;
             }
 
+            /// <summary>
+            /// ****NW:Compare first vs last
+            /// </summary>
+            /// <param name="head"></param>
+            /// <param name="length"></param>
+            /// <returns></returns>
             private Result IsPalindromeRecurse(LinkedListNode head, int length)
             {
                 if (head == null || length == 0)
                 {
+                    Console.WriteLine($"length == 0 'true'");
                     return new Result(null, true);
                 }
 
                 if (length == 1)
                 {
+                    Console.WriteLine($"length == 1 'true'");
                     return new Result(head.Next, true);
                 }
 
                 if (length == 2)
                 {
+                    Console.WriteLine($"length == 2 head.Data{head.Data} == head.Next.Data {head.Next.Data}");
                     return new Result(head.Next.Next, head.Data == head.Next.Data);
                 }
 
+                //Compare first vs last recurresively
                 var res = IsPalindromeRecurse(head.Next, length - 2);
-
+                //Console.WriteLine($"*res.result:{res.result}");
                 if (!res.result || res.Node == null)
                 {
+                    Console.WriteLine($"*res:{res}");
                     return res; // Only "result" member is actually used in the call stack.
                 }
 
                 res.result = head.Data == res.Node.Data;
                 res.Node = res.Node.Next;
-
+                Console.WriteLine($"$res.Node.Data:{res.Node.Data}");
                 return res;
             }
 
@@ -663,18 +680,15 @@ namespace TWL_Algorithms_Samples.LinkedList
                 /* Create linked list */
                 int[] vals = { -1, -2, 0, 1, 2, 3, 4, 5, 6, 7, 8 };
                 LinkedListNode list1 = AssortedMethods.CreateLinkedListFromArray(vals);
-
+                list1.PrintForward("list1");
                 int[] vals2 = { 12, 14, 15 };
                 LinkedListNode list2 = AssortedMethods.CreateLinkedListFromArray(vals2);
-
-                list2.Next.Next = list1.Next.Next.Next.Next;
-
-                list1.PrintForward();
-                list2.PrintForward();
-
+                list2.PrintForward("list2");
+                //adding some common elements
+                list2.Next.Next = list1.Next.Next.Next.Next;                
+                list2.PrintForward("list2");
                 LinkedListNode intersection = findIntersection(list1, list2);
-
-                intersection.PrintForward();
+                intersection.PrintForward("intersection");
             }
 
             public class Result
