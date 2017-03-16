@@ -1,4 +1,6 @@
-﻿using TWL_Algorithms_Samples;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using TWL_Algorithms_Samples.Arrays;
 
 namespace TWL_Algorithms_Samples.SortingAndSearching
@@ -7,8 +9,8 @@ namespace TWL_Algorithms_Samples.SortingAndSearching
     {
         public void Run()
         {
-
         }
+
         public class Q10_10_Rank_from_Stream : IQuestion
         {
             private static RankNode root = null;
@@ -214,7 +216,7 @@ namespace TWL_Algorithms_Samples.SortingAndSearching
                     }
                 }
 
-                AssortedMethods.PrintMatrix(matrix);
+                ArrayUtility.Matrix_Display(matrix);
 
                 for (int i = 0; i < M; i++)
                 {
@@ -236,7 +238,7 @@ namespace TWL_Algorithms_Samples.SortingAndSearching
                             new [] {48, 55, 109, 140, 150}
             };
 
-                AssortedMethods.PrintMatrix(matrix);
+                ArrayUtility.Matrix_Display(matrix);
 
                 int m = matrix.Length;
                 int n = matrix[0].Length;
@@ -330,6 +332,7 @@ namespace TWL_Algorithms_Samples.SortingAndSearching
 
             #endregion Solution B
         }
+
         public class Q10_08_Find_Duplicates : IQuestion
         {
             public class BitSet
@@ -563,6 +566,7 @@ namespace TWL_Algorithms_Samples.SortingAndSearching
                 Console.WriteLine(Search2(stringList, "duck"));
             }
         }
+
         public class Q10_02_Group_Anagrams : IQuestion
         {
             private class AnagramComparator : IComparer

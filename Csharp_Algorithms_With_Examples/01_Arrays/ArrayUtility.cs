@@ -2,7 +2,7 @@
 
 namespace TWL_Algorithms_Samples.Arrays
 {
-    internal class ArrayUtility
+    public class ArrayUtility
     {
         public static void Matrix_Display(int[][] matrix, string header = "")
         {
@@ -450,6 +450,7 @@ namespace TWL_Algorithms_Samples.Arrays
                 }
             }
         }
+
         public class Zero_Matrix : IQuestion
         {
             public void Run()

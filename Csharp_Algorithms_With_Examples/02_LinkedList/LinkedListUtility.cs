@@ -506,11 +506,11 @@ namespace TWL_Algorithms_Samples.LinkedList
 
                 var head = nodes[0];
                 head.PrintForward("Original:");
-                Console.WriteLine("\nIsPalindrome: " + IsPalindrome(head));
+                Console.WriteLine("\nIsPalindrome: " + IsPalindrome_UsingRecursionMain(head));
                 Console.WriteLine("\nIsPalindrome2: " + IsPalindrome_UsingStack(head));
             }
 
-            private bool IsPalindrome(LinkedListNode head)
+            private bool IsPalindrome_UsingRecursionMain(LinkedListNode head)
             {
                 var size = 0;
                 var node = head;
@@ -521,7 +521,7 @@ namespace TWL_Algorithms_Samples.LinkedList
                     node = node.Next;
                 }
 
-                var palindrome = IsPalindromeRecurse(head, size);
+                var palindrome = IsPalindrome_UsingRecursion(head, size);
 
                 return palindrome.result;
             }
@@ -569,7 +569,7 @@ namespace TWL_Algorithms_Samples.LinkedList
             /// <param name="head"></param>
             /// <param name="length"></param>
             /// <returns></returns>
-            private Result IsPalindromeRecurse(LinkedListNode head, int length)
+            private Result IsPalindrome_UsingRecursion(LinkedListNode head, int length)
             {
                 if (head == null || length == 0)
                 {
@@ -590,7 +590,7 @@ namespace TWL_Algorithms_Samples.LinkedList
                 }
 
                 //Compare first vs last recurresively
-                var res = IsPalindromeRecurse(head.Next, length - 2);
+                var res = IsPalindrome_UsingRecursion(head.Next, length - 2);
                 //Console.WriteLine($"*res.result:{res.result}");
                 if (!res.result || res.Node == null)
                 {
@@ -751,7 +751,6 @@ namespace TWL_Algorithms_Samples.LinkedList
                 var slow = head;
                 var fast = head;
 
-
                 // Find meeting point
                 // slow will reach to half of link list
                 while (fast != null && fast.Next != null)
@@ -770,7 +769,7 @@ namespace TWL_Algorithms_Samples.LinkedList
                 }
 
                 //slow.PrintForward("@slow");
-                
+
                 // Error check - there is no meeting point, and therefore no loop
                 if (fast == null || fast.Next == null)
                 {
