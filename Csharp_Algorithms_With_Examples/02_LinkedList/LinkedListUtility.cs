@@ -50,7 +50,8 @@ namespace TWL_Algorithms_Samples.LinkedList
             //new Sum_Lists_Numbers().Run();
             //new Q2_04_Partition().Run();
             //new CheckIfPalindrome().Run();
-            new Q2_07_Intersection().Run();
+            //new Q2_07_Intersection().Run();
+            new Loop_Detection().Run();
         }
 
         public class Q2_04_Partition : IQuestion
@@ -539,7 +540,7 @@ namespace TWL_Algorithms_Samples.LinkedList
                     //traverse with two elements so that stack will have half values
                     fast = fast.Next.Next;
                 }
-                
+
                 /* Has odd number of elements, so skip the middle */
                 if (fast != null)
                 {
@@ -685,7 +686,7 @@ namespace TWL_Algorithms_Samples.LinkedList
                 LinkedListNode list2 = AssortedMethods.CreateLinkedListFromArray(vals2);
                 list2.PrintForward("list2");
                 //adding some common elements
-                list2.Next.Next = list1.Next.Next.Next.Next;                
+                list2.Next.Next = list1.Next.Next.Next.Next;
                 list2.PrintForward("list2");
                 LinkedListNode intersection = findIntersection(list1, list2);
                 intersection.PrintForward("intersection");
@@ -704,7 +705,7 @@ namespace TWL_Algorithms_Samples.LinkedList
             }
         }
 
-        public class Q2_08_Loop_Detection : IQuestion
+        public class Loop_Detection : IQuestion
         {
             public void Run()
             {
@@ -719,11 +720,19 @@ namespace TWL_Algorithms_Samples.LinkedList
                     nodes[i - 1] = new LinkedListNodeDoubly(i, null, i - 1 > 0 ? (LinkedListNodeDoubly)nodes[i - 2] : null);
                     Console.Write("{0} -> ", nodes[i - 1].Data);
                 }
-                Console.WriteLine();
-
                 // Create loop;
+                Console.WriteLine($"\n Create loop: nodes[listLength - 1].Next = nodes[listLength - k - 1]");
+                nodes[listLength - k - 1].PrintForward("nodes[listLength - k - 1]");
+                nodes[listLength - 1].PrintForward("nodes[listLength - 1]");
+                ////nodes[listLength - 1].Next.PrintForward("nodes[listLength - 1].Next");
+
                 nodes[listLength - 1].Next = nodes[listLength - k - 1];
-                Console.WriteLine("{0} -> {1}", nodes[listLength - 1].Data, nodes[listLength - k - 1].Data);
+                Console.WriteLine("\n{0} -> {1}", nodes[listLength - 1].Data, nodes[listLength - k - 1].Data);
+                Console.WriteLine("Nodes:\n");
+                //foreach (var node in nodes)
+                //{
+                //    node.PrintForward();
+                //}
 
                 var loop = FindBeginning(nodes[0]);
 
@@ -742,30 +751,50 @@ namespace TWL_Algorithms_Samples.LinkedList
                 var slow = head;
                 var fast = head;
 
+
                 // Find meeting point
+                // slow will reach to half of link list
                 while (fast != null && fast.Next != null)
                 {
+                    Console.WriteLine($"*slow.Data{slow.Data}");
+                    Console.WriteLine($"*fast.Data{fast.Data}");
+
                     slow = slow.Next;
                     fast = fast.Next.Next;
 
                     if (slow == fast)
                     {
+                        Console.WriteLine($"slow == fast");
                         break;
                     }
                 }
 
+                //slow.PrintForward("@slow");
+                
                 // Error check - there is no meeting point, and therefore no loop
                 if (fast == null || fast.Next == null)
                 {
+                    Console.WriteLine("@fast == null || fast.Next == null");
                     return null;
+                }
+                else
+                {
+                    Console.WriteLine("@fast!=null");
+                    //fast.PrintForward("@fast");
                 }
 
                 /* Move slow to Head. Keep fast at Meeting Point. Each are k steps
                 /* from the Loop Start. If they move at the same pace, they must
                  * meet at Loop Start. */
                 slow = head;
+                //slow.PrintForward("*slow");
+                Console.WriteLine("\n\n*slow!=null");
+                //fast.PrintForward("*fast");
+                Console.WriteLine("*fast!=null");
                 while (slow != fast)
                 {
+                    Console.WriteLine($"*slow.Data{slow.Data}");
+                    Console.WriteLine($"*fast.Data{fast.Data}");
                     slow = slow.Next;
                     fast = fast.Next;
                 }

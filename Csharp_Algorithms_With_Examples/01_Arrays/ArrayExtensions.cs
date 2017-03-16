@@ -30,9 +30,9 @@ namespace TWL_Algorithms_Samples.Arrays
         public static void Print(this object[] array)
         {
             string printString = "{";
-            foreach (object arrayElemnt in array)
+            foreach (object arrayElement in array)
             {
-                printString = printString + "'" + arrayElemnt + "',";
+                printString = printString + "'" + arrayElement + "',";
             }
             printString = printString + "}";
             Console.WriteLine(printString);

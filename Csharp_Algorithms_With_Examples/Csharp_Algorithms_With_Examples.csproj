@@ -49,6 +49,8 @@
     <Compile Include="03_Stack\StackAsLinkList.cs" />
     <Compile Include="03_Stack\StackAsArray.cs" />
     <Compile Include="03_Stack\Stack.cs" />
+    <Compile Include="05_BitManipulation\BitManipulatorUtility.cs" />
+    <Compile Include="10_SortingAndSearching\SortingAndSearchingUtility.cs" />
     <Compile Include="CharUtility.cs" />
     <Compile Include="02_LinkedList\LinkedListUtility.cs" />
     <Compile Include="05_BitManipulation\BitVictor.cs" />
