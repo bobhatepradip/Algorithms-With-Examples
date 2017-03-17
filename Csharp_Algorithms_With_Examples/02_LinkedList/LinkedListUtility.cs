@@ -51,7 +51,7 @@ namespace TWL_Algorithms_Samples.LinkedList
             //new Q2_04_Partition().Run();
             //new CheckIfPalindrome().Run();
             //new Q2_07_Intersection().Run();
-            new Loop_Detection().Run();
+            //new Loop_Detection().Run();
         }
 
         public class Q2_04_Partition : IQuestion

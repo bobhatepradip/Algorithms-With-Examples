@@ -38,6 +38,11 @@ namespace TWL_Algorithms_Samples.Stack
             return (CurrentIndex == -1);
         }
 
+        public override object Peek()
+        {
+            return IsEmpty() ? null : array[CurrentIndex];
+        }
+
         public override object Pop()
         {
             var last = array[CurrentIndex];

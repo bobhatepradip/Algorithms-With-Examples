@@ -45,10 +45,14 @@
   <ItemGroup>
     <Compile Include="01_Arrays\ArrayUtility.cs" />
     <Compile Include="01_Arrays\ArrayExtensions.cs" />
-    <Compile Include="03_Stack\StackUtility.cs" />
-    <Compile Include="03_Stack\StackAsLinkList.cs" />
-    <Compile Include="03_Stack\StackAsArray.cs" />
-    <Compile Include="03_Stack\Stack.cs" />
+    <Compile Include="03_02_Queue\QueueUtility.cs" />
+    <Compile Include="03_02_Queue\QueueAsArray.cs" />
+    <Compile Include="03_02_Queue\QueueAsLinkList.cs" />
+    <Compile Include="03_02_Queue\Queue.cs" />
+    <Compile Include="03_01_Stack\StackUtility.cs" />
+    <Compile Include="03_01_Stack\StackAsLinkList.cs" />
+    <Compile Include="03_01_Stack\StackAsArray.cs" />
+    <Compile Include="03_01_Stack\Stack.cs" />
     <Compile Include="05_BitManipulation\BitManipulatorUtility.cs" />
     <Compile Include="10_SortingAndSearching\SortingAndSearchingUtility.cs" />
     <Compile Include="CharUtility.cs" />

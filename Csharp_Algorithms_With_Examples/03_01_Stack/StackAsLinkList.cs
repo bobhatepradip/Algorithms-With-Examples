@@ -24,18 +24,23 @@ namespace TWL_Algorithms_Samples.Stack
 
         public override bool IsEmpty()
         {
-            return (linkListhead == null);
+            return (linkListhead == null || linkListhead.Next == null);
+        }
+
+        public override object Peek()
+        {
+            return IsEmpty() ? null : linkListhead.Next.Data;
         }
 
         public override object Pop()
         {
-            var temp = linkListhead.Data;
+            var deletedNodeData = linkListhead.Data;
             if (linkListhead.Next != null)
             {
                 linkListhead.Next = (LinkedListNodeSingly)linkListhead.Next.Next;
-                Console.WriteLine($"Poped:{temp}");
+                Console.WriteLine($"Poped:{deletedNodeData}");
             }
-            return temp;
+            return deletedNodeData;
         }
 
         public override void Print()
@@ -45,9 +50,7 @@ namespace TWL_Algorithms_Samples.Stack
 
         public override void Push(object obj)
         {
-            var temp = linkListhead;
             LinkedListNodeSingly newLinkListNode = new LinkedListNodeSingly(obj);
-            //newLinkListNode.PrintForward();
             if (linkListhead.Next != null)
             {
                 newLinkListNode.SetNext(linkListhead.Next);
