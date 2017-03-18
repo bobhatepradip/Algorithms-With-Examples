@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text;
 using TWL_Algorithms_Samples.BitManipulation;
+using TWL_Algorithms_Samples.Char;
 
 namespace TWL_Algorithms_Samples.Arrays.Strings
 {
@@ -28,15 +29,55 @@ namespace TWL_Algorithms_Samples.Arrays.Strings
 
         public void Compression_Run()
         {
-            string[] testStrings = new string[] { "abbccccccde", "abbccccccdeeee" };
-            foreach (var original in testStrings)
-            {
-                var compressed = Compression(original);
-                Console.WriteLine("Original  : {0}", original);
-                Console.WriteLine("Compressed: {0}", compressed);
-            }
         }
 
+        /// <summary>
+        /// considering only alphanumeric characters and ignoring cases
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        public bool isPalindrome_ConsiderOnlyAlphanumericCharectes(String s)
+        {
+            if (string.IsNullOrEmpty(s))
+            {
+                return true;
+            }
+            int head = 0, tail = s.Length - 1;
+            char cHead, cTail;
+            while (head <= tail)
+            {
+                cHead = s.ToCharArray()[head];
+                cTail = s.ToCharArray()[tail];
+                if (!cHead.isLetterOrDigit())
+                {
+                    head++;
+                }
+                else if (!cTail.isLetterOrDigit())
+                {
+                    tail--;
+                }
+                else
+                {
+                    if (cHead.ToLower() != cTail.ToLower())
+                    {
+                        return false;
+                    }
+                    head++;
+                    tail--;
+                }
+            }
+
+            return true;
+        }
+
+        public void isPalindrome_ConsiderOnlyAlphanumericCharectes_Run()
+        {
+            string[] testStrings = new string[] { "A man, a plan, a canal: Panama", "race a car" };
+            foreach (var testStr in testStrings)
+            {
+                Console.WriteLine($"{isPalindrome_ConsiderOnlyAlphanumericCharectes(testStr)} string:'{testStr}'");
+            }
+        }
         public void IsRotation_Run()
         {
             string[][] pairs =
@@ -63,6 +104,7 @@ namespace TWL_Algorithms_Samples.Arrays.Strings
             //Compression_Run();
             //new Palindrome_Permutation().Run();
             //IsRotation_Run();
+            //isPalindrome_ConsiderOnlyAlphanumericCharectes_Run();
         }
 
         public string Sort(string str)
@@ -362,7 +404,7 @@ namespace TWL_Algorithms_Samples.Arrays.Strings
                 int[] table = new int[(int)char.GetNumericValue('z') - (int)char.GetNumericValue('a') + 1];
                 foreach (char c in phrase.ToCharArray())
                 {
-                    int x = CharUtility.GetCharNumber(c);
+                    int x = CharExtension.GetCharNumber(c);
                     if (x != -1)
                     {
                         table[x]++;
@@ -406,7 +448,7 @@ namespace TWL_Algorithms_Samples.Arrays.Strings
                 int[] table = new int[(int)char.GetNumericValue('z') - (int)char.GetNumericValue('a') + 1];
                 foreach (char c in phrase.ToCharArray())
                 {
-                    int x = CharUtility.GetCharNumber(c);
+                    int x = CharExtension.GetCharNumber(c);
                     if (x != -1)
                     {
                         table[x]++;

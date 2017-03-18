@@ -1,4 +1,5 @@
 ﻿using System;
+using TWL_Algorithms_Samples.Char;
 
 namespace TWL_Algorithms_Samples.BitManipulation
 {
@@ -28,7 +29,7 @@ namespace TWL_Algorithms_Samples.BitManipulation
             int bitVector = 0;
             foreach (char c in phrase.ToCharArray())
             {
-                int x = CharUtility.GetCharNumber(c);
+                int x = c.GetCharNumber();
                 bitVector = Toggle(bitVector, x);
             }
             return bitVector;

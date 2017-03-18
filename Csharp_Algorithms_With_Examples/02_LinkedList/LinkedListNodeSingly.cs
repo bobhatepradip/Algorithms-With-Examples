@@ -36,16 +36,15 @@ namespace TWL_Algorithms_Samples.LinkedList
             return (LinkedListNode)head2;
         }
 
-        public override bool DeleteNode(LinkedListNode node)
+        public override bool DeleteNode(LinkedListNode nodeToDelete)
         {
-            if (node == null || node.Next == null)
+            if (nodeToDelete == null || nodeToDelete.Next == null)
             {
                 return false; // Failure
             }
 
-            var next = node.Next;
-            node.Data = next.Data;
-            node.Next = next.Next;
+            nodeToDelete.Data = nodeToDelete.Next.Data;
+            nodeToDelete.Next = nodeToDelete.Next.Next;
 
             return true;
         }

@@ -2217,20 +2217,6 @@ namespace TWL_Algorithms_Samples
             return root;
         }
 
-        public static LinkedListNode RandomLinkedListSingly(int N, int min, int max)
-        {
-            LinkedListNode root = new LinkedListNodeSingly(RandomIntInRange(min, max), null);
-            LinkedListNode prev = root;
-            for (int i = 1; i < N; i++)
-            {
-                int data = RandomIntInRange(min, max);
-                LinkedListNode next = new LinkedListNodeSingly(data, null);
-                prev.SetNext(next);
-                prev = next;
-            }
-            return root;
-        }
-
         //public static LinkedListNode LinkedListWithValue(int N, int value)
         //{
         //    LinkedListNode root = new LinkedListNode(value, null, null);

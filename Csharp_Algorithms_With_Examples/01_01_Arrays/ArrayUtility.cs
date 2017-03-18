@@ -104,6 +104,59 @@ namespace TWL_Algorithms_Samples.Arrays
             a.Print("Merged Array a:");
         }
 
+        /// <summary>
+        /// given [1,2,3,4], return [24,12,8,6].
+        /// </summary>
+        /// <param name="nums"></param>
+        /// <returns></returns>
+        public int[] ProductAllExceptSelf(int[] nums)
+        {
+            Console.WriteLine("given [1,2,3,4], return [24,12,8,6].");
+            nums.Print("input:");
+            int n = nums.Length;
+            int[] res = new int[n];
+            res[0] = 1;
+            for (int i = 1; i < n; i++)
+            {
+                res[i] = res[i - 1] * nums[i - 1];
+            }
+            res.Print("res:");
+            int right = 1;
+            for (int i = n - 1; i >= 0; i--)
+            {
+                Console.WriteLine($"right='{right}' res[i]='{res[i]}'");
+                res[i] *= right;
+                right *= nums[i];
+                Console.WriteLine($"nums[i]='{nums[i]}' right='{right}' res[i]='{res[i]}'");
+                res.Print("res Temp");
+            }
+            res.Print("output:");
+            return res;
+        }
+
+        /// <summary>
+        /// Time complextiy : O(n). Assume that nn is the length of array. Each of i and j traverses at most n steps.
+        /// Space complexity : O(1).
+        /// </summary>
+        /// <param name="nums"></param>
+        /// <returns></returns>
+        public int RemoveDuplicatesInSortedArray(int[] nums)
+        {
+            nums.Print("Before:");
+            if (nums.Length == 0) return 0;
+            int i = 0;
+            for (int j = 1; j < nums.Length; j++)
+            {
+                if (nums[j] != nums[i])
+                {
+                    i++;
+                    nums[i] = nums[j];
+                }
+            }
+            nums.Print("After:", 0, i);
+            return i + 1;
+        }
+
         public void Run()
         {
             //new Peaks_and_Valleys().Run();
@@ -112,8 +165,10 @@ namespace TWL_Algorithms_Samples.Arrays
             //new OneEditChecker().Run();
             //new MatrixRotation().Run();
             //new Zero_Matrix().Run();
+            //RemoveDuplicatesInSortedArray(new int[] { 1, 2, 2, 3, 3, 3, 4, 5, 6, 6, 6, 6, 6, 6 });
+            //TwoSumInSortedArray(new int[] { 1, 2, 7, 11, 15 }, 9);
+            //ProductAllExceptSelf(new int[] { 1, 2, 3, 4 });
         }
-
         /// <summary>
         /// As in the book, returns the correct index (tested)
         /// It's a real kludge though... good initial answer
@@ -194,6 +249,33 @@ namespace TWL_Algorithms_Samples.Arrays
             Console.WriteLine($"\nIndex of {searchInput} in array is {searchIndex}");
         }
 
+        public int[] TwoSumInSortedArray(int[] num, int target)
+        {
+            num.Print("input:");
+            int[] indice = new int[2];
+            if (num == null || num.Length < 2) return indice;
+            int left = 0, right = num.Length - 1;
+            while (left < right)
+            {
+                int v = num[left] + num[right];
+                if (v == target)
+                {
+                    indice[0] = left + 1;
+                    indice[1] = right + 1;
+                    Console.WriteLine($"indice[0]={indice[0]} indice[1]={indice[1]} target({target}) = num[left] ({num[left]})+ num[right]({num[right]}) ; left={left} right={right}");
+                    break;
+                }
+                else if (v > target)
+                {
+                    right--;
+                }
+                else
+                {
+                    left++;
+                }
+            }
+            return indice;
+        }
         public class MatrixRotation : IQuestion
         {
             public void Run()
