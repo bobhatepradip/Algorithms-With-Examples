@@ -6,6 +6,102 @@ namespace TWL_Algorithms_Samples.LinkedList
 {
     public class LinkedListUtility
     {
+        public static LinkedListNode CreateLinkedListFromArray(int[] vals)
+        {
+            LinkedListNode head = new LinkedListNodeDoubly(vals[0], null, null);
+            LinkedListNodeDoubly current = (LinkedListNodeDoubly)head;
+            for (int i = 1; i < vals.Length; i++)
+            {
+                current = new LinkedListNodeDoubly(vals[i], null, current);
+            }
+            return head;
+        }
+
+        /// <summary>
+        /// Use two pointers, walker and runner.
+        /// walker moves step by step.runner moves two steps at time.
+        /// if the Linked List has a cycle walker and runner will meet at some point.
+        /// </summary>
+        /// <param name="head"></param>
+        /// <returns></returns>
+        public static bool CycleExists(LinkedListNode head)
+        {
+            if (head == null) return false;
+            LinkedListNode walker = head;
+            LinkedListNode runner = head;
+            while (runner.Next != null && runner.Next.Next != null)
+            {
+                walker = walker.Next;
+                runner = runner.Next.Next;
+                if (walker == runner) return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Use two pointers, walker and runner.
+        /// walker moves step by step.runner moves two steps at time.
+        /// if the Linked List has a cycle walker and runner will meet at some point.
+        /// </summary>
+        /// <param name="head"></param>
+        /// <returns>runner (not slower)</returns>
+        public static LinkedListNode CycleExistsReturnRunner(LinkedListNode head)
+        {
+            if (head == null) return null;
+            LinkedListNode walker = head;
+            LinkedListNode runner = head;
+            while (runner.Next != null && runner.Next.Next != null)
+            {
+                walker = walker.Next;
+                runner = runner.Next.Next;
+                if (walker == runner)
+                {
+                    Console.WriteLine($"CycleExists: True runner.Data:{runner.Data}");
+                    return runner;
+                };
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Use two pointers, walker and runner.
+        /// walker moves step by step.runner moves two steps at time.
+        /// if the Linked List has a cycle walker and runner will meet at some point.
+        /// </summary>
+        /// <param name="head"></param>
+        /// <returns></returns>
+        public static LinkedListNode CycleFindBeginning(LinkedListNode head)
+        {
+            var walker = head;
+            var runner = CycleExistsReturnRunner(head);
+            if (runner != null)
+            {
+                /* Move slow to Head. Keep fast at Meeting Point. Each are k steps
+                /* from the Loop Start. If they move at the same pace, they must
+                 * meet at Loop Start. */
+                walker = head;
+
+                while (walker != runner)
+                {
+                    Console.WriteLine($"*slow.Data{walker.Data}");
+                    Console.WriteLine($"*fast.Data{runner.Data}");
+                    walker = walker.Next;
+                    runner = runner.Next;
+                }
+            }
+            // Both now point to the start of the loop.
+            return runner;
+        }
+
+        public static void DeleteNode_Run()
+        {
+            var head = GetLinkedListSingly_Random(10, 0, 10);
+            head.PrintForward("Input:");
+            var deleted = head.DeleteNode(head.Next.Next.Next.Next); // delete node 5
+            Console.WriteLine("deleted? {0}", deleted);
+            head.PrintForward("Output:");
+        }
+
         public static LinkedListNode GetLinkedListDoubly_Random(int N, int min, int max)
         {
             LinkedListNode root = new LinkedListNodeDoubly(AssortedMethods.RandomIntInRange(min, max), null, null);
@@ -59,21 +155,84 @@ namespace TWL_Algorithms_Samples.LinkedList
             }
             return root;
         }
-        public void DeleteNode_Run()
+
+        public static LinkedListNode MergeTwoLists_Int(LinkedListNode l1, LinkedListNode l2)
         {
-            var head = GetLinkedListSingly_Random(10, 0, 10);
-            head.PrintForward("Input:");
-            var deleted = head.DeleteNode(head.Next.Next.Next.Next); // delete node 5
-            Console.WriteLine("deleted? {0}", deleted);
-            head.PrintForward("Output:");
+            if (l1 == null) return l2;
+            if (l2 == null) return l1;
+
+            if ((int)l1.Data < (int)l2.Data)
+            {
+                l1.Next = MergeTwoLists_Int(l1.Next, l2);
+                return l1;
+            }
+            else
+            {
+                l2.Next = MergeTwoLists_Int(l2.Next, l1);
+                return l2;
+            }
+        }
+
+        public LinkedListNode Cycle_Create()
+        {
+            const int listLength = 10;
+            const int k = 3;
+
+            // Create linked list
+            var nodes = new LinkedListNode[listLength];
+
+            for (var i = 1; i <= listLength; i++)
+            {
+                nodes[i - 1] = new LinkedListNodeDoubly(i, null, i - 1 > 0 ? (LinkedListNodeDoubly)nodes[i - 2] : null);
+                Console.Write("{0} -> ", nodes[i - 1].Data);
+            }
+            // Create loop;
+            Console.WriteLine($"\n Create loop: nodes[listLength - 1].Next = nodes[listLength - k - 1]");
+            nodes[listLength - k - 1].PrintForward("nodes[listLength - k - 1]");
+            nodes[listLength - 1].PrintForward("nodes[listLength - 1]");
+
+            nodes[listLength - 1].Next = nodes[listLength - k - 1];
+            Console.WriteLine("\n{0} -> {1}", nodes[listLength - 1].Data, nodes[listLength - k - 1].Data);
+            Console.WriteLine("Nodes:\n");
+
+            return nodes[0];
+        }
+
+        public void Cycle_Run()
+        {
+            var cycle = Cycle_Create();
+            var loop = CycleExists(cycle);
+            Console.WriteLine($"Linked List Has Cycle:{loop}");
+
+            var loop2 = CycleFindBeginning(cycle);
+            if (loop2 == null)
+            {
+                Console.WriteLine("No Cycle.");
+            }
+            else
+            {
+                Console.WriteLine($"Cycle exists!!! loop starts at- '{loop2.Data}'");
+            }
+        }
+
+        public void MeargeList_Run()
+        {
+            int[] firstVals = { 1, 3, 6, 8 };
+            LinkedListNode firstList = CreateLinkedListFromArray(firstVals);
+            firstList.PrintForward("firstList");
+            int[] SecondVals = { 0, 2, 4, 5, 7, 9, 10 };
+            LinkedListNode secondList = CreateLinkedListFromArray(SecondVals);
+            secondList.PrintForward("secondList");
+            var meargedList = MergeTwoLists_Int(firstList, secondList);
+            meargedList.PrintForward("meargedList");
         }
 
         public void ReverseLinkedList_Run()
         {
             var head = GetLinkedListSingly_Serial(0, 5);
-            head.PrintForward("Input for ReverseLinkedListIterative Test:");
-            head = ReverseLinkedListIterative(head);
-            head.PrintForward("Output for ReverseLinkedListIterative:");
+            //head.PrintForward("Input for ReverseLinkedListIterative Test:");
+            //head = ReverseLinkedListIterative(head);
+            //head.PrintForward("Output for ReverseLinkedListIterative:");
             head.PrintForward("Input for ReverseLinkedListRecursive Test:");
             head = ReverseLinkedListRecursive(head);
             head.PrintForward("Output for ReverseLinkedListRecursive:");
@@ -108,26 +267,49 @@ namespace TWL_Algorithms_Samples.LinkedList
             return ReverseLinkedListRecursiveInt(head, null);
         }
 
+        public LinkedListNode ReverseLinkedListRecursiveInt(LinkedListNode head, LinkedListNode newHead)
+        {
+            if (head == null)
+                return newHead;
+            head.PrintForward("*head");
+            //if (newHead != null)
+            //    newHead.PrintForward("*newHead");
+            LinkedListNode nextNode = head.Next;
+            head.Next = newHead;
+            return ReverseLinkedListRecursiveInt(nextNode, head);
+        }
+
         public void Run()
         {
             //new Remove_Dups().Run();
             //DeleteNode_Run();
-            ReverseLinkedList_Run();
+            //ReverseLinkedList_Run();
             //new Return_Kth_To_Last().Run();
             //new Sum_Lists_Numbers().Run();
             //new Q2_04_Partition().Run();
             //new CheckIfPalindrome().Run();
             //new Q2_07_Intersection().Run();
-            //new Loop_Detection().Run();
+            //Cycle_Run();
+            //MeargeList_Run();
+            //SwapPairsAlertnatly_Run();
         }
 
-        private LinkedListNode ReverseLinkedListRecursiveInt(LinkedListNode head, LinkedListNode newHead)
+        public LinkedListNode SwapPairsAlertnatly(LinkedListNode head)
         {
-            if (head == null)
-                return newHead;
-            LinkedListNode nextNode = head.Next;
-            head.Next = newHead;
-            return ReverseLinkedListRecursiveInt(nextNode, head);
+            if ((head == null) || (head.Next == null))
+                return head;
+            LinkedListNode n = head.Next;
+            head.Next = SwapPairsAlertnatly(head.Next.Next);
+            n.Next = head;
+            return n;
+        }
+
+        public void SwapPairsAlertnatly_Run()
+        {
+            LinkedListNode testLinkedList = GetLinkedListSingly_Serial(0, 10);
+            testLinkedList.PrintForward("testLinkedList");
+            var swapedList = SwapPairsAlertnatly(testLinkedList);
+            swapedList.PrintForward("swapedList");
         }
         public class CheckIfPalindrome : IQuestion
         {
@@ -254,6 +436,7 @@ namespace TWL_Algorithms_Samples.LinkedList
 
                 return true;
             }
+
             private class Result
             {
                 public LinkedListNode Node;
@@ -264,104 +447,6 @@ namespace TWL_Algorithms_Samples.LinkedList
                     Node = node;
                     result = res;
                 }
-            }
-        }
-
-        public class Loop_Detection : IQuestion
-        {
-            public void Run()
-            {
-                const int listLength = 10;
-                const int k = 3;
-
-                // Create linked list
-                var nodes = new LinkedListNode[listLength];
-
-                for (var i = 1; i <= listLength; i++)
-                {
-                    nodes[i - 1] = new LinkedListNodeDoubly(i, null, i - 1 > 0 ? (LinkedListNodeDoubly)nodes[i - 2] : null);
-                    Console.Write("{0} -> ", nodes[i - 1].Data);
-                }
-                // Create loop;
-                Console.WriteLine($"\n Create loop: nodes[listLength - 1].Next = nodes[listLength - k - 1]");
-                nodes[listLength - k - 1].PrintForward("nodes[listLength - k - 1]");
-                nodes[listLength - 1].PrintForward("nodes[listLength - 1]");
-                ////nodes[listLength - 1].Next.PrintForward("nodes[listLength - 1].Next");
-
-                nodes[listLength - 1].Next = nodes[listLength - k - 1];
-                Console.WriteLine("\n{0} -> {1}", nodes[listLength - 1].Data, nodes[listLength - k - 1].Data);
-                Console.WriteLine("Nodes:\n");
-                //foreach (var node in nodes)
-                //{
-                //    node.PrintForward();
-                //}
-
-                var loop = FindBeginning(nodes[0]);
-
-                if (loop == null)
-                {
-                    Console.WriteLine("No Cycle.");
-                }
-                else
-                {
-                    Console.WriteLine(loop.Data);
-                }
-            }
-
-            private LinkedListNode FindBeginning(LinkedListNode head)
-            {
-                var slow = head;
-                var fast = head;
-
-                // Find meeting point
-                // slow will reach to half of link list
-                while (fast != null && fast.Next != null)
-                {
-                    Console.WriteLine($"*slow.Data{slow.Data}");
-                    Console.WriteLine($"*fast.Data{fast.Data}");
-
-                    slow = slow.Next;
-                    fast = fast.Next.Next;
-
-                    if (slow == fast)
-                    {
-                        Console.WriteLine($"slow == fast");
-                        break;
-                    }
-                }
-
-                //slow.PrintForward("@slow");
-
-                // Error check - there is no meeting point, and therefore no loop
-                if (fast == null || fast.Next == null)
-                {
-                    Console.WriteLine("@fast == null || fast.Next == null");
-                    return null;
-                }
-                else
-                {
-                    Console.WriteLine("@fast!=null");
-                    //fast.PrintForward("@fast");
-                }
-
-                /* Move slow to Head. Keep fast at Meeting Point. Each are k steps
-                /* from the Loop Start. If they move at the same pace, they must
-                 * meet at Loop Start. */
-                slow = head;
-                //slow.PrintForward("*slow");
-                Console.WriteLine("\n\n*slow!=null");
-                //fast.PrintForward("*fast");
-                Console.WriteLine("*fast!=null");
-                while (slow != fast)
-                {
-                    Console.WriteLine($"*slow.Data{slow.Data}");
-                    Console.WriteLine($"*fast.Data{fast.Data}");
-                    slow = slow.Next;
-                    fast = fast.Next;
-                }
-
-                // Both now point to the start of the loop.
-                return fast;
             }
         }
 
@@ -630,10 +715,10 @@ namespace TWL_Algorithms_Samples.LinkedList
             {
                 /* Create linked list */
                 int[] vals = { -1, -2, 0, 1, 2, 3, 4, 5, 6, 7, 8 };
-                LinkedListNode list1 = AssortedMethods.CreateLinkedListFromArray(vals);
+                LinkedListNode list1 = CreateLinkedListFromArray(vals);
                 list1.PrintForward("list1");
                 int[] vals2 = { 12, 14, 15 };
-                LinkedListNode list2 = AssortedMethods.CreateLinkedListFromArray(vals2);
+                LinkedListNode list2 = CreateLinkedListFromArray(vals2);
                 list2.PrintForward("list2");
                 //adding some common elements
                 list2.Next.Next = list1.Next.Next.Next.Next;

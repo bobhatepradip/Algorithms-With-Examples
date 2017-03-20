@@ -4,6 +4,16 @@ namespace TWL_Algorithms_Samples.Arrays
 {
     public class ArrayUtility
     {
+        public static int[] GetArray_Serial(int min, int max)
+        {
+            int[] arrayInt = new int[(max - min) + 1];
+            for (int i = 0; i <= max - min; i++)
+            {
+                arrayInt[i] = min + i;
+            }
+            return arrayInt;
+        }
+
         public static void Matrix_Display(int[][] matrix, string header = "")
         {
             Console.WriteLine($"------------------------------------{header}----------------------------------");
@@ -157,18 +167,31 @@ namespace TWL_Algorithms_Samples.Arrays
             return i + 1;
         }
 
-        public void Run()
+        public void Reverse(int[] nums, int start, int end)
         {
-            //new Peaks_and_Valleys().Run();
-            //this.Merge_Run();
-            //Search_in_Rotated_Array_Run();
-            //new OneEditChecker().Run();
-            //new MatrixRotation().Run();
-            //new Zero_Matrix().Run();
-            //RemoveDuplicatesInSortedArray(new int[] { 1, 2, 2, 3, 3, 3, 4, 5, 6, 6, 6, 6, 6, 6 });
-            //TwoSumInSortedArray(new int[] { 1, 2, 7, 11, 15 }, 9);
-            //ProductAllExceptSelf(new int[] { 1, 2, 3, 4 });
+            while (start < end)
+            {
+                nums.Swap(start, end);
+                start++;
+                end--;
+            }
         }
+
+        public void RotateArray(int[] nums, int k)
+        {
+            Reverse(nums, 0, nums.Length - 1);
+            Reverse(nums, 0, k - 1);
+            Reverse(nums, k, nums.Length - 1);
+        }
+
+        public void RotateArray_Run()
+        {
+            var testArrayRotation = GetArray_Serial(1, 7);
+            testArrayRotation.Print("Before Array Rotation:");
+            RotateArray(testArrayRotation, 3);
+            testArrayRotation.Print("After Array Rotation:");
+        }
+
         /// <summary>
         /// As in the book, returns the correct index (tested)
         /// It's a real kludge though... good initial answer
@@ -180,7 +203,7 @@ namespace TWL_Algorithms_Samples.Arrays
         /// <param name="high"></param>
         /// <param name="x"></param>
         /// <returns></returns>
-        public int Search_in_Rotated_Array(int[] a, int left, int right, int x)
+        public int RotatedArray_Search(int[] a, int left, int right, int x)
         {
             int mid = (left + right) / 2;
             if (x == a[mid])
@@ -200,36 +223,36 @@ namespace TWL_Algorithms_Samples.Arrays
             { // Left is normally ordered.
                 if (x >= a[left] && x < a[mid])
                 {
-                    return Search_in_Rotated_Array(a, left, mid - 1, x);
+                    return RotatedArray_Search(a, left, mid - 1, x);
                 }
                 else
                 {
-                    return Search_in_Rotated_Array(a, mid + 1, right, x);
+                    return RotatedArray_Search(a, mid + 1, right, x);
                 }
             }
             else if (a[mid] < a[left])
             { // Right is normally ordered.
                 if (x > a[mid] && x <= a[right])
                 {
-                    return Search_in_Rotated_Array(a, mid + 1, right, x);
+                    return RotatedArray_Search(a, mid + 1, right, x);
                 }
                 else
                 {
-                    return Search_in_Rotated_Array(a, left, mid - 1, x);
+                    return RotatedArray_Search(a, left, mid - 1, x);
                 }
             }
             else if (a[left] == a[mid])
             { // Left is either all repeats OR loops around (with the right half being all dups)
                 if (a[mid] != a[right])
                 { // If right half is different, search there
-                    return Search_in_Rotated_Array(a, mid + 1, right, x);
+                    return RotatedArray_Search(a, mid + 1, right, x);
                 }
                 else
                 { // Else, we have to search both halves
-                    int result = Search_in_Rotated_Array(a, left, mid - 1, x);
+                    int result = RotatedArray_Search(a, left, mid - 1, x);
                     if (result == -1)
                     {
-                        return Search_in_Rotated_Array(a, mid + 1, right, x);
+                        return RotatedArray_Search(a, mid + 1, right, x);
                     }
                     else
                     {
@@ -240,15 +263,28 @@ namespace TWL_Algorithms_Samples.Arrays
             return -1;
         }
 
-        public void Search_in_Rotated_Array_Run()
+        public void RotatedArray_Search_Run()
         {
             int[] a = new int[] { 5, 6, 7, 8, 9, 1, 2, 3, 4 };
             int searchInput = 4;
             a.Print($"Input array (search for '{searchInput}'):");
-            int searchIndex = Search_in_Rotated_Array(a, 0, a.Length - 1, searchInput);
+            int searchIndex = RotatedArray_Search(a, 0, a.Length - 1, searchInput);
             Console.WriteLine($"\nIndex of {searchInput} in array is {searchIndex}");
         }
 
+        public void Run()
+        {
+            //new Peaks_and_Valleys().Run();
+            //this.Merge_Run();
+            //RotatedArray_Search_Run();
+            //new OneEditChecker().Run();
+            //new MatrixRotation().Run();
+            //new Zero_Matrix().Run();
+            //RemoveDuplicatesInSortedArray(new int[] { 1, 2, 2, 3, 3, 3, 4, 5, 6, 6, 6, 6, 6, 6 });
+            //TwoSumInSortedArray(new int[] { 1, 2, 7, 11, 15 }, 9);
+            //ProductAllExceptSelf(new int[] { 1, 2, 3, 4 });
+            //RotateArray_Run();
+        }
         public int[] TwoSumInSortedArray(int[] num, int target)
         {
             num.Print("input:");
@@ -276,6 +312,7 @@ namespace TWL_Algorithms_Samples.Arrays
             }
             return indice;
         }
+
         public class MatrixRotation : IQuestion
         {
             public void Run()

@@ -89,5 +89,19 @@ namespace TWL_Algorithms_Samples.Arrays
             array[firstIndex] = array[secondIndex];
             array[secondIndex] = temp;
         }
+
+        public static void Swap(this object[] array, int firstIndex, int secondIndex)
+        {
+            var temp = array[firstIndex];
+            array[firstIndex] = array[secondIndex];
+            array[secondIndex] = temp;
+        }
+
+        public static void Swap(this char[] array, int firstIndex, int secondIndex)
+        {
+            var temp = array[firstIndex];
+            array[firstIndex] = array[secondIndex];
+            array[secondIndex] = temp;
+        }
     }
 }

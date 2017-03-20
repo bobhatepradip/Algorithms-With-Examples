@@ -78,6 +78,7 @@ namespace TWL_Algorithms_Samples.Arrays.Strings
                 Console.WriteLine($"{isPalindrome_ConsiderOnlyAlphanumericCharectes(testStr)} string:'{testStr}'");
             }
         }
+
         public void IsRotation_Run()
         {
             string[][] pairs =
@@ -96,6 +97,39 @@ namespace TWL_Algorithms_Samples.Arrays.Strings
             }
         }
 
+        public string Reverse(string str)
+        {
+            char[] chars = str.ToCharArray();
+            int startIndex = 0;
+            int endIndex = chars.Length - 1;
+            while (startIndex < endIndex)
+            {
+                chars.Swap(startIndex, endIndex);
+                startIndex++;
+                endIndex--;
+            }
+            return String.Concat(chars);
+        }
+
+        public void Reverse_Run()
+        {
+            string revereStringTest = "I am doing good";
+            Console.WriteLine($"revereStringTest='{revereStringTest}'");
+            Console.WriteLine($"Reversed String='{Reverse(revereStringTest)}'");
+            Console.WriteLine($"Reversed Words in String='{ReverseWords(revereStringTest)}'");
+        }
+
+        public string ReverseWords(string str)
+        {
+            string reversedString = Reverse(str);
+            StringBuilder reversedWordsString = new StringBuilder();
+            foreach (string word in reversedString.Split(' '))
+            {
+                reversedWordsString.AppendFormat("{0} ", Reverse(word));
+            }
+            return reversedWordsString.ToString();
+        }
+
         public void Run()
         {
             //IsUniqueChars_Run();
@@ -105,16 +139,15 @@ namespace TWL_Algorithms_Samples.Arrays.Strings
             //new Palindrome_Permutation().Run();
             //IsRotation_Run();
             //isPalindrome_ConsiderOnlyAlphanumericCharectes_Run();
+            //Reverse_Run();
         }
-
-        public string Sort(string str)
+        public string Sort_TEMP(string str)
         {
             // put the characters into an array
             char[] chars = str.ToCharArray();
             ///???
             return chars.ToString();
         }
-
         public void URLEncoding_Run()
         {
             const string input = "abc d e f";

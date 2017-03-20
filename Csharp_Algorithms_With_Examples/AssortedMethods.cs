@@ -32,17 +32,6 @@ namespace TWL_Algorithms_Samples
             return buffer.ToString();
         }
 
-        public static LinkedListNode CreateLinkedListFromArray(int[] vals)
-        {
-            LinkedListNode head = new LinkedListNodeDoubly(vals[0], null, null);
-            LinkedListNodeDoubly current = (LinkedListNodeDoubly)head;
-            for (int i = 1; i < vals.Length; i++)
-            {
-                current = new LinkedListNodeDoubly(vals[i], null, current);
-            }
-            return head;
-        }
-
         //public static TreeNode CreateTreeFromArray(int[] array)
         //{
         //    if (array.Length > 0)
