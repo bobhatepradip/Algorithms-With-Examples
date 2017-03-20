@@ -3,17 +3,19 @@ using TWL_Algorithms_Samples.LinkedList;
 
 namespace TWL_Algorithms_Samples.Queue
 {
-    public class QueueAsLinkList : Queue
+    public class MyQueueAsLinkList : MyQueue
     {
-        LinkedListNodeSingly insertNode;
-        LinkedListNodeSingly removeNode;
-        public QueueAsLinkList()
+        private MyLinkedListNodeSingly insertNode;
+        private MyLinkedListNodeSingly removeNode;
+
+        public MyQueueAsLinkList()
         {
             Create();
         }
+
         public override void Add(object obj)
         {
-            LinkedListNodeSingly newLinkListNode = new LinkedListNodeSingly(obj);
+            MyLinkedListNodeSingly newLinkListNode = new MyLinkedListNodeSingly(obj);
             if (insertNode.Next != null)
             {
                 newLinkListNode.SetNext(insertNode.Next);
@@ -24,7 +26,7 @@ namespace TWL_Algorithms_Samples.Queue
 
         public override void Create()
         {
-            insertNode = new LinkedListNodeSingly();
+            insertNode = new MyLinkedListNodeSingly();
             removeNode = insertNode;
         }
 
@@ -53,7 +55,7 @@ namespace TWL_Algorithms_Samples.Queue
             var deletedNodeData = removeNode.Data;
             if (removeNode.Next != null)
             {
-                removeNode.Next = (LinkedListNodeSingly)removeNode.Next.Next;
+                removeNode.Next = (MyLinkedListNodeSingly)removeNode.Next.Next;
                 Console.WriteLine($"Deleted:{deletedNodeData}");
             }
             return deletedNodeData;

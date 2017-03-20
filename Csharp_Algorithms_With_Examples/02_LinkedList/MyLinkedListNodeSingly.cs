@@ -4,20 +4,20 @@ using System.Diagnostics;
 namespace TWL_Algorithms_Samples.LinkedList
 {
     [DebuggerDisplay("Data = {Data}")]
-    public class LinkedListNodeSingly : LinkedListNode
+    public class MyLinkedListNodeSingly : MyLinkedListNode
     {
-        public LinkedListNodeSingly(object d, LinkedListNodeSingly n)
+        public MyLinkedListNodeSingly(object d, MyLinkedListNodeSingly n)
         {
             Data = d;
             SetNext(n);
         }
 
-        public LinkedListNodeSingly(object d)
+        public MyLinkedListNodeSingly(object d)
         {
             Data = d;
         }
 
-        public LinkedListNodeSingly()
+        public MyLinkedListNodeSingly()
         { }
 
         //public LinkedListNodeSingly(int d, LinkedListNode n)
@@ -25,18 +25,18 @@ namespace TWL_Algorithms_Samples.LinkedList
         //    Data = d;
         //    SetNext(n);
         //}
-        public override LinkedListNode Clone()
+        public override MyLinkedListNode Clone()
         {
-            LinkedListNodeSingly next2 = null;
+            MyLinkedListNodeSingly next2 = null;
             if (Next != null)
             {
-                next2 = (LinkedListNodeSingly)((LinkedListNode)Next).Clone();
+                next2 = (MyLinkedListNodeSingly)((MyLinkedListNode)Next).Clone();
             }
-            LinkedListNodeSingly head2 = new LinkedListNodeSingly(Data, next2);
-            return (LinkedListNode)head2;
+            MyLinkedListNodeSingly head2 = new MyLinkedListNodeSingly(Data, next2);
+            return (MyLinkedListNode)head2;
         }
 
-        public override bool DeleteNode(LinkedListNode nodeToDelete)
+        public override bool DeleteNode(MyLinkedListNode nodeToDelete)
         {
             if (nodeToDelete == null || nodeToDelete.Next == null)
             {
@@ -72,13 +72,13 @@ namespace TWL_Algorithms_Samples.LinkedList
             PrintForward();
         }
 
-        public override void SetNext(LinkedListNode n)
+        public override void SetNext(MyLinkedListNode n)
         {
-            LinkedListNodeSingly newNextNode = (LinkedListNodeSingly)n;
+            MyLinkedListNodeSingly newNextNode = (MyLinkedListNodeSingly)n;
             SetNext(newNextNode);
         }
 
-        public void SetNext(LinkedListNodeSingly newNextNode)
+        public void SetNext(MyLinkedListNodeSingly newNextNode)
         {
             Next = newNextNode;
             if (this == CurrentNode)

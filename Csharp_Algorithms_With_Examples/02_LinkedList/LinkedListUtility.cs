@@ -6,13 +6,13 @@ namespace TWL_Algorithms_Samples.LinkedList
 {
     public class LinkedListUtility
     {
-        public static LinkedListNode CreateLinkedListFromArray(int[] vals)
+        public static MyLinkedListNode CreateLinkedListFromArray(int[] vals)
         {
-            LinkedListNode head = new LinkedListNodeDoubly(vals[0], null, null);
-            LinkedListNodeDoubly current = (LinkedListNodeDoubly)head;
+            MyLinkedListNode head = new MyLinkedListNodeDoubly(vals[0], null, null);
+            MyLinkedListNodeDoubly current = (MyLinkedListNodeDoubly)head;
             for (int i = 1; i < vals.Length; i++)
             {
-                current = new LinkedListNodeDoubly(vals[i], null, current);
+                current = new MyLinkedListNodeDoubly(vals[i], null, current);
             }
             return head;
         }
@@ -24,11 +24,11 @@ namespace TWL_Algorithms_Samples.LinkedList
         /// </summary>
         /// <param name="head"></param>
         /// <returns></returns>
-        public static bool CycleExists(LinkedListNode head)
+        public static bool CycleExists(MyLinkedListNode head)
         {
             if (head == null) return false;
-            LinkedListNode walker = head;
-            LinkedListNode runner = head;
+            MyLinkedListNode walker = head;
+            MyLinkedListNode runner = head;
             while (runner.Next != null && runner.Next.Next != null)
             {
                 walker = walker.Next;
@@ -45,11 +45,11 @@ namespace TWL_Algorithms_Samples.LinkedList
         /// </summary>
         /// <param name="head"></param>
         /// <returns>runner (not slower)</returns>
-        public static LinkedListNode CycleExistsReturnRunner(LinkedListNode head)
+        public static MyLinkedListNode CycleExistsReturnRunner(MyLinkedListNode head)
         {
             if (head == null) return null;
-            LinkedListNode walker = head;
-            LinkedListNode runner = head;
+            MyLinkedListNode walker = head;
+            MyLinkedListNode runner = head;
             while (runner.Next != null && runner.Next.Next != null)
             {
                 walker = walker.Next;
@@ -70,7 +70,7 @@ namespace TWL_Algorithms_Samples.LinkedList
         /// </summary>
         /// <param name="head"></param>
         /// <returns></returns>
-        public static LinkedListNode CycleFindBeginning(LinkedListNode head)
+        public static MyLinkedListNode CycleFindBeginning(MyLinkedListNode head)
         {
             var walker = head;
             var runner = CycleExistsReturnRunner(head);
@@ -102,61 +102,61 @@ namespace TWL_Algorithms_Samples.LinkedList
             head.PrintForward("Output:");
         }
 
-        public static LinkedListNode GetLinkedListDoubly_Random(int N, int min, int max)
+        public static MyLinkedListNode GetLinkedListDoubly_Random(int N, int min, int max)
         {
-            LinkedListNode root = new LinkedListNodeDoubly(AssortedMethods.RandomIntInRange(min, max), null, null);
-            LinkedListNode prev = root;
+            MyLinkedListNode root = new MyLinkedListNodeDoubly(AssortedMethods.RandomIntInRange(min, max), null, null);
+            MyLinkedListNode prev = root;
             for (int i = 1; i < N; i++)
             {
                 int data = AssortedMethods.RandomIntInRange(min, max);
-                LinkedListNode next = new LinkedListNodeDoubly(data, null, null);
+                MyLinkedListNode next = new MyLinkedListNodeDoubly(data, null, null);
                 prev.SetNext(next);
                 prev = next;
             }
             return root;
         }
 
-        public static LinkedListNode GetLinkedListSingly_Random(int N, int min, int max)
+        public static MyLinkedListNode GetLinkedListSingly_Random(int N, int min, int max)
         {
-            LinkedListNode root = new LinkedListNodeSingly(AssortedMethods.RandomIntInRange(min, max), null);
-            LinkedListNode prev = root;
+            MyLinkedListNode root = new MyLinkedListNodeSingly(AssortedMethods.RandomIntInRange(min, max), null);
+            MyLinkedListNode prev = root;
             for (int i = 1; i < N; i++)
             {
                 int data = AssortedMethods.RandomIntInRange(min, max);
-                LinkedListNode next = new LinkedListNodeSingly(data, null);
+                MyLinkedListNode next = new MyLinkedListNodeSingly(data, null);
                 prev.SetNext(next);
                 prev = next;
             }
             return root;
         }
 
-        public static LinkedListNode GetLinkedListSingly_Serial(int min, int max)
+        public static MyLinkedListNode GetLinkedListSingly_Serial(int min, int max)
         {
-            LinkedListNode root = new LinkedListNodeSingly(min, null);
-            LinkedListNode prev = root;
+            MyLinkedListNode root = new MyLinkedListNodeSingly(min, null);
+            MyLinkedListNode prev = root;
             for (int i = min + 1; i <= max; i++)
             {
-                LinkedListNode next = new LinkedListNodeSingly(i, null);
+                MyLinkedListNode next = new MyLinkedListNodeSingly(i, null);
                 prev.SetNext(next);
                 prev = next;
             }
             return root;
         }
 
-        public static LinkedListNode LinkedListWithValue(int N, int value)
+        public static MyLinkedListNode LinkedListWithValue(int N, int value)
         {
-            LinkedListNode root = new LinkedListNodeDoubly(value, null, null);
-            LinkedListNode prev = root;
+            MyLinkedListNode root = new MyLinkedListNodeDoubly(value, null, null);
+            MyLinkedListNode prev = root;
             for (int i = 1; i < N; i++)
             {
-                LinkedListNode next = new LinkedListNodeDoubly(value, null, null);
+                MyLinkedListNode next = new MyLinkedListNodeDoubly(value, null, null);
                 prev.SetNext(next);
                 prev = next;
             }
             return root;
         }
 
-        public static LinkedListNode MergeTwoLists_Int(LinkedListNode l1, LinkedListNode l2)
+        public static MyLinkedListNode MergeTwoLists_Int(MyLinkedListNode l1, MyLinkedListNode l2)
         {
             if (l1 == null) return l2;
             if (l2 == null) return l1;
@@ -173,17 +173,17 @@ namespace TWL_Algorithms_Samples.LinkedList
             }
         }
 
-        public LinkedListNode Cycle_Create()
+        public MyLinkedListNode Cycle_Create()
         {
             const int listLength = 10;
             const int k = 3;
 
             // Create linked list
-            var nodes = new LinkedListNode[listLength];
+            var nodes = new MyLinkedListNode[listLength];
 
             for (var i = 1; i <= listLength; i++)
             {
-                nodes[i - 1] = new LinkedListNodeDoubly(i, null, i - 1 > 0 ? (LinkedListNodeDoubly)nodes[i - 2] : null);
+                nodes[i - 1] = new MyLinkedListNodeDoubly(i, null, i - 1 > 0 ? (MyLinkedListNodeDoubly)nodes[i - 2] : null);
                 Console.Write("{0} -> ", nodes[i - 1].Data);
             }
             // Create loop;
@@ -218,10 +218,10 @@ namespace TWL_Algorithms_Samples.LinkedList
         public void MeargeList_Run()
         {
             int[] firstVals = { 1, 3, 6, 8 };
-            LinkedListNode firstList = CreateLinkedListFromArray(firstVals);
+            MyLinkedListNode firstList = CreateLinkedListFromArray(firstVals);
             firstList.PrintForward("firstList");
             int[] SecondVals = { 0, 2, 4, 5, 7, 9, 10 };
-            LinkedListNode secondList = CreateLinkedListFromArray(SecondVals);
+            MyLinkedListNode secondList = CreateLinkedListFromArray(SecondVals);
             secondList.PrintForward("secondList");
             var meargedList = MergeTwoLists_Int(firstList, secondList);
             meargedList.PrintForward("meargedList");
@@ -243,14 +243,14 @@ namespace TWL_Algorithms_Samples.LinkedList
         /// </summary>
         /// <param name="head"></param>
         /// <returns></returns>
-        public LinkedListNode ReverseLinkedListIterative(LinkedListNode head)
+        public MyLinkedListNode ReverseLinkedListIterative(MyLinkedListNode head)
         {
             /* iterative solution */
-            LinkedListNode newHead = null;
+            MyLinkedListNode newHead = null;
             while (head != null)
             {
                 //head.PrintForward("head");
-                LinkedListNode nextNode = head.Next;
+                MyLinkedListNode nextNode = head.Next;
                 head.Next = newHead;
 
                 //Link to New node
@@ -261,20 +261,20 @@ namespace TWL_Algorithms_Samples.LinkedList
             return newHead;
         }
 
-        public LinkedListNode ReverseLinkedListRecursive(LinkedListNode head)
+        public MyLinkedListNode ReverseLinkedListRecursive(MyLinkedListNode head)
         {
             /* recursive solution */
             return ReverseLinkedListRecursiveInt(head, null);
         }
 
-        public LinkedListNode ReverseLinkedListRecursiveInt(LinkedListNode head, LinkedListNode newHead)
+        public MyLinkedListNode ReverseLinkedListRecursiveInt(MyLinkedListNode head, MyLinkedListNode newHead)
         {
             if (head == null)
                 return newHead;
             head.PrintForward("*head");
             //if (newHead != null)
             //    newHead.PrintForward("*newHead");
-            LinkedListNode nextNode = head.Next;
+            MyLinkedListNode nextNode = head.Next;
             head.Next = newHead;
             return ReverseLinkedListRecursiveInt(nextNode, head);
         }
@@ -294,11 +294,11 @@ namespace TWL_Algorithms_Samples.LinkedList
             //SwapPairsAlertnatly_Run();
         }
 
-        public LinkedListNode SwapPairsAlertnatly(LinkedListNode head)
+        public MyLinkedListNode SwapPairsAlertnatly(MyLinkedListNode head)
         {
             if ((head == null) || (head.Next == null))
                 return head;
-            LinkedListNode n = head.Next;
+            MyLinkedListNode n = head.Next;
             head.Next = SwapPairsAlertnatly(head.Next.Next);
             n.Next = head;
             return n;
@@ -306,21 +306,22 @@ namespace TWL_Algorithms_Samples.LinkedList
 
         public void SwapPairsAlertnatly_Run()
         {
-            LinkedListNode testLinkedList = GetLinkedListSingly_Serial(0, 10);
+            MyLinkedListNode testLinkedList = GetLinkedListSingly_Serial(0, 10);
             testLinkedList.PrintForward("testLinkedList");
             var swapedList = SwapPairsAlertnatly(testLinkedList);
             swapedList.PrintForward("swapedList");
         }
+
         public class CheckIfPalindrome : IQuestion
         {
             public void Run()
             {
                 const int length = 10;
-                var nodes = new LinkedListNodeDoubly[length];
+                var nodes = new MyLinkedListNodeDoubly[length];
 
                 for (var i = 0; i < length; i++)
                 {
-                    nodes[i] = new LinkedListNodeDoubly(i >= length / 2 ? length - i - 1 : i, null, null);
+                    nodes[i] = new MyLinkedListNodeDoubly(i >= length / 2 ? length - i - 1 : i, null, null);
                 }
 
                 for (var i = 0; i < length; i++)
@@ -349,7 +350,7 @@ namespace TWL_Algorithms_Samples.LinkedList
             /// <param name="head"></param>
             /// <param name="length"></param>
             /// <returns></returns>
-            private Result IsPalindrome_UsingRecursion(LinkedListNode head, int length)
+            private Result IsPalindrome_UsingRecursion(MyLinkedListNode head, int length)
             {
                 if (head == null || length == 0)
                 {
@@ -384,7 +385,7 @@ namespace TWL_Algorithms_Samples.LinkedList
                 return res;
             }
 
-            private bool IsPalindrome_UsingRecursionMain(LinkedListNode head)
+            private bool IsPalindrome_UsingRecursionMain(MyLinkedListNode head)
             {
                 var size = 0;
                 var node = head;
@@ -400,7 +401,7 @@ namespace TWL_Algorithms_Samples.LinkedList
                 return palindrome.result;
             }
 
-            private bool IsPalindrome_UsingStack(LinkedListNode head)
+            private bool IsPalindrome_UsingStack(MyLinkedListNode head)
             {
                 var fast = head;
                 var slow = head;
@@ -439,10 +440,10 @@ namespace TWL_Algorithms_Samples.LinkedList
 
             private class Result
             {
-                public LinkedListNode Node;
+                public MyLinkedListNode Node;
                 public bool result;
 
-                public Result(LinkedListNode node, bool res)
+                public Result(MyLinkedListNode node, bool res)
                 {
                     Node = node;
                     result = res;
@@ -456,12 +457,12 @@ namespace TWL_Algorithms_Samples.LinkedList
             {
                 /* Create linked list */
                 int[] vals = { 1, 3, 7, 5, 2, 9, 4 };
-                var head = new LinkedListNodeDoubly(vals[0], null, null);
+                var head = new MyLinkedListNodeDoubly(vals[0], null, null);
                 var current = head;
 
                 for (var i = 1; i < vals.Length; i++)
                 {
-                    current = new LinkedListNodeDoubly(vals[i], null, current);
+                    current = new MyLinkedListNodeDoubly(vals[i], null, current);
                 }
                 head.PrintForward("Original:");
 
@@ -482,12 +483,12 @@ namespace TWL_Algorithms_Samples.LinkedList
                 h4.PrintForward("Partition4");
             }
 
-            private LinkedListNode Partition(LinkedListNode node, int pivot)
+            private MyLinkedListNode Partition(MyLinkedListNode node, int pivot)
             {
-                LinkedListNode beforeStart = null;
-                LinkedListNode beforeEnd = null;
-                LinkedListNode afterStart = null;
-                LinkedListNode afterEnd = null;
+                MyLinkedListNode beforeStart = null;
+                MyLinkedListNode beforeEnd = null;
+                MyLinkedListNode afterStart = null;
+                MyLinkedListNode afterEnd = null;
 
                 /* Partition list */
                 while (node != null)
@@ -535,10 +536,10 @@ namespace TWL_Algorithms_Samples.LinkedList
                 return beforeStart;
             }
 
-            private LinkedListNode Partition2(LinkedListNode node, int pivot)
+            private MyLinkedListNode Partition2(MyLinkedListNode node, int pivot)
             {
-                LinkedListNode beforeStart = null;
-                LinkedListNode afterStart = null;
+                MyLinkedListNode beforeStart = null;
+                MyLinkedListNode afterStart = null;
 
                 /* Partition list */
                 while (node != null)
@@ -578,10 +579,10 @@ namespace TWL_Algorithms_Samples.LinkedList
                 return head;
             }
 
-            private LinkedListNode Partition3(LinkedListNode listHead, int pivot)
+            private MyLinkedListNode Partition3(MyLinkedListNode listHead, int pivot)
             {
-                var leftList = new LinkedListNodeDoubly(); // empty temp node to not have an IF inside the loop
-                var rightList = new LinkedListNodeDoubly(pivot, null, null);
+                var leftList = new MyLinkedListNodeDoubly(); // empty temp node to not have an IF inside the loop
+                var rightList = new MyLinkedListNodeDoubly(pivot, null, null);
 
                 var leftListHead = leftList; // Used at the end to remove the empty node.
                 var rightListHead = rightList; // Used at the end to merge lists.
@@ -592,11 +593,11 @@ namespace TWL_Algorithms_Samples.LinkedList
                 {
                     if ((int)currentNode.Data < pivot)
                     {
-                        leftList = new LinkedListNodeDoubly(currentNode.Data, null, leftList);
+                        leftList = new MyLinkedListNodeDoubly(currentNode.Data, null, leftList);
                     }
                     else if ((int)currentNode.Data > pivot)
                     {
-                        rightList = new LinkedListNodeDoubly(currentNode.Data, null, rightList);
+                        rightList = new MyLinkedListNodeDoubly(currentNode.Data, null, rightList);
                     }
 
                     currentNode = currentNode.Next;
@@ -610,12 +611,12 @@ namespace TWL_Algorithms_Samples.LinkedList
                 return finalList;
             }
 
-            private LinkedListNode Partition4(LinkedListNode listHead, int pivot)
+            private MyLinkedListNode Partition4(MyLinkedListNode listHead, int pivot)
             {
-                LinkedListNode leftSubList = null;
-                LinkedListNode rightSubList = null;
-                LinkedListNode rightSubListHead = null;
-                LinkedListNode pivotNode = null;
+                MyLinkedListNode leftSubList = null;
+                MyLinkedListNode rightSubList = null;
+                MyLinkedListNode rightSubListHead = null;
+                MyLinkedListNode pivotNode = null;
 
                 var currentNode = listHead;
 
@@ -654,7 +655,7 @@ namespace TWL_Algorithms_Samples.LinkedList
 
         public class Q2_07_Intersection : IQuestion
         {
-            public static LinkedListNode findIntersection(LinkedListNode list1, LinkedListNode list2)
+            public static MyLinkedListNode findIntersection(MyLinkedListNode list1, MyLinkedListNode list2)
             {
                 if (list1 == null || list2 == null) return null;
 
@@ -669,8 +670,8 @@ namespace TWL_Algorithms_Samples.LinkedList
                 }
 
                 /* Set pointers to the start of each linked list. */
-                LinkedListNode shorter = result1.size < result2.size ? list1 : list2;
-                LinkedListNode longer = result1.size < result2.size ? list2 : list1;
+                MyLinkedListNode shorter = result1.size < result2.size ? list1 : list2;
+                MyLinkedListNode longer = result1.size < result2.size ? list2 : list1;
 
                 /* Advance the pointer for the longer linked list by the difference in lengths. */
                 longer = getKthNode(longer, Math.Abs(result1.size - result2.size));
@@ -686,9 +687,9 @@ namespace TWL_Algorithms_Samples.LinkedList
                 return longer;
             }
 
-            public static LinkedListNode getKthNode(LinkedListNode head, int k)
+            public static MyLinkedListNode getKthNode(MyLinkedListNode head, int k)
             {
-                LinkedListNode current = head;
+                MyLinkedListNode current = head;
                 while (k > 0 && current != null)
                 {
                     current = current.Next;
@@ -697,12 +698,12 @@ namespace TWL_Algorithms_Samples.LinkedList
                 return current;
             }
 
-            public static Result getTailAndSize(LinkedListNode list)
+            public static Result getTailAndSize(MyLinkedListNode list)
             {
                 if (list == null) return null;
 
                 int size = 1;
-                LinkedListNode current = list;
+                MyLinkedListNode current = list;
                 while (current.Next != null)
                 {
                     size++;
@@ -715,24 +716,24 @@ namespace TWL_Algorithms_Samples.LinkedList
             {
                 /* Create linked list */
                 int[] vals = { -1, -2, 0, 1, 2, 3, 4, 5, 6, 7, 8 };
-                LinkedListNode list1 = CreateLinkedListFromArray(vals);
+                MyLinkedListNode list1 = CreateLinkedListFromArray(vals);
                 list1.PrintForward("list1");
                 int[] vals2 = { 12, 14, 15 };
-                LinkedListNode list2 = CreateLinkedListFromArray(vals2);
+                MyLinkedListNode list2 = CreateLinkedListFromArray(vals2);
                 list2.PrintForward("list2");
                 //adding some common elements
                 list2.Next.Next = list1.Next.Next.Next.Next;
                 list2.PrintForward("list2");
-                LinkedListNode intersection = findIntersection(list1, list2);
+                MyLinkedListNode intersection = findIntersection(list1, list2);
                 intersection.PrintForward("intersection");
             }
 
             public class Result
             {
                 public int size;
-                public LinkedListNode tail;
+                public MyLinkedListNode tail;
 
-                public Result(LinkedListNode tail, int size)
+                public Result(MyLinkedListNode tail, int size)
                 {
                     this.tail = tail;
                     this.size = size;
@@ -748,13 +749,13 @@ namespace TWL_Algorithms_Samples.LinkedList
             public void Run()
             {
                 Console.WriteLine($"{this.GetType().FullName}.{System.Reflection.MethodBase.GetCurrentMethod().Name}");
-                var first = new LinkedListNodeDoubly(0, null, null);
+                var first = new MyLinkedListNodeDoubly(0, null, null);
                 var originalList = first;
                 var second = first;
 
                 for (var i = 1; i < 8; i++)
                 {
-                    second = new LinkedListNodeDoubly(i % 2, null, null);
+                    second = new MyLinkedListNodeDoubly(i % 2, null, null);
                     first.SetNext(second);
                     second.SetPrevious(first);
                     first = second;
@@ -777,12 +778,12 @@ namespace TWL_Algorithms_Samples.LinkedList
             /// Delete dups using additional memory (e.g. Hash table or Dictionary)
             /// </summary>
             /// <param name="head"></param>
-            private void DeleteDups_UsingDictionary(LinkedListNodeDoubly head)
+            private void DeleteDups_UsingDictionary(MyLinkedListNodeDoubly head)
             {
                 head.PrintForward("List-Before\n");
                 Console.WriteLine($"{this.GetType().FullName}.{System.Reflection.MethodBase.GetCurrentMethod().Name}\n");
                 var table = new Dictionary<int, bool>();
-                LinkedListNodeDoubly previous = null;
+                MyLinkedListNodeDoubly previous = null;
 
                 while (head != null)
                 {
@@ -799,13 +800,13 @@ namespace TWL_Algorithms_Samples.LinkedList
                         previous = head;
                     }
 
-                    head = (LinkedListNodeDoubly)head.Next;
+                    head = (MyLinkedListNodeDoubly)head.Next;
                 }
                 head.PrintForward("List-After\n");
                 Console.WriteLine("-------------------------------------------------------");
             }
 
-            private void DeleteDupsB(LinkedListNode head)
+            private void DeleteDupsB(MyLinkedListNode head)
             {
                 head.PrintForward("List-Before\n");
                 Console.WriteLine($"{this.GetType().FullName}.{System.Reflection.MethodBase.GetCurrentMethod().Name}\n");
@@ -840,7 +841,7 @@ namespace TWL_Algorithms_Samples.LinkedList
                 Console.WriteLine("-------------------------------------------------------");
             }
 
-            private void DeleteDupsC(LinkedListNode head)
+            private void DeleteDupsC(MyLinkedListNode head)
             {
                 head.PrintForward("List-Before\n");
                 Console.WriteLine($"{this.GetType().FullName}.{System.Reflection.MethodBase.GetCurrentMethod().Name}\n");
@@ -913,7 +914,7 @@ namespace TWL_Algorithms_Samples.LinkedList
                 Console.WriteLine("-------------------------------------------------------");
             }
 
-            private void DeleteDupsC2(LinkedListNode head)
+            private void DeleteDupsC2(MyLinkedListNode head)
             {
                 head.PrintForward("List-Before\n");
                 Console.WriteLine($"{this.GetType().FullName}.{System.Reflection.MethodBase.GetCurrentMethod().Name}\n");
@@ -1004,7 +1005,7 @@ namespace TWL_Algorithms_Samples.LinkedList
                 }
             }
 
-            private LinkedListNode NthToLast(LinkedListNode head, int n)
+            private MyLinkedListNode NthToLast(MyLinkedListNode head, int n)
             {
                 var p1 = head;
                 var p2 = head;
@@ -1037,7 +1038,7 @@ namespace TWL_Algorithms_Samples.LinkedList
                 return p1;
             }
 
-            private int NthToLastR1(LinkedListNode head, int n)
+            private int NthToLastR1(MyLinkedListNode head, int n)
             {
                 if (head != null)
                 {
@@ -1063,7 +1064,7 @@ namespace TWL_Algorithms_Samples.LinkedList
                 return k;
             }
 
-            private LinkedListNode NthToLastR2(LinkedListNode head, int n, ref int i)
+            private MyLinkedListNode NthToLastR2(MyLinkedListNode head, int n, ref int i)
             {
                 if (head == null)
                 {
@@ -1081,7 +1082,7 @@ namespace TWL_Algorithms_Samples.LinkedList
                 return node;
             }
 
-            private LinkedListNode NthToLastR3(LinkedListNode head, int k)
+            private MyLinkedListNode NthToLastR3(MyLinkedListNode head, int k)
             {
                 head.PrintForward("@");
                 var result = NthToLastR3Helper(head, k);
@@ -1105,7 +1106,7 @@ namespace TWL_Algorithms_Samples.LinkedList
             //    Console.WriteLine($"n='{n}' k='{k}'");
             //    return k;
             //}
-            private Result NthToLastR3Helper(LinkedListNode head, int k)
+            private Result NthToLastR3Helper(MyLinkedListNode head, int k)
             {
                 if (head == null)
                 {
@@ -1135,14 +1136,14 @@ namespace TWL_Algorithms_Samples.LinkedList
 
             internal class Result
             {
-                public Result(LinkedListNode node, int count)
+                public Result(MyLinkedListNode node, int count)
                 {
                     Node = node;
                     Count = count;
                 }
 
                 public int Count { get; set; }
-                public LinkedListNode Node { get; set; }
+                public MyLinkedListNode Node { get; set; }
             }
 
             //private LinkedListNode NthToLastR1(LinkedListNode head, int n)
@@ -1164,14 +1165,14 @@ namespace TWL_Algorithms_Samples.LinkedList
         {
             #region First Part
 
-            private LinkedListNode AddLists(LinkedListNode list1, LinkedListNode list2, int carry)
+            private MyLinkedListNode AddLists(MyLinkedListNode list1, MyLinkedListNode list2, int carry)
             {
                 if (list1 == null && list2 == null && carry == 0)
                 {
                     return null;
                 }
 
-                var result = new LinkedListNodeDoubly();
+                var result = new MyLinkedListNodeDoubly();
                 var value = carry;
 
                 if (list1 != null)
@@ -1196,7 +1197,7 @@ namespace TWL_Algorithms_Samples.LinkedList
                 return result;
             }
 
-            private int LinkedListToInt(LinkedListNode node)
+            private int LinkedListToInt(MyLinkedListNode node)
             {
                 int value = 0;
 
@@ -1212,7 +1213,7 @@ namespace TWL_Algorithms_Samples.LinkedList
 
             #region Followup
 
-            private LinkedListNode AddLists2(LinkedListNode list1, LinkedListNode list2)
+            private MyLinkedListNode AddLists2(MyLinkedListNode list1, MyLinkedListNode list2)
             {
                 var len1 = Length(list1);
                 var len2 = Length(list2);
@@ -1239,7 +1240,7 @@ namespace TWL_Algorithms_Samples.LinkedList
                 }
             }
 
-            private PartialSum AddListsHelper(LinkedListNode list1, LinkedListNode list2)
+            private PartialSum AddListsHelper(MyLinkedListNode list1, MyLinkedListNode list2)
             {
                 if (list1 == null && list2 == null)
                 {
@@ -1262,10 +1263,10 @@ namespace TWL_Algorithms_Samples.LinkedList
                 return sum;
             }
 
-            private LinkedListNode insertBefore(LinkedListNode list, int data)
+            private MyLinkedListNode insertBefore(MyLinkedListNode list, int data)
             {
-                var listD = (LinkedListNodeDoubly)list;
-                var node = new LinkedListNodeDoubly(data, null, null);
+                var listD = (MyLinkedListNodeDoubly)list;
+                var node = new MyLinkedListNodeDoubly(data, null, null);
 
                 if (listD != null)
                 {
@@ -1276,7 +1277,7 @@ namespace TWL_Algorithms_Samples.LinkedList
                 return node;
             }
 
-            private int Length(LinkedListNode l)
+            private int Length(MyLinkedListNode l)
             {
                 if (l == null)
                 {
@@ -1288,7 +1289,7 @@ namespace TWL_Algorithms_Samples.LinkedList
                 }
             }
 
-            private int linkedListToInt(LinkedListNode node)
+            private int linkedListToInt(MyLinkedListNode node)
             {
                 int value = 0;
 
@@ -1301,13 +1302,13 @@ namespace TWL_Algorithms_Samples.LinkedList
                 return value;
             }
 
-            private LinkedListNode PadList(LinkedListNode listNode, int padding)
+            private MyLinkedListNode PadList(MyLinkedListNode listNode, int padding)
             {
-                var head = (LinkedListNodeDoubly)listNode;
+                var head = (MyLinkedListNodeDoubly)listNode;
 
                 for (var i = 0; i < padding; i++)
                 {
-                    var n = new LinkedListNodeDoubly(0, null, null);
+                    var n = new MyLinkedListNodeDoubly(0, null, null);
                     head.Prev = n;
                     n.Next = head;
                     head = n;
@@ -1319,7 +1320,7 @@ namespace TWL_Algorithms_Samples.LinkedList
             private class PartialSum
             {
                 public int Carry = 0;
-                public LinkedListNode Sum = null;
+                public MyLinkedListNode Sum = null;
             }
 
             #endregion Followup
@@ -1329,13 +1330,13 @@ namespace TWL_Algorithms_Samples.LinkedList
                 #region First Part
 
                 {
-                    var lA1 = new LinkedListNodeDoubly(9, null, null);
-                    var lA2 = new LinkedListNodeDoubly(9, null, lA1);
-                    var lA3 = new LinkedListNodeDoubly(9, null, lA2);
+                    var lA1 = new MyLinkedListNodeDoubly(9, null, null);
+                    var lA2 = new MyLinkedListNodeDoubly(9, null, lA1);
+                    var lA3 = new MyLinkedListNodeDoubly(9, null, lA2);
 
-                    var lB1 = new LinkedListNodeDoubly(1, null, null);
-                    var lB2 = new LinkedListNodeDoubly(0, null, lB1);
-                    var lB3 = new LinkedListNodeDoubly(0, null, lB2);
+                    var lB1 = new MyLinkedListNodeDoubly(1, null, null);
+                    var lB2 = new MyLinkedListNodeDoubly(0, null, lB1);
+                    var lB3 = new MyLinkedListNodeDoubly(0, null, lB2);
 
                     var list3 = AddLists(lA1, lB1, 0);
 
@@ -1356,13 +1357,13 @@ namespace TWL_Algorithms_Samples.LinkedList
                 #region Followup
 
                 {
-                    var lA1 = new LinkedListNodeDoubly(3, null, null);
-                    var lA2 = new LinkedListNodeDoubly(1, null, lA1);
+                    var lA1 = new MyLinkedListNodeDoubly(3, null, null);
+                    var lA2 = new MyLinkedListNodeDoubly(1, null, lA1);
                     //LinkedListNode lA3 = new LinkedListNode(5, null, lA2);
 
-                    var lB1 = new LinkedListNodeDoubly(5, null, null);
-                    var lB2 = new LinkedListNodeDoubly(9, null, lB1);
-                    var lB3 = new LinkedListNodeDoubly(1, null, lB2);
+                    var lB1 = new MyLinkedListNodeDoubly(5, null, null);
+                    var lB2 = new MyLinkedListNodeDoubly(9, null, lB1);
+                    var lB3 = new MyLinkedListNodeDoubly(1, null, lB2);
 
                     var list3 = AddLists2(lA1, lB1);
 

@@ -2,9 +2,9 @@
 
 namespace TWL_Algorithms_Samples.Stack
 {
-    public class StackAsArray : Stack
+    public class MyStackAsArray : MyStack
     {
-        public StackAsArray(int size)
+        public MyStackAsArray(int size)
         {
             Create(size);
         }

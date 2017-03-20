@@ -9,7 +9,7 @@
 
         public void RunBasicOperations()
         {
-            StackAsLinkList stackAsLinkList = new StackAsLinkList();
+            MyStackAsLinkList stackAsLinkList = new MyStackAsLinkList();
             stackAsLinkList.Push(10);
             stackAsLinkList.Push(20);
             stackAsLinkList.Push(30);
@@ -17,7 +17,7 @@
             stackAsLinkList.Pop();
             stackAsLinkList.Print();
 
-            StackAsArray stackAsArray = new StackAsArray(10);
+            MyStackAsArray stackAsArray = new MyStackAsArray(10);
             stackAsArray.Push(10);
             stackAsArray.Print();
             stackAsArray.Push(20);

@@ -9,7 +9,7 @@
 
         public void RunBasicOperations()
         {
-            QueueAsLinkList QueueAsLinkList = new QueueAsLinkList();
+            MyQueueAsLinkList QueueAsLinkList = new MyQueueAsLinkList();
             QueueAsLinkList.Add(10);
             QueueAsLinkList.Add(20);
             QueueAsLinkList.Add(30);

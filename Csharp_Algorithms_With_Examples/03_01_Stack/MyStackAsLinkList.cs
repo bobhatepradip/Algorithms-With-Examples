@@ -3,18 +3,18 @@ using TWL_Algorithms_Samples.LinkedList;
 
 namespace TWL_Algorithms_Samples.Stack
 {
-    public class StackAsLinkList : Stack
+    public class MyStackAsLinkList : MyStack
     {
-        public StackAsLinkList()
+        public MyStackAsLinkList()
         {
             Create();
         }
 
-        private LinkedListNodeSingly linkListhead { get; set; }
+        private MyLinkedListNodeSingly linkListhead { get; set; }
 
         public override void Create()
         {
-            linkListhead = new LinkedListNodeSingly();
+            linkListhead = new MyLinkedListNodeSingly();
         }
 
         public override void Destroy()
@@ -37,7 +37,7 @@ namespace TWL_Algorithms_Samples.Stack
             var deletedNodeData = linkListhead.Data;
             if (linkListhead.Next != null)
             {
-                linkListhead.Next = (LinkedListNodeSingly)linkListhead.Next.Next;
+                linkListhead.Next = (MyLinkedListNodeSingly)linkListhead.Next.Next;
                 Console.WriteLine($"Poped:{deletedNodeData}");
             }
             return deletedNodeData;
@@ -50,7 +50,7 @@ namespace TWL_Algorithms_Samples.Stack
 
         public override void Push(object obj)
         {
-            LinkedListNodeSingly newLinkListNode = new LinkedListNodeSingly(obj);
+            MyLinkedListNodeSingly newLinkListNode = new MyLinkedListNodeSingly(obj);
             if (linkListhead.Next != null)
             {
                 newLinkListNode.SetNext(linkListhead.Next);

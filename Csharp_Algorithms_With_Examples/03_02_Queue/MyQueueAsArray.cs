@@ -2,7 +2,7 @@
 
 namespace TWL_Algorithms_Samples.Queue
 {
-    public class QueueAsArray : Queue
+    public class MyQueueAsArray : Queue
     {
         private int Max { get; set; }
         private int CurrentIndex { get; set; }
@@ -11,7 +11,7 @@ namespace TWL_Algorithms_Samples.Queue
         {
             throw new NotImplementedException();
         }
-        public QueueAsArray(int size)
+        public MyQueueAsArray(int size)
         {
             Create(size);
         }

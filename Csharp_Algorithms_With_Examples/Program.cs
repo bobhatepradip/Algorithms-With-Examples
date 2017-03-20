@@ -6,6 +6,7 @@ using TWL_Algorithms_Samples.LinkedList;
 using TWL_Algorithms_Samples.Queue;
 using TWL_Algorithms_Samples.SortingAndSearching;
 using TWL_Algorithms_Samples.Stack;
+using TWL_Algorithms_Samples.Tree;
 
 internal class Program
 {
@@ -20,6 +21,7 @@ internal class Program
         new BitManipulationUtility().Run();
         new Sorting().Run();
         new SortingAndSearchingUtility().Run();
+        new TreeUtility().Run();
         Console.WriteLine("======================================================================");
         Console.WriteLine("Press any key to quit");
         Console.ReadKey();

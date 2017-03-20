@@ -177,16 +177,24 @@ namespace TWL_Algorithms_Samples.Arrays
             }
         }
 
+        /// <summary>
+        /// nums={1,2,3,4,5,6,7} k=3
+        /// revNums={7,6,5,4,3,2,1}
+        /// outputNums={rev(0, nums.Length-k), rev(nums.Length-k-1, nums.Lenght)}
+        /// outputNums={{4,5,6,7},{1,2,3}}
+        /// </summary>
+        /// <param name="nums"></param>
+        /// <param name="k"></param>
         public void RotateArray(int[] nums, int k)
         {
             Reverse(nums, 0, nums.Length - 1);
-            Reverse(nums, 0, k - 1);
-            Reverse(nums, k, nums.Length - 1);
+            Reverse(nums, 0, nums.Length - k - 1);
+            Reverse(nums, nums.Length - k, nums.Length - 1);
         }
 
         public void RotateArray_Run()
         {
-            var testArrayRotation = GetArray_Serial(1, 7);
+            var testArrayRotation = GetArray_Serial(1, 10);
             testArrayRotation.Print("Before Array Rotation:");
             RotateArray(testArrayRotation, 3);
             testArrayRotation.Print("After Array Rotation:");
@@ -285,6 +293,7 @@ namespace TWL_Algorithms_Samples.Arrays
             //ProductAllExceptSelf(new int[] { 1, 2, 3, 4 });
             //RotateArray_Run();
         }
+
         public int[] TwoSumInSortedArray(int[] num, int target)
         {
             num.Print("input:");

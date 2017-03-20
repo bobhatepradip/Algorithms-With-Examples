@@ -4,9 +4,9 @@ using System.Diagnostics;
 namespace TWL_Algorithms_Samples.LinkedList
 {
     [DebuggerDisplay("Data = {Data}")]
-    public class LinkedListNodeDoubly : LinkedListNode, ILinkedListNodeDoubly
+    public class MyLinkedListNodeDoubly : MyLinkedListNode, IMyLinkedListNodeDoubly
     {
-        public LinkedListNodeDoubly(object d, LinkedListNodeDoubly n, LinkedListNodeDoubly p)
+        public MyLinkedListNodeDoubly(object d, MyLinkedListNodeDoubly n, MyLinkedListNodeDoubly p)
         {
             Data = d;
             SetNext(n);
@@ -30,28 +30,28 @@ namespace TWL_Algorithms_Samples.LinkedList
         //    SetPrevious(p);
         //}
 
-        public LinkedListNodeDoubly()
+        public MyLinkedListNodeDoubly()
         { }
 
-        public LinkedListNodeDoubly Prev { get; set; }
+        public MyLinkedListNodeDoubly Prev { get; set; }
 
-        public override LinkedListNode Clone()
+        public override MyLinkedListNode Clone()
         {
-            return (LinkedListNode)CloneLinkedListNodeDoubly();
+            return (MyLinkedListNode)CloneLinkedListNodeDoubly();
         }
 
-        public LinkedListNodeDoubly CloneLinkedListNodeDoubly()
+        public MyLinkedListNodeDoubly CloneLinkedListNodeDoubly()
         {
-            LinkedListNodeDoubly next2 = null;
+            MyLinkedListNodeDoubly next2 = null;
             if (Next != null)
             {
-                next2 = (LinkedListNodeDoubly)((LinkedListNode)Next).Clone();
+                next2 = (MyLinkedListNodeDoubly)((MyLinkedListNode)Next).Clone();
             }
-            LinkedListNodeDoubly head2 = new LinkedListNodeDoubly(Data, next2, null);
+            MyLinkedListNodeDoubly head2 = new MyLinkedListNodeDoubly(Data, next2, null);
             return head2;
         }
 
-        public override bool DeleteNode(LinkedListNode node)
+        public override bool DeleteNode(MyLinkedListNode node)
         {
             if (node == null || node.Next == null)
             {
@@ -88,9 +88,9 @@ namespace TWL_Algorithms_Samples.LinkedList
             PrintForward();
         }
 
-        public override void SetNext(LinkedListNode n)
+        public override void SetNext(MyLinkedListNode n)
         {
-            LinkedListNodeDoubly newNextNode = (LinkedListNodeDoubly)n;
+            MyLinkedListNodeDoubly newNextNode = (MyLinkedListNodeDoubly)n;
             Next = newNextNode;
             if (this == CurrentNode)
             {
@@ -102,7 +102,7 @@ namespace TWL_Algorithms_Samples.LinkedList
             }
         }
 
-        public void SetPrevious(LinkedListNodeDoubly p)
+        public void SetPrevious(MyLinkedListNodeDoubly p)
         {
             Prev = p;
             if (p != null && p.Next != this)

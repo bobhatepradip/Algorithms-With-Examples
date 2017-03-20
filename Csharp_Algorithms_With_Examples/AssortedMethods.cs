@@ -32,49 +32,6 @@ namespace TWL_Algorithms_Samples
             return buffer.ToString();
         }
 
-        //public static TreeNode CreateTreeFromArray(int[] array)
-        //{
-        //    if (array.Length > 0)
-        //    {
-        //        var root = new TreeNode(array[0]);
-        //        var queue = new Queue<TreeNode>();
-        //        queue.Enqueue(root);
-        //        var done = false;
-        //        var i = 1;
-
-        //        while (!done)
-        //        {
-        //            var treeNode = queue.Peek();
-
-        //            if (treeNode.Left == null)
-        //            {
-        //                treeNode.Left = new TreeNode(array[i]);
-        //                i++;
-        //                queue.Enqueue(treeNode.Left);
-        //            }
-        //            else if (treeNode.Right == null)
-        //            {
-        //                treeNode.Right = new TreeNode(array[i]);
-        //                i++;
-        //                queue.Enqueue(treeNode.Right);
-        //            }
-        //            else
-        //            {
-        //                queue.Dequeue();
-        //            }
-
-        //            if (i == array.Length)
-        //            {
-        //                done = true;
-        //            }
-        //        }
-
-        //        return root;
-        //    }
-
-        //    return null;
-        //}
-
         public static string[] GetListOfWords()
         {
             // Words in the dictionary.
@@ -2192,14 +2149,14 @@ namespace TWL_Algorithms_Samples
             return RandomInt(max + 1 - min) + min;
         }
 
-        public static LinkedListNode RandomLinkedListDoubly(int N, int min, int max)
+        public static MyLinkedListNode RandomLinkedListDoubly(int N, int min, int max)
         {
-            LinkedListNode root = new LinkedListNodeDoubly(RandomIntInRange(min, max), null, null);
-            LinkedListNode prev = root;
+            MyLinkedListNode root = new MyLinkedListNodeDoubly(RandomIntInRange(min, max), null, null);
+            MyLinkedListNode prev = root;
             for (int i = 1; i < N; i++)
             {
                 int data = RandomIntInRange(min, max);
-                LinkedListNode next = new LinkedListNodeDoubly(data, null, null);
+                MyLinkedListNode next = new MyLinkedListNodeDoubly(data, null, null);
                 prev.SetNext(next);
                 prev = next;
             }

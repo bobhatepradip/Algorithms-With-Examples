@@ -1,14 +1,14 @@
-﻿namespace TWL_Algorithms_Samples.Queue
+﻿namespace TWL_Algorithms_Samples.Stack
 {
-    public abstract class Queue
+    public abstract class MyStack
     {
         public abstract void Create();
 
         public abstract void Destroy();
 
-        public abstract object Remove();
+        public abstract object Pop();
 
-        public abstract void Add(object obj);
+        public abstract void Push(object obj);
 
         public abstract void Print();
 
