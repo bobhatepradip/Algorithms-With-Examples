@@ -5,14 +5,14 @@ namespace TWL_Algorithms_Samples.Tree
 {
     public class BTreePrinter
     {
-        public static void PrintNode(TreeNodeBinary root)
+        public static void PrintNode(BinaryTreeNode root)
         {
             int maxLevel = BTreePrinter.MaxLevel(root);
 
-            PrintNodeInternal(new List<TreeNodeBinary>() { root }, 1, maxLevel);
+            PrintNodeInternal(new List<BinaryTreeNode>() { root }, 1, maxLevel);
         }
 
-        private static void PrintNodeInternal(List<TreeNodeBinary> nodes, int level, int maxLevel)
+        private static void PrintNodeInternal(List<BinaryTreeNode> nodes, int level, int maxLevel)
         {
             if (nodes.Count == 0 || BTreePrinter.IsAllElementsNull(nodes))
                 return;
@@ -24,8 +24,8 @@ namespace TWL_Algorithms_Samples.Tree
 
             BTreePrinter.PrintWhitespaces(firstSpaces);
 
-            List<TreeNodeBinary> newNodes = new List<TreeNodeBinary>();
-            foreach (TreeNodeBinary node in nodes)
+            List<BinaryTreeNode> newNodes = new List<BinaryTreeNode>();
+            foreach (BinaryTreeNode node in nodes)
             {
                 if (node != null)
                 {
@@ -85,7 +85,7 @@ namespace TWL_Algorithms_Samples.Tree
             //    Console.Write(" ");
         }
 
-        private static int MaxLevel(TreeNodeBinary node)
+        private static int MaxLevel(BinaryTreeNode node)
         {
             if (node == null)
                 return 0;

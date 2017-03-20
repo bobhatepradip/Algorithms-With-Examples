@@ -1,56 +1,66 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using TWL_Algorithms_Samples.Arrays;
 
 namespace TWL_Algorithms_Samples.Tree
 {
     public class TreeUtility
     {
-        public void Run()
+        private int[] arraySample = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+
+        public void BinaryTreeCreation_Run()
         {
-            var binaryTree = BinaryTree_CreateFromArray(new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 });
+            var binaryTree = BinaryTreeNode.Create_FromArray_InsertInOrder(arraySample);
+            arraySample.Print("Input for Create_FromArray_InsertInOrder:");
             binaryTree.Print();
+            var binaryTree2 = BinaryTreeNode.Create_Random(10, 0, 9);
+            binaryTree2.Print();
+            Console.WriteLine($"CheckIfBinaryTreeIsBinarySearchTree ={CheckIfBinaryTreeIsBinarySearchTree(binaryTree2)}");
         }
 
-        public static TreeNodeBinary BinaryTree_CreateFromArray(int[] array)
+        public void BinarySearchTreeCreation_Run()
         {
-            if (array.Length > 0)
+            /* Will take a look at at when get time
+            var binarySearchTree = BinarySearchTreeNode.Create_Random(10, 0, 9);
+            binarySearchTree.Print();
+            Console.WriteLine($"CheckIfBinaryTreeIsBinarySearchTree ={CheckIfBinaryTreeIsBinarySearchTree((BinaryTreeNode)binarySearchTree)}");
+            */
+            //arraySample.Reverse();
+
+            var binarySearchTree2 = BinarySearchTreeNode.CreateMinimalBinarySearchTree(arraySample);
+            arraySample.Print("Input for CreateMinimalBinarySearchTree:");
+            binarySearchTree2.Print();
+            Console.WriteLine($"CheckIfBinaryTreeIsBinarySearchTree ={CheckIfBinaryTreeIsBinarySearchTree(binarySearchTree2)}");
+
+            var binarySearchTree3 = BinarySearchTreeNode.CreateMinimalBinarySearchTree(arraySample, 0, 4);
+            arraySample.Print("\nInput CreateMinimalBinarySearchTree(arr, start, end):", 0, 4);
+            binarySearchTree3.Print();
+        }
+
+        public bool CheckIfBinaryTreeIsBinarySearchTree(BinaryTreeNode binaryTreeNode)
+        {
+            if (binaryTreeNode.Left != null)
             {
-                var root = new TreeNodeBinary(array[0]);
-                var queue = new Queue<TreeNodeBinary>();
-                queue.Enqueue(root);
-                var done = false;
-                var i = 1;
-
-                while (!done)
+                if (binaryTreeNode.Data < binaryTreeNode.Left.Data || !CheckIfBinaryTreeIsBinarySearchTree(binaryTreeNode.Left))
                 {
-                    var treeNode = queue.Peek();
-
-                    if (treeNode.Left == null)
-                    {
-                        treeNode.Left = new TreeNodeBinary(array[i]);
-                        i++;
-                        queue.Enqueue(treeNode.Left);
-                    }
-                    else if (treeNode.Right == null)
-                    {
-                        treeNode.Right = new TreeNodeBinary(array[i]);
-                        i++;
-                        queue.Enqueue(treeNode.Right);
-                    }
-                    else
-                    {
-                        queue.Dequeue();
-                    }
-
-                    if (i == array.Length)
-                    {
-                        done = true;
-                    }
+                    return false;
                 }
-
-                return root;
             }
 
-            return null;
+            if (binaryTreeNode.Right != null)
+            {
+                if (binaryTreeNode.Data >= binaryTreeNode.Right.Data || !CheckIfBinaryTreeIsBinarySearchTree(binaryTreeNode.Right))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        public void Run()
+        {
+            BinaryTreeCreation_Run();
+            BinarySearchTreeCreation_Run();
         }
     }
 }

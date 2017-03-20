@@ -1,9 +1,24 @@
 ﻿using System;
+using System.Text;
 
 namespace TWL_Algorithms_Samples.Arrays
 {
     public class ArrayUtility
     {
+        public static string CharArrayToString(char[] array)
+        {
+            StringBuilder buffer = new StringBuilder(array.Length);
+            foreach (char c in array)
+            {
+                if (c == 0)
+                {
+                    break;
+                }
+                buffer.Append(c);
+            }
+            return buffer.ToString();
+        }
+
         public static int[] GetArray_Serial(int min, int max)
         {
             int[] arrayInt = new int[(max - min) + 1];

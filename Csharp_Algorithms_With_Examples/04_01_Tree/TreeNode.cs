@@ -2,14 +2,17 @@
 {
     public class TreeNode
     {
+        public TreeNode[] childrens;
+
+        public object genericObject;
+
+        public string name;
+
+        public int value;
+
         public TreeNode(int val)
         {
             this.value = val;
         }
-
-        public string name;
-        public object genericObject;
-        public int value;
-        public TreeNodeBinary[] childrens;
     }
 }

@@ -18,20 +18,6 @@ namespace TWL_Algorithms_Samples
             return sb.ToString();
         }
 
-        public static string CharArrayToString(char[] array)
-        {
-            StringBuilder buffer = new StringBuilder(array.Length);
-            foreach (char c in array)
-            {
-                if (c == 0)
-                {
-                    break;
-                }
-                buffer.Append(c);
-            }
-            return buffer.ToString();
-        }
-
         public static string[] GetListOfWords()
         {
             // Words in the dictionary.
@@ -2128,17 +2114,6 @@ namespace TWL_Algorithms_Samples
             return RandomIntInRange(1, 100) <= percentTrue;
         }
 
-        //public static TreeNode RandomBst(int N, int min, int max)
-        //{
-        //    int d = RandomIntInRange(min, max);
-        //    TreeNode root = new TreeNode(d);
-        //    for (int i = 1; i < N; i++)
-        //    {
-        //        root.InsertInOrder(RandomIntInRange(min, max));
-        //    }
-        //    return root;
-        //}
-
         public static int RandomInt(int n)
         {
             return RandomIntNumbers.Next(n);
@@ -2212,7 +2187,5 @@ namespace TWL_Algorithms_Samples
 
             return binaryString;
         }
-
-        /* Creates tree by mapping the array left to right, top to bottom. */
     }
 }

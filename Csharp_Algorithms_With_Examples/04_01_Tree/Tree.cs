@@ -2,6 +2,6 @@
 {
     public class Tree
     {
-        public TreeNodeBinary root;
+        public TreeNode root;
     }
 }

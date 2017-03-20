@@ -45,8 +45,9 @@
   <ItemGroup>
     <Compile Include="01_01_Arrays\ArrayUtility.cs" />
     <Compile Include="01_01_Arrays\ArrayExtensions.cs" />
+    <Compile Include="04_01_Tree\BinarySearchTreeNode.cs" />
     <Compile Include="04_01_Tree\BTreePrinter.cs" />
-    <Compile Include="04_01_Tree\TreeNodeBinary.cs" />
+    <Compile Include="04_01_Tree\BinaryTreeNode.cs" />
     <Compile Include="04_01_Tree\TreeNode.cs" />
     <Compile Include="04_02_Graph\Graph.cs" />
     <Compile Include="04_02_Graph\GraphUtility.cs" />

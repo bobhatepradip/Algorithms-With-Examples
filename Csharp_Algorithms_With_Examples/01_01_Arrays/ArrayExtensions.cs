@@ -10,6 +10,20 @@ namespace TWL_Algorithms_Samples.Arrays
             array.Print();
         }
 
+        public static void Reverse(this int[] nums, int start = 0, int end = 0)
+        {
+            if (end == 0)
+            {
+                end = nums.Length - 1;
+            }
+            while (start < end)
+            {
+                nums.Swap(start, end);
+                start++;
+                end--;
+            }
+        }
+
         public static void Print(this int[] array)
         {
             string printString = "{";
