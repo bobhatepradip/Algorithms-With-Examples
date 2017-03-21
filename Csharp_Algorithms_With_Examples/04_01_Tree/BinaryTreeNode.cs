@@ -71,6 +71,38 @@ namespace TWL_Algorithms_Samples.Tree
             return null;
         }
 
+        public static BinaryTreeNode Create_Random(int N, int min, int max)
+        {
+            int[] dataArray = new int[N];
+            int d = AssortedMethods.RandomIntInRange(min, max);
+            BinaryTreeNode root = new BinaryTreeNode(d);
+            dataArray[0] = d;
+            for (int i = 1; i < N; i++)
+            {
+                dataArray[i] = AssortedMethods.RandomIntInRange(min, max);
+            }
+            dataArray.Print();
+            for (int i = 1; i < N; i++)
+            {
+                // Console.WriteLine($"Processing dataArray[i]='{dataArray[i]}' ");
+                root.InsertInOrder(dataArray[i]);
+            }
+            return root;
+        }
+
+        public static BinaryTreeNode Create_Serial(int min, int max)
+        {
+            BinaryTreeNode root = new BinaryTreeNode(min);
+            min++;
+            while (min <= max)
+            {
+                // Console.WriteLine($"Processing dataArray[i]='{dataArray[i]}' ");
+                root.InsertInOrder(min);
+                min++;
+            }
+            return root;
+        }
+
         public BinaryTreeNode Find(int data)
         {
             if (data == this.Data)
@@ -97,50 +129,6 @@ namespace TWL_Algorithms_Samples.Tree
             //1 for root
             return 1 + Math.Max(leftHeight, rightHeight);
         }
-
-        public static BinaryTreeNode Create_Random(int N, int min, int max)
-        {
-            int[] dataArray = new int[N];
-            int d = AssortedMethods.RandomIntInRange(min, max);
-            BinaryTreeNode root = new BinaryTreeNode(d);
-            dataArray[0] = d;
-            for (int i = 1; i < N; i++)
-            {
-                dataArray[i] = AssortedMethods.RandomIntInRange(min, max);
-            }
-            dataArray.Print();
-            for (int i = 1; i < N; i++)
-            {
-                // Console.WriteLine($"Processing dataArray[i]='{dataArray[i]}' ");
-                root.InsertInOrder(dataArray[i]);
-            }
-            return root;
-        }
-
-        public void InsertInOrder2(int data)
-        {
-            if (this.Left == null)
-            {
-                //Console.WriteLine($"Added '{data}' Left of '{this.Data}' ");
-                SetLeftChild(new BinaryTreeNode(data));
-                Size++;
-            }
-            else if (this.Right == null)
-            {
-                //Console.WriteLine($"Added '{data}' Right of '{this.Data}' ");
-                SetRightChild(new BinaryTreeNode(data));
-                Size++;
-            }
-            else if (this.Left.Size <= 2)
-            {
-                this.Left.InsertInOrder2(data);
-            }
-            else
-            {
-                this.Right.InsertInOrder2(data);
-            }
-        }
-
         public void InsertInOrder(int data)
         {
             // Console.WriteLine("BTN InsertInOrder");
@@ -170,6 +158,29 @@ namespace TWL_Algorithms_Samples.Tree
             Size++;
         }
 
+        public void InsertInOrder2(int data)
+        {
+            if (this.Left == null)
+            {
+                //Console.WriteLine($"Added '{data}' Left of '{this.Data}' ");
+                SetLeftChild(new BinaryTreeNode(data));
+                Size++;
+            }
+            else if (this.Right == null)
+            {
+                //Console.WriteLine($"Added '{data}' Right of '{this.Data}' ");
+                SetRightChild(new BinaryTreeNode(data));
+                Size++;
+            }
+            else if (this.Left.Size <= 2)
+            {
+                this.Left.InsertInOrder2(data);
+            }
+            else
+            {
+                this.Right.InsertInOrder2(data);
+            }
+        }
         public void InsertInOrderMain(int data)
         {
             Console.WriteLine("BTN InsertInOrder");
@@ -199,9 +210,9 @@ namespace TWL_Algorithms_Samples.Tree
             Size++;
         }
 
-        public void Print()
+        public void Print(string header = "")
         {
-            BTreePrinter.PrintNode(this);
+            BTreePrinter.PrintNode(this, header);
         }
 
         public void SetLeftChild(BinaryTreeNode left)

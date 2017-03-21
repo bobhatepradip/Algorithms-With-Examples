@@ -57,7 +57,7 @@ namespace TWL_Algorithms_Samples.Tree
                 }
                 else
                 {
-                   this.Left.InsertInOrder(data);
+                    this.Left.InsertInOrder(data);
                 }
             }
             else

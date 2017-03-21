@@ -5,11 +5,34 @@ namespace TWL_Algorithms_Samples.Tree
 {
     public class BTreePrinter
     {
-        public static void PrintNode(BinaryTreeNode root)
+        public static void PrintNode(BinaryTreeNode root, string header = "")
         {
             int maxLevel = BTreePrinter.MaxLevel(root);
+            if (!string.IsNullOrEmpty(header))
+            {
+                Console.WriteLine($"Max Level ={maxLevel} {header}");
+            }
 
             PrintNodeInternal(new List<BinaryTreeNode>() { root }, 1, maxLevel);
+        }
+
+        private static bool IsAllElementsNull<T>(IEnumerable<T> list)
+        {
+            foreach (object o in list)
+            {
+                if (o != null)
+                    return false;
+            }
+
+            return true;
+        }
+
+        private static int MaxLevel(BinaryTreeNode node)
+        {
+            if (node == null)
+                return 0;
+
+            return Math.Max(BTreePrinter.MaxLevel(node.Left), BTreePrinter.MaxLevel(node.Right)) + 1;
         }
 
         private static void PrintNodeInternal(List<BinaryTreeNode> nodes, int level, int maxLevel)
@@ -83,25 +106,6 @@ namespace TWL_Algorithms_Samples.Tree
             Console.Write(padding, " ");
             //for (int i = 0; i < count; i++)
             //    Console.Write(" ");
-        }
-
-        private static int MaxLevel(BinaryTreeNode node)
-        {
-            if (node == null)
-                return 0;
-
-            return Math.Max(BTreePrinter.MaxLevel(node.Left), BTreePrinter.MaxLevel(node.Right)) + 1;
-        }
-
-        private static bool IsAllElementsNull<T>(IEnumerable<T> list)
-        {
-            foreach (object o in list)
-            {
-                if (o != null)
-                    return false;
-            }
-
-            return true;
         }
     }
 }
