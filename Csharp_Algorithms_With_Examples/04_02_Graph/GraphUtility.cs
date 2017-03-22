@@ -1,4 +1,4 @@
-﻿namespace TWL_Algorithms_Samples.Tree
+﻿namespace TWL_Algorithms_Samples.Graph
 {
     public class GraphUtility
     {

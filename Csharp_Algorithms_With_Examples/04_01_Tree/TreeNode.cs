@@ -4,11 +4,11 @@
     {
         public TreeNode[] childrens;
 
-        public object genericObject;
+        //public object genericObject;
 
         public string name;
 
-        public int value;
+        //public int value;
 
         public TreeNode(int val)
         {

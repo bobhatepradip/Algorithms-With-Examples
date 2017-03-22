@@ -129,6 +129,7 @@ namespace TWL_Algorithms_Samples.Tree
             //1 for root
             return 1 + Math.Max(leftHeight, rightHeight);
         }
+
         public void InsertInOrder(int data)
         {
             // Console.WriteLine("BTN InsertInOrder");
@@ -181,6 +182,7 @@ namespace TWL_Algorithms_Samples.Tree
                 this.Right.InsertInOrder2(data);
             }
         }
+
         public void InsertInOrderMain(int data)
         {
             Console.WriteLine("BTN InsertInOrder");

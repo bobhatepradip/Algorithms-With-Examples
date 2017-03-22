@@ -60,6 +60,7 @@
     <Compile Include="03_01_Stack\MyStackAsLinkList.cs" />
     <Compile Include="03_01_Stack\MyStackAsArray.cs" />
     <Compile Include="03_01_Stack\MyStack.cs" />
+    <Compile Include="04_02_Graph\GraphNode.cs" />
     <Compile Include="05_BitManipulation\BitManipulatorUtility.cs" />
     <Compile Include="10_SortingAndSearching\SortingAndSearchingUtility.cs" />
     <Compile Include="01_02_Strings\CharExtension.cs" />

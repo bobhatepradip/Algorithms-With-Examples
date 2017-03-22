@@ -207,6 +207,7 @@ namespace TWL_Algorithms_Samples.Tree
             prev = node;
             return ValidateBinarySearchTree2(node.Right, prev);
         }
+
         /// <summary>
         /// Max Depth of tree is Height of tree
         /// </summary>
@@ -236,6 +237,7 @@ namespace TWL_Algorithms_Samples.Tree
 
             return Math.Max(MaxDepth(node.Left), MaxDepth(node.Right)) + 1;
         }
+
         private void BinaryTreePathsList(BinaryTreeNode root, String path, List<String> answer)
         {
             if (root.Left == null && root.Right == null) answer.Add(path + root.Data);
