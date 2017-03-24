@@ -2,12 +2,12 @@
 {
     internal static class CharExtension
     {
-        public static int GetCharNumber(this char c)
+        public static int GetCharNumber(this char charecter)
         {
             var a = (int)char.GetNumericValue('a');
             var z = (int)char.GetNumericValue('z');
 
-            var val = (int)char.GetNumericValue(c);
+            var val = (int)char.GetNumericValue(charecter);
             if (a <= val && val <= z)
             {
                 return val - a;

@@ -150,7 +150,7 @@ namespace TWL_Algorithms_Samples.Tree
             //IsSameTree_Run();
             // HasPathSum_Run();
             //BinaryTreePaths_Run();
-            ValidateBinarySearchTree_Run();
+            //ValidateBinarySearchTree_Run();
         }
 
         public bool ValidateBinarySearchTree(BinaryTreeNode binaryTreeNode)

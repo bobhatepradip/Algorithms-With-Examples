@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Linq;
 using System.Text;
 using TWL_Algorithms_Samples.BitManipulation;
 using TWL_Algorithms_Samples.Char;
@@ -7,6 +9,12 @@ namespace TWL_Algorithms_Samples.Arrays.Strings
 {
     internal class StringUtility
     {
+        public string[] OneDTestStrings = new string[] { "abcabcbb", "bbbbb", "pwwkew" };
+        public string[][] TwoDTestStrings = new string[][]  {
+                new string[]{"apple", "pleap"},
+                new string[]{"waterbottle", "erbottlewat"},
+                new string[]{"camera", "macera"},
+            };
         public static bool IsRotation(String s1, String s2)
         {
             var string1Length = s1.Length;
@@ -29,6 +37,158 @@ namespace TWL_Algorithms_Samples.Arrays.Strings
 
         public void Compression_Run()
         {
+        }
+
+        public void IsAnagram_Run()
+        {
+            string[][] pairs =
+            {
+                new string[]{"anagram", "nagrama"},
+                new string[]{"anagram", "aaaaaaa"},
+                new string[]{ "anagram", "anag"}
+            };
+
+            foreach (var pair in pairs)
+            {
+                var word1 = pair[0];
+                var word2 = pair[1];
+                var isRotation = IsRotation(word1, word2);
+                Console.WriteLine("IsAnagram_UsingArray({0}, {1}): {2}", word1, word2, IsAnagram_UsingArray(word1, word2));
+
+                Console.WriteLine("IsAnagram_UsingHashtable({0}, {1}): {2}", word1, word2, IsAnagram_UsingHashtable(word1, word2));
+            }
+        }
+
+        public void PrintFrequencyOfCharecters_Run()
+        {
+            string[] testStrings = { "xyz", "test", "aaabb" };
+            // , "◣⚽◢⚡◣⚾⚡◢" -should be used only with Hash table implementation
+
+            foreach (var testString in testStrings)
+            {
+                //   PrintFrequency_UsingHashtable(testString);
+                PrintFrequencyOfCharecters_UsingArray(testString);
+            }
+        }
+
+        private static void PrintFrequencyOfCharecters_UsingArray(string testString)
+        {
+            Console.WriteLine($"PrintFrequency_UsingArray('{testString}'):");
+
+            char[] str = testString.ToCharArray();
+
+            int[] freq = new int[128];
+            for (int i = 0; i < str.Length; i++)
+            {
+                freq[str[i] - 'a']++;
+            }
+            for (int i = 0; i < 128; i++)
+            {
+                if (freq[i] > 0)
+                {
+                    Console.WriteLine("PrintFrequency_UsingArray:[" + (char)((char)i + 'a') + "] = " + freq[i]);
+                }
+            }
+        }
+
+        public int LengthOfLongestSubstring(String s)
+        {
+
+            if (s.Length == 0) return 0;
+            Hashtable map = new Hashtable();
+            int max = 0;
+            for (int i = 0, j = 0; i < s.Length; ++i)
+            {
+                if (map.ContainsKey(s[i]))
+                {
+                    j = Math.Max(j, i + 1);//(int)map[s[i]]
+                }
+                else
+                {
+                    map.Add(s[i], i);
+                }
+                max = Math.Max(max, i - j + 1);
+            }
+
+            // Console.WriteLine($"{string.Join(", ", map.Keys.Cast<object>().Select(x => x.ToString()).ToArray())}");
+            return max;
+        }
+
+        public void LengthOfLongestSubstring_Run()
+        {
+            foreach (string str in OneDTestStrings)
+            {
+                Console.WriteLine($"Input String='{str}' LengthOfLongestSubstring_Run={LengthOfLongestSubstring(str)}");
+            }
+        }
+
+        private static void PrintFrequencyOfCharecters_UsingHashtable(string testString)
+        {
+            Console.WriteLine($"PrintFrequency_UsingHashtable('{testString}'):");
+
+            char[] str = testString.ToCharArray();
+
+            Hashtable freq = new Hashtable();
+            for (int i = 0; i < str.Length; i++)
+            {
+                if (freq.ContainsKey(str[i]))
+                {
+                    freq[str[i]] = (int)freq[str[i]] + 1;
+                }
+                else
+                {
+                    freq.Add(str[i], 1);
+                }
+            }
+            foreach (DictionaryEntry dectionaryEntry in freq)
+            {
+                Console.WriteLine("PrintFrequency_UsingHashtable: [" + dectionaryEntry.Key + "] = " + dectionaryEntry.Value);
+            }
+        }
+
+        public bool IsAnagram_UsingArray(string s, string t)
+        {
+            if (s.Length != t.Length) return false;
+            int n = s.Length;
+            int[] counts = new int[26];
+            for (int i = 0; i < n; i++)
+            {
+                counts[s[i] - 'a']++;
+                counts[t[i] - 'a']--;
+            }
+            for (int i = 0; i < 26; i++)
+                if (counts[i] != 0) return false;
+            return true;
+        }
+
+        public bool IsAnagram_UsingHashtable(string s, string t)
+        {
+            if (s.Length != t.Length) return false;
+            int n = s.Length;
+            Hashtable hashtable = new Hashtable();
+            for (int i = 0; i < n; i++)
+            {
+                if (hashtable.ContainsKey(s[i]))
+                {
+                    hashtable[s[i]] = (int)hashtable[s[i]] + 1;
+                }
+                else
+                {
+                    hashtable.Add(s[i], 1);
+                }
+
+                if (hashtable.ContainsKey(t[i]))
+                {
+                    hashtable[t[i]] = (int)hashtable[t[i]] - 1;
+                }
+                else
+                {
+                    hashtable.Add(t[i], -1);
+                }
+            }
+            foreach (var hashValue in hashtable.Values)
+                if ((int)hashValue != 0) return false;
+            return true;
         }
 
         /// <summary>
@@ -140,6 +300,9 @@ namespace TWL_Algorithms_Samples.Arrays.Strings
             //IsRotation_Run();
             //isPalindrome_ConsiderOnlyAlphanumericCharectes_Run();
             //Reverse_Run();
+            //IsAnagram_Run();
+            //PrintFrequency_Run();
+            LengthOfLongestSubstring_Run();
         }
 
         public string Sort_TEMP(string str)

@@ -8,7 +8,7 @@
 
         public string name;
 
-        //public int value;
+        public int value;
 
         public TreeNode(int val)
         {
