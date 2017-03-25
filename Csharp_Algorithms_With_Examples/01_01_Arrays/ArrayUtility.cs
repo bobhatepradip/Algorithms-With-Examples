@@ -5,6 +5,9 @@ namespace TWL_Algorithms_Samples.Arrays
 {
     public class ArrayUtility
     {
+        public static int[] OneDArray = new int[] { 1, 2, 3, 4 };
+        public static int[][] TwoDArray = new int[][] { new int[] { 1, 1, 2, 3, 3, 4, 4 }, new int[] { 4, 4, 1, 1, 3, 2, 2 }, new int[] { 1, 2, 2, 3, 3 } };
+
         public static string CharArrayToString(char[] array)
         {
             StringBuilder buffer = new StringBuilder(array.Length);

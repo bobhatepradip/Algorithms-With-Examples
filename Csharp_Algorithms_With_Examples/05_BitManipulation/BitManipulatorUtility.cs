@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using TWL_Algorithms_Samples.Arrays;
 
 namespace TWL_Algorithms_Samples.BitManipulation
 {
@@ -7,159 +8,160 @@ namespace TWL_Algorithms_Samples.BitManipulation
     {
         public void Run()
         {
+            SingleNumber_Run();
         }
 
-        public class Q5_08_Draw_Line : IQuestion
+        /// <summary>
+        /// Given an array of integers, every element appears twice except for one. Find that single one.
+        /// </summary>
+        public void SingleNumber_Run()
         {
-            public static int ComputeByteNum(int width, int x, int y)
+            foreach (var testArray in ArrayUtility.TwoDArray)
             {
-                return (width * y + x) / 8;
-            }
-
-            public static void DrawLine(byte[] screen, int width, int x1, int x2, int y)
-            {
-                var startOffset = x1 % 8;
-                var firstFullByte = x1 / 8;
-
-                if (startOffset != 0)
-                {
-                    firstFullByte++;
-                }
-
-                var endOffset = x2 % 8;
-                var lastFullByte = x2 / 8;
-
-                if (endOffset != 7)
-                {
-                    lastFullByte--;
-                }
-
-                // Set full bytes
-                for (var b = firstFullByte; b <= lastFullByte; b++)
-                {
-                    screen[(width / 8) * y + b] = (byte)0xFF;
-                }
-
-                var startMask = (byte)(0xFF >> startOffset);
-                var endMask = (byte)~(0xFF >> (endOffset + 1));
-
-                // Set start and end of line
-                if ((x1 / 8) == (x2 / 8))
-                {
-                    // If x1 and x2 are in the same byte
-                    var mask = (byte)(startMask & endMask);
-                    screen[(width / 8) * y + (x1 / 8)] |= mask;
-                }
-                else
-                {
-                    if (startOffset != 0)
-                    {
-                        var byteNumber = (width / 8) * y + firstFullByte - 1;
-                        screen[byteNumber] |= startMask;
-                    }
-                    if (endOffset != 7)
-                    {
-                        var byteNumber = (width / 8) * y + lastFullByte + 1;
-                        screen[byteNumber] |= endMask;
-                    }
-                }
-            }
-
-            public static void PrintByte(byte b)
-            {
-                for (var i = 7; i >= 0; i--)
-                {
-                    Console.Write((b >> i) & 1);
-                }
-            }
-
-            public static void PrintScreen(byte[] screen, int width)
-            {
-                var height = screen.Length * 8 / width;
-
-                for (var r = 0; r < height; r++)
-                {
-                    for (var c = 0; c < width; c += 8)
-                    {
-                        var b = screen[ComputeByteNum(width, c, r)];
-                        PrintByte(b);
-                    }
-
-                    Console.WriteLine("");
-                }
-            }
-
-            public void Run()
-            {
-                const int width = 8 * 4;
-                const int height = 15;
-                var screen = new byte[width * height / 8];
-                //screen[1] = 13;
-
-                DrawLine(screen, width, 8, 10, 2);
-
-                PrintScreen(screen, width);
+                testArray.Print("Input");
+                Console.WriteLine($"SingleNumber: {SingleNumber_UsingXOR(testArray)} ");
             }
         }
 
-        public class Q5_07_Pairwise_Swap : IQuestion
+        private int SingleNumber_UsingXOR(int[] numbers)
         {
-            public static int SwapOddEvenBits(int x)
+            int result = 0;
+            for (int i = 0; i < numbers.Length; i++)
             {
-                return (int)(((x & 0xaaaaaaaa) >> 1) | ((x & 0x55555555) << 1));
+                result ^= numbers[i];
             }
+            return result;
+        }
 
+        public class Q5_01_Insertion : IQuestion
+        {
             public void Run()
             {
-                var a = 103217;
-                Console.WriteLine(a + ": " + AssortedMethods.ToFullBinarystring(a));
-                var b = SwapOddEvenBits(a);
-                Console.WriteLine(b + ": " + AssortedMethods.ToFullBinarystring(b));
+                Console.WriteLine(UpdateBits(100, 10, 2, 6));
+            }
+
+            private static int UpdateBits(int n, int m, int i, int j)
+            {
+                /* Create a mask to clear bits i  through j in n */
+                /* Example i = 2, j = 4. Result should be 11100011.
+                 * For simplicity, we'll use just 8 bits for the example. */
+
+                // Will equal sequence of all 1's
+                const int allOnes = ~0;
+
+                // 1's before position j, then 0s. left = 11100000
+                var left = allOnes << (j + 1);
+
+                // 1's after position i. right = 00000011
+                var right = ((1 << i) - 1);
+
+                // All 1's, except for 0's between i and i. mask 11100011
+                var mask = left | right;
+
+                /* Clear bits j through i then put m in there */
+                var nCleared = n & mask; // Clear bits j thorugh i.
+                var mShifted = m << i; // Move m into correct position.
+
+                return nCleared | mShifted;// OR them, and we're done
             }
         }
 
-        public class Q5_06_Conversion : IQuestion
+        public class Q5_02_Binary_to_String : IQuestion
         {
-            public static int BitSwapRequired(int number1, int number2)
-            {
-                var count = 0;
-
-                for (var c = number1 ^ number2; c != 0; c = c >> 1)
-                {
-                    count += c & 1;
-                }
-
-                return count;
-            }
-
-            public static int BitSwapRequired2(int number1, int number2)
-            {
-                var count = 0;
-
-                for (var c = number1 ^ number2; c != 0; c = c & (c - 1))
-                {
-                    count++;
-                }
-
-                return count;
-            }
-
             public void Run()
             {
-                var a = 23432;
-                var b = 512132;
-                Console.WriteLine(a + ": " + AssortedMethods.ToFullBinarystring(a));
-                Console.WriteLine(b + ": " + AssortedMethods.ToFullBinarystring(b));
+                var binaryString = PrintBinary2(.125);
+                Console.WriteLine(binaryString);
 
-                var nbits = BitSwapRequired(a, b);
-                var nbits2 = BitSwapRequired2(a, b);
+                for (var i = 0; i < 1000; i++)
+                {
+                    var num = i / 1000.0;
+                    var binary = PrintBinary(num);
+                    var binary2 = PrintBinary2(num);
 
-                Console.WriteLine("Required number of bits: " + nbits + " " + nbits2);
+                    if (!binary.Equals("ERROR") || !binary2.Equals("ERROR"))
+                    {
+                        Console.WriteLine(num + " : " + binary + " " + binary2);
+                    }
+                }
+            }
+
+            private string PrintBinary(double number)
+            {
+                if (number >= 1 || number <= 0)
+                {
+                    return "ERROR";
+                }
+
+                var binary = new StringBuilder();
+                binary.Append(".");
+
+                while (number > 0)
+                {
+                    /* Setting a limit on length: 32 characters */
+                    if (binary.Length > 32)
+                    {
+                        return "ERROR";
+                    }
+
+                    var r = number * 2;
+
+                    if (r >= 1)
+                    {
+                        binary.Append(1);
+                        number = r - 1;
+                    }
+                    else
+                    {
+                        binary.Append(0);
+                        number = r;
+                    }
+                }
+
+                return binary.ToString();
+            }
+
+            private string PrintBinary2(double number)
+            {
+                if (number >= 1 || number <= 0)
+                {
+                    return "ERROR";
+                }
+
+                var binary = new StringBuilder();
+                var frac = 0.5;
+                binary.Append(".");
+
+                while (number > 0)
+                {
+                    /* Setting a limit on length: 32 characters */
+                    if (binary.Length >= 32)
+                    {
+                        return "ERROR";
+                    }
+                    if (number >= frac)
+                    {
+                        binary.Append(1);
+                        number -= frac;
+                    }
+                    else
+                    {
+                        binary.Append(0);
+                    }
+                    frac /= 2;
+                }
+
+                return binary.ToString();
             }
         }
 
         public class Q5_04_Next_Number : IQuestion
         {
+            public static void BinPrint(int number)
+            {
+                Console.WriteLine(number + ": " + AssortedMethods.ToFullBinarystring(number));
+            }
+
             public static int CountOnes(int number)
             {
                 var count = 0;
@@ -180,85 +182,6 @@ namespace TWL_Algorithms_Samples.BitManipulation
             public static int CountZeros(int number)
             {
                 return 32 - CountOnes(number);
-            }
-
-            public static bool HasValidNext(int number)
-            {
-                if (number == 0)
-                {
-                    return false;
-                }
-                var count = 0;
-
-                while ((number & 1) == 0)
-                {
-                    number >>= 1;
-                    count++;
-                }
-
-                while ((number & 1) == 1)
-                {
-                    number >>= 1;
-                    count++;
-                }
-
-                if (count == 31)
-                {
-                    return false;
-                }
-
-                return true;
-            }
-
-            public static bool HasValidPrev(int number)
-            {
-                while ((number & 1) == 1)
-                {
-                    number >>= 1;
-                }
-
-                if (number == 0)
-                {
-                    return false;
-                }
-
-                return true;
-            }
-
-            public static int GetNextSlow(int number)
-            {
-                if (!HasValidNext(number))
-                {
-                    return -1;
-                }
-
-                var numOnes = CountOnes(number);
-                number++;
-
-                while (CountOnes(number) != numOnes)
-                {
-                    number++;
-                }
-
-                return number;
-            }
-
-            public static int GetPrevSlow(int number)
-            {
-                if (!HasValidPrev(number))
-                {
-                    return -1;
-                }
-
-                var numOnes = CountOnes(number);
-                number--;
-
-                while (CountOnes(number) != numOnes)
-                {
-                    number--;
-                }
-
-                return number;
             }
 
             public static int GetNext(int number)
@@ -344,6 +267,24 @@ namespace TWL_Algorithms_Samples.BitManipulation
                  */
 
                 return number + (1 << c0) + (1 << (c1 - 1)) - 1;
+            }
+
+            public static int GetNextSlow(int number)
+            {
+                if (!HasValidNext(number))
+                {
+                    return -1;
+                }
+
+                var numOnes = CountOnes(number);
+                number++;
+
+                while (CountOnes(number) != numOnes)
+                {
+                    number++;
+                }
+
+                return number;
             }
 
             public static int GetPrev(int number)
@@ -439,9 +380,65 @@ namespace TWL_Algorithms_Samples.BitManipulation
                 return number - (1 << c1) - (1 << (c0 - 1)) + 1;
             }
 
-            public static void BinPrint(int number)
+            public static int GetPrevSlow(int number)
             {
-                Console.WriteLine(number + ": " + AssortedMethods.ToFullBinarystring(number));
+                if (!HasValidPrev(number))
+                {
+                    return -1;
+                }
+
+                var numOnes = CountOnes(number);
+                number--;
+
+                while (CountOnes(number) != numOnes)
+                {
+                    number--;
+                }
+
+                return number;
+            }
+
+            public static bool HasValidNext(int number)
+            {
+                if (number == 0)
+                {
+                    return false;
+                }
+                var count = 0;
+
+                while ((number & 1) == 0)
+                {
+                    number >>= 1;
+                    count++;
+                }
+
+                while ((number & 1) == 1)
+                {
+                    number >>= 1;
+                    count++;
+                }
+
+                if (count == 31)
+                {
+                    return false;
+                }
+
+                return true;
+            }
+
+            public static bool HasValidPrev(int number)
+            {
+                while ((number & 1) == 1)
+                {
+                    number >>= 1;
+                }
+
+                if (number == 0)
+                {
+                    return false;
+                }
+
+                return true;
             }
 
             public void Run()
@@ -474,125 +471,152 @@ namespace TWL_Algorithms_Samples.BitManipulation
             }
         }
 
-        public class Q5_02_Binary_to_String : IQuestion
+        public class Q5_06_Conversion : IQuestion
         {
-            private string PrintBinary(double number)
+            public static int BitSwapRequired(int number1, int number2)
             {
-                if (number >= 1 || number <= 0)
+                var count = 0;
+
+                for (var c = number1 ^ number2; c != 0; c = c >> 1)
                 {
-                    return "ERROR";
+                    count += c & 1;
                 }
 
-                var binary = new StringBuilder();
-                binary.Append(".");
-
-                while (number > 0)
-                {
-                    /* Setting a limit on length: 32 characters */
-                    if (binary.Length > 32)
-                    {
-                        return "ERROR";
-                    }
-
-                    var r = number * 2;
-
-                    if (r >= 1)
-                    {
-                        binary.Append(1);
-                        number = r - 1;
-                    }
-                    else
-                    {
-                        binary.Append(0);
-                        number = r;
-                    }
-                }
-
-                return binary.ToString();
+                return count;
             }
 
-            private string PrintBinary2(double number)
+            public static int BitSwapRequired2(int number1, int number2)
             {
-                if (number >= 1 || number <= 0)
+                var count = 0;
+
+                for (var c = number1 ^ number2; c != 0; c = c & (c - 1))
                 {
-                    return "ERROR";
+                    count++;
                 }
 
-                var binary = new StringBuilder();
-                var frac = 0.5;
-                binary.Append(".");
-
-                while (number > 0)
-                {
-                    /* Setting a limit on length: 32 characters */
-                    if (binary.Length >= 32)
-                    {
-                        return "ERROR";
-                    }
-                    if (number >= frac)
-                    {
-                        binary.Append(1);
-                        number -= frac;
-                    }
-                    else
-                    {
-                        binary.Append(0);
-                    }
-                    frac /= 2;
-                }
-
-                return binary.ToString();
+                return count;
             }
 
             public void Run()
             {
-                var binaryString = PrintBinary2(.125);
-                Console.WriteLine(binaryString);
+                var a = 23432;
+                var b = 512132;
+                Console.WriteLine(a + ": " + AssortedMethods.ToFullBinarystring(a));
+                Console.WriteLine(b + ": " + AssortedMethods.ToFullBinarystring(b));
 
-                for (var i = 0; i < 1000; i++)
-                {
-                    var num = i / 1000.0;
-                    var binary = PrintBinary(num);
-                    var binary2 = PrintBinary2(num);
+                var nbits = BitSwapRequired(a, b);
+                var nbits2 = BitSwapRequired2(a, b);
 
-                    if (!binary.Equals("ERROR") || !binary2.Equals("ERROR"))
-                    {
-                        Console.WriteLine(num + " : " + binary + " " + binary2);
-                    }
-                }
+                Console.WriteLine("Required number of bits: " + nbits + " " + nbits2);
             }
         }
 
-        public class Q5_01_Insertion : IQuestion
+        public class Q5_07_Pairwise_Swap : IQuestion
         {
-            private static int UpdateBits(int n, int m, int i, int j)
+            public static int SwapOddEvenBits(int x)
             {
-                /* Create a mask to clear bits i  through j in n */
-                /* Example i = 2, j = 4. Result should be 11100011.
-                 * For simplicity, we'll use just 8 bits for the example. */
-
-                // Will equal sequence of all 1's
-                const int allOnes = ~0;
-
-                // 1's before position j, then 0s. left = 11100000
-                var left = allOnes << (j + 1);
-
-                // 1's after position i. right = 00000011
-                var right = ((1 << i) - 1);
-
-                // All 1's, except for 0's between i and i. mask 11100011
-                var mask = left | right;
-
-                /* Clear bits j through i then put m in there */
-                var nCleared = n & mask; // Clear bits j thorugh i.
-                var mShifted = m << i; // Move m into correct position.
-
-                return nCleared | mShifted;// OR them, and we're done
+                return (int)(((x & 0xaaaaaaaa) >> 1) | ((x & 0x55555555) << 1));
             }
 
             public void Run()
             {
-                Console.WriteLine(UpdateBits(100, 10, 2, 6));
+                var a = 103217;
+                Console.WriteLine(a + ": " + AssortedMethods.ToFullBinarystring(a));
+                var b = SwapOddEvenBits(a);
+                Console.WriteLine(b + ": " + AssortedMethods.ToFullBinarystring(b));
+            }
+        }
+
+        public class Q5_08_Draw_Line : IQuestion
+        {
+            public static int ComputeByteNum(int width, int x, int y)
+            {
+                return (width * y + x) / 8;
+            }
+
+            public static void DrawLine(byte[] screen, int width, int x1, int x2, int y)
+            {
+                var startOffset = x1 % 8;
+                var firstFullByte = x1 / 8;
+
+                if (startOffset != 0)
+                {
+                    firstFullByte++;
+                }
+
+                var endOffset = x2 % 8;
+                var lastFullByte = x2 / 8;
+
+                if (endOffset != 7)
+                {
+                    lastFullByte--;
+                }
+
+                // Set full bytes
+                for (var b = firstFullByte; b <= lastFullByte; b++)
+                {
+                    screen[(width / 8) * y + b] = (byte)0xFF;
+                }
+
+                var startMask = (byte)(0xFF >> startOffset);
+                var endMask = (byte)~(0xFF >> (endOffset + 1));
+
+                // Set start and end of line
+                if ((x1 / 8) == (x2 / 8))
+                {
+                    // If x1 and x2 are in the same byte
+                    var mask = (byte)(startMask & endMask);
+                    screen[(width / 8) * y + (x1 / 8)] |= mask;
+                }
+                else
+                {
+                    if (startOffset != 0)
+                    {
+                        var byteNumber = (width / 8) * y + firstFullByte - 1;
+                        screen[byteNumber] |= startMask;
+                    }
+                    if (endOffset != 7)
+                    {
+                        var byteNumber = (width / 8) * y + lastFullByte + 1;
+                        screen[byteNumber] |= endMask;
+                    }
+                }
+            }
+
+            public static void PrintByte(byte b)
+            {
+                for (var i = 7; i >= 0; i--)
+                {
+                    Console.Write((b >> i) & 1);
+                }
+            }
+
+            public static void PrintScreen(byte[] screen, int width)
+            {
+                var height = screen.Length * 8 / width;
+
+                for (var r = 0; r < height; r++)
+                {
+                    for (var c = 0; c < width; c += 8)
+                    {
+                        var b = screen[ComputeByteNum(width, c, r)];
+                        PrintByte(b);
+                    }
+
+                    Console.WriteLine("");
+                }
+            }
+
+            public void Run()
+            {
+                const int width = 8 * 4;
+                const int height = 15;
+                var screen = new byte[width * height / 8];
+                //screen[1] = 13;
+
+                DrawLine(screen, width, 8, 10, 2);
+
+                PrintScreen(screen, width);
             }
         }
     }

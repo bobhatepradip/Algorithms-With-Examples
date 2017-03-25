@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Linq;
 using System.Text;
 using TWL_Algorithms_Samples.BitManipulation;
 using TWL_Algorithms_Samples.Char;
@@ -10,11 +9,13 @@ namespace TWL_Algorithms_Samples.Arrays.Strings
     internal class StringUtility
     {
         public string[] OneDTestStrings = new string[] { "abcabcbb", "bbbbb", "pwwkew" };
+
         public string[][] TwoDTestStrings = new string[][]  {
                 new string[]{"apple", "pleap"},
                 new string[]{"waterbottle", "erbottlewat"},
                 new string[]{"camera", "macera"},
             };
+
         public static bool IsRotation(String s1, String s2)
         {
             var string1Length = s1.Length;
@@ -56,93 +57,6 @@ namespace TWL_Algorithms_Samples.Arrays.Strings
                 Console.WriteLine("IsAnagram_UsingArray({0}, {1}): {2}", word1, word2, IsAnagram_UsingArray(word1, word2));
 
                 Console.WriteLine("IsAnagram_UsingHashtable({0}, {1}): {2}", word1, word2, IsAnagram_UsingHashtable(word1, word2));
-            }
-        }
-
-        public void PrintFrequencyOfCharecters_Run()
-        {
-            string[] testStrings = { "xyz", "test", "aaabb" };
-            // , "◣⚽◢⚡◣⚾⚡◢" -should be used only with Hash table implementation
-
-            foreach (var testString in testStrings)
-            {
-                //   PrintFrequency_UsingHashtable(testString);
-                PrintFrequencyOfCharecters_UsingArray(testString);
-            }
-        }
-
-        private static void PrintFrequencyOfCharecters_UsingArray(string testString)
-        {
-            Console.WriteLine($"PrintFrequency_UsingArray('{testString}'):");
-
-            char[] str = testString.ToCharArray();
-
-            int[] freq = new int[128];
-            for (int i = 0; i < str.Length; i++)
-            {
-                freq[str[i] - 'a']++;
-            }
-            for (int i = 0; i < 128; i++)
-            {
-                if (freq[i] > 0)
-                {
-                    Console.WriteLine("PrintFrequency_UsingArray:[" + (char)((char)i + 'a') + "] = " + freq[i]);
-                }
-            }
-        }
-
-        public int LengthOfLongestSubstring(String s)
-        {
-
-            if (s.Length == 0) return 0;
-            Hashtable map = new Hashtable();
-            int max = 0;
-            for (int i = 0, j = 0; i < s.Length; ++i)
-            {
-                if (map.ContainsKey(s[i]))
-                {
-                    j = Math.Max(j, i + 1);//(int)map[s[i]]
-                }
-                else
-                {
-                    map.Add(s[i], i);
-                }
-                max = Math.Max(max, i - j + 1);
-            }
-
-            // Console.WriteLine($"{string.Join(", ", map.Keys.Cast<object>().Select(x => x.ToString()).ToArray())}");
-            return max;
-        }
-
-        public void LengthOfLongestSubstring_Run()
-        {
-            foreach (string str in OneDTestStrings)
-            {
-                Console.WriteLine($"Input String='{str}' LengthOfLongestSubstring_Run={LengthOfLongestSubstring(str)}");
-            }
-        }
-
-        private static void PrintFrequencyOfCharecters_UsingHashtable(string testString)
-        {
-            Console.WriteLine($"PrintFrequency_UsingHashtable('{testString}'):");
-
-            char[] str = testString.ToCharArray();
-
-            Hashtable freq = new Hashtable();
-            for (int i = 0; i < str.Length; i++)
-            {
-                if (freq.ContainsKey(str[i]))
-                {
-                    freq[str[i]] = (int)freq[str[i]] + 1;
-                }
-                else
-                {
-                    freq.Add(str[i], 1);
-                }
-            }
-            foreach (DictionaryEntry dectionaryEntry in freq)
-            {
-                Console.WriteLine("PrintFrequency_UsingHashtable: [" + dectionaryEntry.Key + "] = " + dectionaryEntry.Value);
             }
         }
 
@@ -257,6 +171,48 @@ namespace TWL_Algorithms_Samples.Arrays.Strings
             }
         }
 
+        public int LengthOfLongestSubstring(String s)
+        {
+            if (s.Length == 0) return 0;
+            Hashtable map = new Hashtable();
+            int max = 0;
+            for (int i = 0, j = 0; i < s.Length; ++i)
+            {
+                if (map.ContainsKey(s[i]))
+                {
+                    j = Math.Max(j, i + 1);//(int)map[s[i]]
+                }
+                else
+                {
+                    map.Add(s[i], i);
+                }
+                max = Math.Max(max, i - j + 1);
+            }
+
+            // Console.WriteLine($"{string.Join(", ", map.Keys.Cast<object>().Select(x => x.ToString()).ToArray())}");
+            return max;
+        }
+
+        public void LengthOfLongestSubstring_Run()
+        {
+            foreach (string str in OneDTestStrings)
+            {
+                Console.WriteLine($"Input String='{str}' LengthOfLongestSubstring_Run={LengthOfLongestSubstring(str)}");
+            }
+        }
+
+        public void PrintFrequencyOfCharecters_Run()
+        {
+            string[] testStrings = { "xyz", "test", "aaabb" };
+            // , "◣⚽◢⚡◣⚾⚡◢" -should be used only with Hash table implementation
+
+            foreach (var testString in testStrings)
+            {
+                //   PrintFrequency_UsingHashtable(testString);
+                PrintFrequencyOfCharecters_UsingArray(testString);
+            }
+        }
+
         public string Reverse(string str)
         {
             char[] chars = str.ToCharArray();
@@ -302,7 +258,7 @@ namespace TWL_Algorithms_Samples.Arrays.Strings
             //Reverse_Run();
             //IsAnagram_Run();
             //PrintFrequency_Run();
-            LengthOfLongestSubstring_Run();
+            //LengthOfLongestSubstring_Run();
         }
 
         public string Sort_TEMP(string str)
@@ -311,6 +267,19 @@ namespace TWL_Algorithms_Samples.Arrays.Strings
             char[] chars = str.ToCharArray();
             ///???
             return chars.ToString();
+        }
+
+        public int strStr(String haystack, String needle)
+        {
+            for (int i = 0; ; i++)
+            {
+                for (int j = 0; ; j++)
+                {
+                    if (j == needle.Length) return i;
+                    if (i + j == haystack.Length) return -1;
+                    if (needle[j] != haystack[i + j]) break;
+                }
+            }
         }
 
         public void URLEncoding_Run()
@@ -322,6 +291,65 @@ namespace TWL_Algorithms_Samples.Arrays.Strings
 
         public void Void()
         { }
+
+        private static void PrintFrequencyOfCharecters_UsingArray(string testString)
+        {
+            Console.WriteLine($"PrintFrequency_UsingArray('{testString}'):");
+
+            char[] str = testString.ToCharArray();
+
+            int[] freq = new int[128];
+            for (int i = 0; i < str.Length; i++)
+            {
+                freq[str[i] - 'a']++;
+            }
+            for (int i = 0; i < 128; i++)
+            {
+                if (freq[i] > 0)
+                {
+                    Console.WriteLine("PrintFrequency_UsingArray:[" + (char)((char)i + 'a') + "] = " + freq[i]);
+                }
+            }
+        }
+
+        //        int atoi(const char* str) {
+        //    int sign = 1, base = 0, i = 0;
+        //    while (str[i] == ' ') { i++; }
+        //    if (str[i] == '-' || str[i] == '+') {
+        //        sign = 1 - 2 * (str[i++] == '-');
+        //    }
+        //    while (str[i] >= '0' && str[i] <= '9') {
+        //        if (base >  INT_MAX / 10 || (base == INT_MAX / 10 && str[i] - '0' > 7)) {
+        //            if (sign == 1) return INT_MAX;
+        //            else return INT_MIN;
+        //        }
+        //        base  = 10 * base + (str[i++] - '0');
+        //    }
+        //    return base * sign;
+        //}
+        private static void PrintFrequencyOfCharecters_UsingHashtable(string testString)
+        {
+            Console.WriteLine($"PrintFrequency_UsingHashtable('{testString}'):");
+
+            char[] str = testString.ToCharArray();
+
+            Hashtable freq = new Hashtable();
+            for (int i = 0; i < str.Length; i++)
+            {
+                if (freq.ContainsKey(str[i]))
+                {
+                    freq[str[i]] = (int)freq[str[i]] + 1;
+                }
+                else
+                {
+                    freq.Add(str[i], 1);
+                }
+            }
+            foreach (DictionaryEntry dectionaryEntry in freq)
+            {
+                Console.WriteLine("PrintFrequency_UsingHashtable: [" + dectionaryEntry.Key + "] = " + dectionaryEntry.Value);
+            }
+        }
 
         private string Compression(string str)
         {
