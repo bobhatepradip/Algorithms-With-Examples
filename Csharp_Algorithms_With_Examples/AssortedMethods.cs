@@ -2174,11 +2174,11 @@ namespace TWL_Algorithms_Samples
             return s;
         }
 
-        public static string ToFullBinarystring(int number)
+        public static string ToFullBinarystring(int number, int bits=32)
         {
             var binaryString = "";
 
-            for (var i = 0; i < 32; i++)
+            for (var i = 0; i < bits; i++)
             {
                 var lsb = number & 1;
                 binaryString = string.Format("{0}{1}", lsb, binaryString);
@@ -2186,6 +2186,8 @@ namespace TWL_Algorithms_Samples
             }
 
             return binaryString;
-        }
+        }      
+
+        
     }
 }

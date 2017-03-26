@@ -8,7 +8,98 @@ namespace TWL_Algorithms_Samples.BitManipulation
     {
         public void Run()
         {
-            SingleNumber_Run();
+            //SingleNumber_Run();
+            BitOperation_Run();
+        }
+        public void BitOperation_Run()
+        {
+            foreach (var i in new[] { 0, 1, 2 })
+            {
+                foreach (var testOriginalValue in new[] { 1, 2, 3, 4, 5, 6 })
+                {
+                    Console.WriteLine($"GetBit('{testOriginalValue}', '{i}th'): {HasIthBit(testOriginalValue, i)} ");
+                    var testOldValue = testOriginalValue;
+                    var testNewValue = SetBit(testOldValue, i);
+                    Console.WriteLine($"SetBit('{testOldValue}', '{i}th'): {testNewValue} ");
+                    Console.WriteLine($"GetBit('{testNewValue}', '{i}th'): {HasIthBit(testNewValue, i)} ");
+
+                    testOldValue = testNewValue;
+                    testNewValue = ClearBit(testOriginalValue, i);
+                    Console.WriteLine($"ClearBit('{testOldValue}', '{i}th'): {testNewValue} ");
+                    Console.WriteLine($"GetBit('{testNewValue}', '{i}th'): {HasIthBit(testNewValue, i)} ");
+
+                    testNewValue = ClearBitsMSBthroughtI(testOriginalValue, i);
+                    Console.WriteLine($"ClearBitsMSBthroughtI('{testOldValue}', '{i}th'): {testNewValue} ");
+                    Console.WriteLine($"GetBit('{testNewValue}', '{i}th'): {HasIthBit(testNewValue, i)} ");
+
+                    testNewValue = ClearBitIthrought0(testOriginalValue, i);
+                    Console.WriteLine($"ClearBitIthrought0('{testOldValue}', '{i}th'): {testNewValue} ");
+                    Console.WriteLine($"GetBit('{testNewValue}', '{i}th'): {HasIthBit(testNewValue, i)} ");
+                    Console.WriteLine("-------------------------------=-------------------");
+                }
+                Console.WriteLine("***********************************************************");
+                Console.WriteLine($"UpdateBit(-1, 0, false);: {UpdateBit(-1, 0, false)} ");
+                Console.WriteLine("***********************************************************");
+                Console.WriteLine($"UpdateBit(-2, 0, true);: {UpdateBit(-2, 0, true)} ");
+                Console.WriteLine("***********************************************************");
+            }
+        }
+        public bool HasIthBit(int number, int i)
+        {
+            return ((number & (1 << i)) != 0);
+        }
+
+        public bool GetBit(int number, int i)
+        {
+            return ((number & (1 << i)) != 0);
+        }
+
+        public int ClearBit(int number, int i)
+        {
+            int mask = ~(1 << i);
+            Console.WriteLine($"ClearBit:(number({number})={AssortedMethods.ToFullBinarystring(number, 4)}) " +
+                $"& mask({mask})={AssortedMethods.ToFullBinarystring(mask, 4)})={(number & mask)}         " +
+                $"mask= ~(1 << {i})=~[{AssortedMethods.ToFullBinarystring(1 << i, 4)}] =[{AssortedMethods.ToFullBinarystring(~(1 << i), 4)}]={mask}");
+            return (number & mask);
+        }
+
+        public int UpdateBit(int number, int i, bool bitValue)
+        {
+            int value = bitValue ? 1 : 0;
+            int mask = ~(1 << i);
+            Console.WriteLine($"ClearBit:(number({number})={AssortedMethods.ToFullBinarystring(number, 4)}) " +
+                $"& mask({mask})={AssortedMethods.ToFullBinarystring(mask, 4)})={(number & mask)}         " +
+                $"mask= ~(1 << {i})=~[{AssortedMethods.ToFullBinarystring(1 << i, 4)}] =[{AssortedMethods.ToFullBinarystring(~(1 << i), 4)}]={mask}");
+
+            Console.WriteLine($"UpdateBit: ClearBit(number, i)[{AssortedMethods.ToFullBinarystring(ClearBit(number, i), 4)}] | (value[[{AssortedMethods.ToFullBinarystring(value, 4)}]] << 1) = [{AssortedMethods.ToFullBinarystring(value << 1, 4)}]");
+            //return (ClearBit(number, i) | (value << 1));
+            return (number & mask) | (value << 1);
+        }
+
+        public int ClearBitsMSBthroughtI(int number, int i)
+        {
+            int mask = (1 << i) - 1;
+            Console.WriteLine($"ClearBitsMSBthroughtI:(number({number})={AssortedMethods.ToFullBinarystring(number, 4)}) " +
+                $"& mask({mask})={AssortedMethods.ToFullBinarystring(mask, 4)})={(number & mask)}          " +
+                $"mask= ((1 << i) - 1)=(1 << i) [{AssortedMethods.ToFullBinarystring(1 << i, 4)}]-1 [{AssortedMethods.ToFullBinarystring(-1, 4)}]=[{AssortedMethods.ToFullBinarystring((1 << i) - 1, 4)}]={mask}" +
+                $"");
+            return (number & mask);
+        }
+
+        public int ClearBitIthrought0(int number, int i)
+        {
+            int mask = -1 << (i + 1);
+            Console.WriteLine($"ClearBitIthrought0:(number({number})={AssortedMethods.ToFullBinarystring(number, 4)}) " +
+                $"& mask({mask})={AssortedMethods.ToFullBinarystring(mask, 4)})={(number & mask)}          " +
+                $"mask= ( -1 << (i + 1))={mask}" +
+                $"mask= (-1 << (i + 1))=-1 [{AssortedMethods.ToFullBinarystring(-1, 4)}] << (i + 1) [{AssortedMethods.ToFullBinarystring(i + 1, 4)}]=[{AssortedMethods.ToFullBinarystring(-1 << (i + 1), 4)}]={mask}" +
+                $"");
+            return (number & mask);
+        }
+
+        public int SetBit(int number, int i)
+        {
+            return (number | (1 << i));
         }
 
         /// <summary>

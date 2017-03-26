@@ -5,7 +5,10 @@ namespace TWL_Algorithms_Samples.Arrays
 {
     public class ArrayUtility
     {
-        public static int[] OneDArray = new int[] { 1, 2, 3, 4 };
+        public static int[] OneDArrayZeroToThree = new int[] { 0, 1, 2, 3 };
+        public static int[] OneDArrayZeroToFive = new int[] { 0, 1, 2, 3, 4, 5 };
+        public static int[] OneDArrayZeroToTen = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+        public static int[] OneDArray = new int[] { 1, 2, 3, 4, 5, 6 };
         public static int[][] TwoDArray = new int[][] { new int[] { 1, 1, 2, 3, 3, 4, 4 }, new int[] { 4, 4, 1, 1, 3, 2, 2 }, new int[] { 1, 2, 2, 3, 3 } };
 
         public static string CharArrayToString(char[] array)
