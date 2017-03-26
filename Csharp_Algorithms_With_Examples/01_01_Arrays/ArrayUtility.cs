@@ -301,6 +301,52 @@ namespace TWL_Algorithms_Samples.Arrays
             Console.WriteLine($"\nIndex of {searchInput} in array is {searchIndex}");
         }
 
+        /// <summary>
+        /// public static int[] arrayPartitionData = new int[] { 1, 9, 4, 3, 7, 5, 2, 8, 6, 10 };
+        ///public static int[] arrayPartitionRange = new int[] { 1, 4,5, 7, 10 };
+        /// </summary>
+        /// <param name="partitionData"></param>
+        /// <param name="partitionDataLeft"></param>
+        /// <param name="partitionDataRight"></param>
+        /// <param name="partitionRange"></param>
+        /// <param name="partitionRangeLeft"></param>
+        /// <param name="partitionRangeRight"></param>
+        public void PartitionSortedArray(int[] partitionData, int partitionDataLeft, int partitionDataRight, int[] partitionRange, int partitionRangeLeft, int partitionRangeRight)
+        {
+            partitionData.Print("partitionData Before:", partitionDataLeft, partitionDataRight);
+            partitionRange.Print("partitionRange Before:", partitionRangeLeft, partitionRangeRight);
+            //for (int i = 0; i < partitionData.Length / 2; i++)
+            while (partitionDataLeft <= partitionDataRight)
+            {
+                if (partitionData[partitionDataLeft] > partitionRange[partitionRangeLeft + 1] && partitionData[partitionDataRight] < partitionRange[partitionRangeRight - 1])
+                {
+                    partitionData.Swap(partitionDataLeft, partitionDataRight);
+                }
+                else if (partitionData[partitionDataLeft] < partitionRange[partitionRangeLeft + 1] || partitionData[partitionDataRight] > partitionRange[partitionRangeRight - 1])
+                {
+                    if (partitionData[partitionDataLeft] < partitionRange[partitionRangeLeft + 1])
+                    {
+                        partitionDataLeft++;
+                    }
+                    if (partitionData[partitionDataRight] > partitionRange[partitionRangeRight - 1])
+                    {
+                        partitionDataRight--;
+                    }
+                }
+                else
+                {
+                    partitionDataLeft++;
+                    partitionDataRight--;
+                }
+            }
+            partitionData.Print("partitionData After:", partitionDataLeft, partitionDataRight);
+            partitionRange.Print("partitionRange After:", partitionRangeLeft, partitionRangeRight);
+            if (((partitionRangeLeft + 1) - (partitionRangeRight - 1)) > 1)
+            {
+                PartitionSortedArray(partitionData, partitionDataLeft + 1, partitionDataRight - 1, partitionRange, partitionRangeLeft + 1, partitionRangeRight - 1);
+            }
+        }
+
         public void Run()
         {
             //new Peaks_and_Valleys().Run();
@@ -313,6 +359,15 @@ namespace TWL_Algorithms_Samples.Arrays
             //TwoSumInSortedArray(new int[] { 1, 2, 7, 11, 15 }, 9);
             //ProductAllExceptSelf(new int[] { 1, 2, 3, 4 });
             //RotateArray_Run();
+            //PartitionSortedArray_Run();
+        }
+
+        public void PartitionSortedArray_Run()
+        {
+            int[] arrayPartitionData = new int[] { 10, 90, 65, 45, 35, 70, 50, 40, 15, 100, 80 };
+            int[] arrayPartitionRange = new int[] { 0, 25, 50, 75, 100 };
+            PartitionSortedArray(arrayPartitionData, 0, arrayPartitionData.Length - 1, arrayPartitionRange, 0, arrayPartitionRange.Length - 1);
+            arrayPartitionData.Print("");
         }
 
         public int[] TwoSumInSortedArray(int[] num, int target)

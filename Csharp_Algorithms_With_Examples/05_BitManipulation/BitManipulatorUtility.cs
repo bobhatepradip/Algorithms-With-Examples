@@ -6,11 +6,6 @@ namespace TWL_Algorithms_Samples.BitManipulation
 {
     public class BitManipulationUtility
     {
-        public void Run()
-        {
-            //SingleNumber_Run();
-            BitOperation_Run();
-        }
         public void BitOperation_Run()
         {
             foreach (var i in new[] { 0, 1, 2 })
@@ -28,11 +23,11 @@ namespace TWL_Algorithms_Samples.BitManipulation
                     Console.WriteLine($"ClearBit('{testOldValue}', '{i}th'): {testNewValue} ");
                     Console.WriteLine($"GetBit('{testNewValue}', '{i}th'): {HasIthBit(testNewValue, i)} ");
 
-                    testNewValue = ClearBitsMSBthroughtI(testOriginalValue, i);
+                    testNewValue = ClearBitsMSBthroughtI_RightRemova(testOriginalValue, i);
                     Console.WriteLine($"ClearBitsMSBthroughtI('{testOldValue}', '{i}th'): {testNewValue} ");
                     Console.WriteLine($"GetBit('{testNewValue}', '{i}th'): {HasIthBit(testNewValue, i)} ");
 
-                    testNewValue = ClearBitIthrought0(testOriginalValue, i);
+                    testNewValue = ClearBitIthrought0_LeftRemoval(testOriginalValue, i);
                     Console.WriteLine($"ClearBitIthrought0('{testOldValue}', '{i}th'): {testNewValue} ");
                     Console.WriteLine($"GetBit('{testNewValue}', '{i}th'): {HasIthBit(testNewValue, i)} ");
                     Console.WriteLine("-------------------------------=-------------------");
@@ -42,16 +37,9 @@ namespace TWL_Algorithms_Samples.BitManipulation
                 Console.WriteLine("***********************************************************");
                 Console.WriteLine($"UpdateBit(-2, 0, true);: {UpdateBit(-2, 0, true)} ");
                 Console.WriteLine("***********************************************************");
+                Console.WriteLine($"ClearBits(7, 2,1);: {ClearBits(7, 2, 1)} ");
+                Console.WriteLine("***********************************************************");
             }
-        }
-        public bool HasIthBit(int number, int i)
-        {
-            return ((number & (1 << i)) != 0);
-        }
-
-        public bool GetBit(int number, int i)
-        {
-            return ((number & (1 << i)) != 0);
         }
 
         public int ClearBit(int number, int i)
@@ -63,20 +51,40 @@ namespace TWL_Algorithms_Samples.BitManipulation
             return (number & mask);
         }
 
-        public int UpdateBit(int number, int i, bool bitValue)
+        public int ClearBits(int number, int left, int right)
         {
-            int value = bitValue ? 1 : 0;
-            int mask = ~(1 << i);
-            Console.WriteLine($"ClearBit:(number({number})={AssortedMethods.ToFullBinarystring(number, 4)}) " +
-                $"& mask({mask})={AssortedMethods.ToFullBinarystring(mask, 4)})={(number & mask)}         " +
-                $"mask= ~(1 << {i})=~[{AssortedMethods.ToFullBinarystring(1 << i, 4)}] =[{AssortedMethods.ToFullBinarystring(~(1 << i), 4)}]={mask}");
-
-            Console.WriteLine($"UpdateBit: ClearBit(number, i)[{AssortedMethods.ToFullBinarystring(ClearBit(number, i), 4)}] | (value[[{AssortedMethods.ToFullBinarystring(value, 4)}]] << 1) = [{AssortedMethods.ToFullBinarystring(value << 1, 4)}]");
-            //return (ClearBit(number, i) | (value << 1));
-            return (number & mask) | (value << 1);
+            ///  -1  or ~0  <<(left+1)
+            ///  Focus of +1 and -1 in left and rigth clearance bit
+            int leftClearanceBit = -1 << (left + 1);
+            int rightClearanceBit = (1 << right) - 1;
+            int mask = leftClearanceBit | rightClearanceBit;
+            return (number & mask);
         }
 
-        public int ClearBitsMSBthroughtI(int number, int i)
+        /// <summary>
+        /// clear all left to ith position
+        /// </summary>
+        /// <param name="number"></param>
+        /// <param name="i"></param>
+        /// <returns></returns>
+        public int ClearBitIthrought0_LeftRemoval(int number, int i)
+        {
+            int mask = -1 << (i + 1);
+            Console.WriteLine($"ClearBitIthrought0:(number({number})={AssortedMethods.ToFullBinarystring(number, 4)}) " +
+                $"& mask({mask})={AssortedMethods.ToFullBinarystring(mask, 4)})={(number & mask)}          " +
+                $"mask= ( -1 << (i + 1))={mask}" +
+                $"mask= (-1 << (i + 1))=-1 [{AssortedMethods.ToFullBinarystring(-1, 4)}] << (i + 1) [{AssortedMethods.ToFullBinarystring(i + 1, 4)}]=[{AssortedMethods.ToFullBinarystring(-1 << (i + 1), 4)}]={mask}" +
+                $"");
+            return (number & mask);
+        }
+
+        /// <summary>
+        /// clear all right to ith position
+        /// </summary>
+        /// <param name="number"></param>
+        /// <param name="i"></param>
+        /// <returns></returns>
+        public int ClearBitsMSBthroughtI_RightRemova(int number, int i)
         {
             int mask = (1 << i) - 1;
             Console.WriteLine($"ClearBitsMSBthroughtI:(number({number})={AssortedMethods.ToFullBinarystring(number, 4)}) " +
@@ -86,15 +94,20 @@ namespace TWL_Algorithms_Samples.BitManipulation
             return (number & mask);
         }
 
-        public int ClearBitIthrought0(int number, int i)
+        public bool GetBit(int number, int i)
         {
-            int mask = -1 << (i + 1);
-            Console.WriteLine($"ClearBitIthrought0:(number({number})={AssortedMethods.ToFullBinarystring(number, 4)}) " +
-                $"& mask({mask})={AssortedMethods.ToFullBinarystring(mask, 4)})={(number & mask)}          " +
-                $"mask= ( -1 << (i + 1))={mask}" +
-                $"mask= (-1 << (i + 1))=-1 [{AssortedMethods.ToFullBinarystring(-1, 4)}] << (i + 1) [{AssortedMethods.ToFullBinarystring(i + 1, 4)}]=[{AssortedMethods.ToFullBinarystring(-1 << (i + 1), 4)}]={mask}" +
-                $"");
-            return (number & mask);
+            return ((number & (1 << i)) != 0);
+        }
+
+        public bool HasIthBit(int number, int i)
+        {
+            return ((number & (1 << i)) != 0);
+        }
+
+        public void Run()
+        {
+            //SingleNumber_Run();
+            BitOperation_Run();
         }
 
         public int SetBit(int number, int i)
@@ -112,6 +125,19 @@ namespace TWL_Algorithms_Samples.BitManipulation
                 testArray.Print("Input");
                 Console.WriteLine($"SingleNumber: {SingleNumber_UsingXOR(testArray)} ");
             }
+        }
+
+        public int UpdateBit(int number, int i, bool bitValue)
+        {
+            int value = bitValue ? 1 : 0;
+            int mask = ~(1 << i);
+            Console.WriteLine($"ClearBit:(number({number})={AssortedMethods.ToFullBinarystring(number, 4)}) " +
+                $"& mask({mask})={AssortedMethods.ToFullBinarystring(mask, 4)})={(number & mask)}         " +
+                $"mask= ~(1 << {i})=~[{AssortedMethods.ToFullBinarystring(1 << i, 4)}] =[{AssortedMethods.ToFullBinarystring(~(1 << i), 4)}]={mask}");
+
+            Console.WriteLine($"UpdateBit: ClearBit(number, i)[{AssortedMethods.ToFullBinarystring(ClearBit(number, i), 4)}] | (value[[{AssortedMethods.ToFullBinarystring(value, 4)}]] << 1) = [{AssortedMethods.ToFullBinarystring(value << 1, 4)}]");
+            //return (ClearBit(number, i) | (value << 1));
+            return (number & mask) | (value << 1);
         }
 
         private int SingleNumber_UsingXOR(int[] numbers)
@@ -606,7 +632,7 @@ namespace TWL_Algorithms_Samples.BitManipulation
         {
             public static int SwapOddEvenBits(int x)
             {
-                return (int)(((x & 0xaaaaaaaa) >> 1) | ((x & 0x55555555) << 1));
+                return (int)((x & 0xaaaaaaaa) >> 1) | ((x & 0x55555555) << 1);
             }
 
             public void Run()
