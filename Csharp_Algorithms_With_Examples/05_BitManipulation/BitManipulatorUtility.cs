@@ -51,16 +51,6 @@ namespace TWL_Algorithms_Samples.BitManipulation
             return (number & mask);
         }
 
-        public int ClearBits(int number, int left, int right)
-        {
-            ///  -1  or ~0  <<(left+1)
-            ///  Focus of +1 and -1 in left and rigth clearance bit
-            int leftClearanceBit = -1 << (left + 1);
-            int rightClearanceBit = (1 << right) - 1;
-            int mask = leftClearanceBit | rightClearanceBit;
-            return (number & mask);
-        }
-
         /// <summary>
         /// clear all left to ith position
         /// </summary>
@@ -78,6 +68,15 @@ namespace TWL_Algorithms_Samples.BitManipulation
             return (number & mask);
         }
 
+        public int ClearBits(int number, int left, int right)
+        {
+            ///  -1  or ~0  <<(left+1)
+            ///  Focus of +1 and -1 in left and rigth clearance bit
+            int leftClearanceBit = -1 << (left + 1);
+            int rightClearanceBit = (1 << right) - 1;
+            int mask = leftClearanceBit | rightClearanceBit;
+            return (number & mask);
+        }
         /// <summary>
         /// clear all right to ith position
         /// </summary>

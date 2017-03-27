@@ -36,6 +36,18 @@ namespace TWL_Algorithms_Samples.Arrays.Strings
             return big.IndexOf(small) >= 0;
         }
 
+        public static void IsUniqueChars_Run()
+        {
+            foreach (var word in Constants.cArrayIsUniqueCharecters)
+            {
+                Console.WriteLine(word + ": "
+                    + IsUniqueChars_UsingBitTracker(word) + " "
+                    + IsUniqueChars_UsingExtraCharecterArray(word)
+                   );
+                Console.WriteLine("--------------------------------------------------------------");
+            }
+        }
+
         public void Compression_Run()
         {
         }
@@ -292,6 +304,67 @@ namespace TWL_Algorithms_Samples.Arrays.Strings
         public void Void()
         { }
 
+        /// <summary>
+        /// Where bit traker 'checker' will store/set bit for each charecter
+        /// and when upon 1&1 it indiacate that charecter already exists.
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        private static bool IsUniqueChars_UsingBitTracker(string str)
+        {
+            string prefix = "IsUniqueChars_UsingBitTracker: ";
+            Console.WriteLine($"{prefix} str={str}");
+            if (str.Length > 256)
+            {
+                return false;
+            }
+            var checker = 0;
+            for (var i = 0; i < str.Length; i++)
+            {
+                var val = str[i] - 'a';
+                Console.WriteLine($"{prefix} str[i]=" + str[i]);
+                //Console.WriteLine($"{prefix}  val= (str[i] - 'a') = {str[i] - 'a'} =" + val);
+                Console.WriteLine($"{prefix}  checker= {checker} [{AssortedMethods.ToFullBinarystring(checker)}]");
+                Console.WriteLine($"{prefix}  (1 << val)=(1 [{AssortedMethods.ToFullBinarystring(1)}] << {val}) = {(1 << val)} [{AssortedMethods.ToFullBinarystring((1 << val))}]");
+                Console.WriteLine($"{prefix}  (checker & (1 << val)) > 0 = [{AssortedMethods.ToFullBinarystring(checker)}] & [{AssortedMethods.ToFullBinarystring((1 << val))}] = [{AssortedMethods.ToFullBinarystring((checker & (1 << val)))}] > 0 = " + ((checker & (1 << val)) > 0));
+                if ((checker & (1 << val)) > 0)
+                {
+                    Console.WriteLine($"{prefix} Return False");
+                    return false;
+                }
+                Console.WriteLine($"{prefix}  checker |= (1 << val) =  [{AssortedMethods.ToFullBinarystring(checker | (1 << val))}]" + (checker | (1 << val)));
+                checker |= (1 << val);
+            }
+            return true;
+        }
+
+        private static bool IsUniqueChars_UsingExtraCharecterArray(String str)
+        {
+            string prefix = "IsUniqueChars_UsingExtraCharecterArray: ";
+
+            Console.WriteLine($"{prefix} str={str}");
+            if (str.Length > 256)
+            {
+                return false;
+            }
+            //charecter tracer checks if charecter processed before
+            var charSet = new bool[256];
+            for (var i = 0; i < str.Length; i++)
+            {
+                int val = str[i];
+                Console.WriteLine($"{prefix} str[i]=" + str[i]);
+                Console.WriteLine($"{prefix} val=" + val);
+                Console.WriteLine($"{prefix} charSet[val]=" + charSet[val]);
+                //Check if charecter already exist in charSet if yes then return false
+                if (charSet[val])
+                {
+                    return false;
+                }
+                charSet[val] = true;
+            }
+            return true;
+        }
+
         private static void PrintFrequencyOfCharecters_UsingArray(string testString)
         {
             Console.WriteLine($"PrintFrequency_UsingArray('{testString}'):");
@@ -518,80 +591,6 @@ namespace TWL_Algorithms_Samples.Arrays.Strings
             Console.WriteLine("===================================================================================");
             return original.Equals(valueToTest);
         }
-
-        /// <summary>
-        /// Where bit traker 'checker' will store/set bit for each charecter
-        /// and when upon 1&1 it indiacate that charecter already exists.
-        /// </summary>
-        /// <param name="str"></param>
-        /// <returns></returns>
-        private static bool IsUniqueChars_UsingBitTracker(string str)
-        {
-            string prefix = "IsUniqueChars_UsingBitTracker: ";
-            Console.WriteLine($"{prefix} str={str}");
-            if (str.Length > 256)
-            {
-                return false;
-            }
-            var checker = 0;
-            for (var i = 0; i < str.Length; i++)
-            {
-                var val = str[i] - 'a';
-                Console.WriteLine($"{prefix} str[i]=" + str[i]);
-                //Console.WriteLine($"{prefix}  val= (str[i] - 'a') = {str[i] - 'a'} =" + val);
-                Console.WriteLine($"{prefix}  checker= {checker} [{AssortedMethods.ToFullBinarystring(checker)}]");
-                Console.WriteLine($"{prefix}  (1 << val)=(1 [{AssortedMethods.ToFullBinarystring(1)}] << {val}) = {(1 << val)} [{AssortedMethods.ToFullBinarystring((1 << val))}]");
-                Console.WriteLine($"{prefix}  (checker & (1 << val)) > 0 = [{AssortedMethods.ToFullBinarystring(checker)}] & [{AssortedMethods.ToFullBinarystring((1 << val))}] = [{AssortedMethods.ToFullBinarystring((checker & (1 << val)))}] > 0 = " + ((checker & (1 << val)) > 0));
-                if ((checker & (1 << val)) > 0)
-                {
-                    Console.WriteLine($"{prefix} Return False");
-                    return false;
-                }
-                Console.WriteLine($"{prefix}  checker |= (1 << val) =  [{AssortedMethods.ToFullBinarystring(checker | (1 << val))}]" + (checker | (1 << val)));
-                checker |= (1 << val);
-            }
-            return true;
-        }
-
-        public static void IsUniqueChars_Run()
-        {
-            foreach (var word in Constants.cArrayIsUniqueCharecters)
-            {
-                Console.WriteLine(word + ": "
-                    + IsUniqueChars_UsingBitTracker(word) + " "
-                    + IsUniqueChars_UsingExtraCharecterArray(word)
-                   );
-                Console.WriteLine("--------------------------------------------------------------");
-            }
-        }
-
-        private static bool IsUniqueChars_UsingExtraCharecterArray(String str)
-        {
-            string prefix = "IsUniqueChars_UsingExtraCharecterArray: ";
-
-            Console.WriteLine($"{prefix} str={str}");
-            if (str.Length > 256)
-            {
-                return false;
-            }
-            //charecter tracer checks if charecter processed before
-            var charSet = new bool[256];
-            for (var i = 0; i < str.Length; i++)
-            {
-                int val = str[i];
-                Console.WriteLine($"{prefix} str[i]=" + str[i]);
-                Console.WriteLine($"{prefix} val=" + val);
-                Console.WriteLine($"{prefix} charSet[val]=" + charSet[val]);
-                //Check if charecter already exist in charSet if yes then return false
-                if (charSet[val])
-                {
-                    return false;
-                }
-                charSet[val] = true;
-            }
-            return true;
-        }
-
         private char[] URLEncoding_ReplaceSpaces(char[] input, int length)
         {
             var spaceCount = 0;

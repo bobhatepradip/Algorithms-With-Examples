@@ -2094,6 +2094,12 @@ namespace TWL_Algorithms_Samples
             }
         }
 
+        public static void PrintType(object obj)
+        {
+            Console.WriteLine(string.Format("// Executing: {0}", obj.GetType().ToString()));
+            Console.WriteLine("// ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----");
+        }
+
         public static int[] RandomArray(int N, int min, int max)
         {
             int[] array = new int[N];
@@ -2186,12 +2192,6 @@ namespace TWL_Algorithms_Samples
             }
 
             return binaryString;
-        }
-
-        public static void PrintType(object obj)
-        {
-            Console.WriteLine(string.Format("// Executing: {0}", obj.GetType().ToString()));
-            Console.WriteLine("// ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----");
         }
     }
 }

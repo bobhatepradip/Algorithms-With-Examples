@@ -22,19 +22,6 @@ internal class Program
         Console.ReadKey();
     }
 
-    private static void UtilityTester()
-    {
-        new ArrayUtility().Run();
-        new LinkedListUtility().Run();
-        new StackUtility().Run();
-        new QueueUtility().Run();
-        new StringUtility().Run();
-        new BitManipulationUtility().Run();
-        new Sorting().Run();
-        new SortingAndSearchingUtility().Run();
-        new TreeUtility().Run();
-    }
-
     private static void QuestionsAndSolutionsByChapters()
     {
         var chapters = new[]
@@ -102,5 +89,18 @@ internal class Program
         Console.WriteLine(string.Format("{0}{1}", Environment.NewLine, Environment.NewLine));
         Console.WriteLine("Press [Enter] to quit");
         Console.ReadLine();
+    }
+
+    private static void UtilityTester()
+    {
+        new ArrayUtility().Run();
+        new LinkedListUtility().Run();
+        new StackUtility().Run();
+        new QueueUtility().Run();
+        new StringUtility().Run();
+        new BitManipulationUtility().Run();
+        new Sorting().Run();
+        new SortingAndSearchingUtility().Run();
+        new TreeUtility().Run();
     }
 }
