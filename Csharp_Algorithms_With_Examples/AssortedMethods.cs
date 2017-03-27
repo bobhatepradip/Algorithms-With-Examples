@@ -2187,5 +2187,11 @@ namespace TWL_Algorithms_Samples
 
             return binaryString;
         }
+
+        public static void PrintType(object obj)
+        {
+            Console.WriteLine(string.Format("// Executing: {0}", obj.GetType().ToString()));
+            Console.WriteLine("// ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----");
+        }
     }
 }

@@ -6,7 +6,7 @@ using TWL_Algorithms_Samples.Char;
 
 namespace TWL_Algorithms_Samples.Arrays.Strings
 {
-    internal class StringUtility
+    public class StringUtility
     {
         public string[] OneDTestStrings = new string[] { "abcabcbb", "bbbbb", "pwwkew" };
 
@@ -519,9 +519,16 @@ namespace TWL_Algorithms_Samples.Arrays.Strings
             return original.Equals(valueToTest);
         }
 
-        private bool IsUniqueChars(string str)
+        /// <summary>
+        /// Where bit traker 'checker' will store/set bit for each charecter
+        /// and when upon 1&1 it indiacate that charecter already exists.
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        private static bool IsUniqueChars_UsingBitTracker(string str)
         {
-            Console.WriteLine("IsUniqueChars: str=" + str);
+            string prefix = "IsUniqueChars_UsingBitTracker: ";
+            Console.WriteLine($"{prefix} str={str}");
             if (str.Length > 256)
             {
                 return false;
@@ -530,35 +537,39 @@ namespace TWL_Algorithms_Samples.Arrays.Strings
             for (var i = 0; i < str.Length; i++)
             {
                 var val = str[i] - 'a';
-                Console.WriteLine("IsUniqueChars: str[i]=" + str[i]);
-                Console.WriteLine("IsUniqueChars: val=" + val);
-                Console.WriteLine("IsUniqueChars: checker=" + checker);
-                Console.WriteLine("IsUniqueChars: (1 << val)=" + (1 << val));
-                Console.WriteLine("IsUniqueChars: (checker & (1 << val)) > 0=" + ((checker & (1 << val)) > 0));
+                Console.WriteLine($"{prefix} str[i]=" + str[i]);
+                //Console.WriteLine($"{prefix}  val= (str[i] - 'a') = {str[i] - 'a'} =" + val);
+                Console.WriteLine($"{prefix}  checker= {checker} [{AssortedMethods.ToFullBinarystring(checker)}]");
+                Console.WriteLine($"{prefix}  (1 << val)=(1 [{AssortedMethods.ToFullBinarystring(1)}] << {val}) = {(1 << val)} [{AssortedMethods.ToFullBinarystring((1 << val))}]");
+                Console.WriteLine($"{prefix}  (checker & (1 << val)) > 0 = [{AssortedMethods.ToFullBinarystring(checker)}] & [{AssortedMethods.ToFullBinarystring((1 << val))}] = [{AssortedMethods.ToFullBinarystring((checker & (1 << val)))}] > 0 = " + ((checker & (1 << val)) > 0));
                 if ((checker & (1 << val)) > 0)
                 {
+                    Console.WriteLine($"{prefix} Return False");
                     return false;
                 }
+                Console.WriteLine($"{prefix}  checker |= (1 << val) =  [{AssortedMethods.ToFullBinarystring(checker | (1 << val))}]" + (checker | (1 << val)));
                 checker |= (1 << val);
-                Console.WriteLine("IsUniqueChars: checker |= (1 << val):" + checker);
             }
             return true;
         }
 
-        private void IsUniqueChars_Run()
+        public static void IsUniqueChars_Run()
         {
             foreach (var word in Constants.cArrayIsUniqueCharecters)
             {
                 Console.WriteLine(word + ": "
-                    + IsUniqueChars(word) + " "
-                    + IsUniqueChars_UsingExtraCharecterArray(word));
+                    + IsUniqueChars_UsingBitTracker(word) + " "
+                    + IsUniqueChars_UsingExtraCharecterArray(word)
+                   );
                 Console.WriteLine("--------------------------------------------------------------");
             }
         }
 
-        private bool IsUniqueChars_UsingExtraCharecterArray(String str)
+        private static bool IsUniqueChars_UsingExtraCharecterArray(String str)
         {
-            Console.WriteLine("IsUniqueChars: str=" + str);
+            string prefix = "IsUniqueChars_UsingExtraCharecterArray: ";
+
+            Console.WriteLine($"{prefix} str={str}");
             if (str.Length > 256)
             {
                 return false;
@@ -568,9 +579,9 @@ namespace TWL_Algorithms_Samples.Arrays.Strings
             for (var i = 0; i < str.Length; i++)
             {
                 int val = str[i];
-                Console.WriteLine("IsUniqueChars: str[i]=" + str[i]);
-                Console.WriteLine("IsUniqueChars: val=" + val);
-                Console.WriteLine("IsUniqueChars: charSet[val]=" + charSet[val]);
+                Console.WriteLine($"{prefix} str[i]=" + str[i]);
+                Console.WriteLine($"{prefix} val=" + val);
+                Console.WriteLine($"{prefix} charSet[val]=" + charSet[val]);
                 //Check if charecter already exist in charSet if yes then return false
                 if (charSet[val])
                 {
