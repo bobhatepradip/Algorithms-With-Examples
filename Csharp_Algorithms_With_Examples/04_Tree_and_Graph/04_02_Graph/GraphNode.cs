@@ -1,16 +1,21 @@
 ﻿namespace TWL_Algorithms_Samples.Graph
 {
-    public class GraphNode
+    public class GraphNode : Node
     {
-        public GraphNode[] childrens;
+        public GraphNode(int val) : base(val)
+        {
+        }
+    }
 
-        public string name;
+    public class Node
+    {
+        public Node[] Childrens;
+        public string Name;
+        public int Value;
 
-        //public int value;
-
-        //public GraphNode(int val)
-        //{
-        //    this.value = val;
-        //}
+        public Node(int val)
+        {
+            this.Value = val;
+        }
     }
 }

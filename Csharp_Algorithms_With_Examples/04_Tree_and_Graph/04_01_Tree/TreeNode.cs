@@ -1,18 +1,11 @@
-﻿namespace TWL_Algorithms_Samples.Tree
+﻿using TWL_Algorithms_Samples.Graph;
+
+namespace TWL_Algorithms_Samples.Tree
 {
-    public class TreeNode
+    public class TreeNode : Node
     {
-        public TreeNode[] childrens;
-
-        //public object genericObject;
-
-        public string name;
-
-        public int value;
-
-        public TreeNode(int val)
+        public TreeNode(int val) : base(val)
         {
-            this.value = val;
         }
     }
 }

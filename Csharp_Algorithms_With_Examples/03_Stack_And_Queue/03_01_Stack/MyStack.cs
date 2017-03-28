@@ -6,16 +6,15 @@
 
         public abstract void Destroy();
 
-        public abstract object Pop();
-
-        public abstract void Push(object obj);
-
-        public abstract void Print();
-
-        public abstract int Size();
+        public abstract bool IsEmpty();
 
         public abstract object Peek();
 
-        public abstract bool IsEmpty();
+        public abstract object Pop();
+
+        public abstract void Print();
+
+        public abstract void Push(object obj);
+        public abstract int Size();
     }
 }

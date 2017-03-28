@@ -9,10 +9,10 @@ namespace TWL_Algorithms_Samples.Stack
             Create(size);
         }
 
-        private int Max { get; set; }
-        private int CurrentIndex { get; set; }
+        public int Max { get; set; }
+        public int CurrentIndex { get; set; }
 
-        private object[] array { get; set; }
+        public object[] array { get; set; }
 
         public override void Create()
         {

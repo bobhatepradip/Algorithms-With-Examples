@@ -4,21 +4,39 @@ using TWL_Algorithms_Samples.Arrays;
 
 namespace TWL_Algorithms_Samples.Tree
 {
-    public class BinaryTreeNode
+    enum ChildernType
     {
-        public BinaryTreeNode(int data)
+        Left, Right
+    }
+    public class BinaryTreeNode : TreeNode
+    {
+        public BinaryTreeNode(int val) : base(val)
         {
-            Data = data;
+           // Value = val;
             Size = 1;
+            Childrens = new Graph.Node[2];
         }
 
-        public int Data { get; set; }
+        public BinaryTreeNode Left
+        {
+            get
+            {
+                return (BinaryTreeNode)Childrens[(int)ChildernType.Left];
+            }
 
-        public BinaryTreeNode Left { get; set; }
+            set => Childrens[(int)ChildernType.Left] = value;
+        }
 
         public BinaryTreeNode Parent { get; set; }
 
-        public BinaryTreeNode Right { get; set; }
+        public BinaryTreeNode Right
+        {
+            get
+            {
+                return (BinaryTreeNode)Childrens[(int)ChildernType.Right];
+            }
+            set => Childrens[(int)ChildernType.Right] = value;
+        }
 
         public int Size { get; set; }
 
@@ -105,15 +123,15 @@ namespace TWL_Algorithms_Samples.Tree
 
         public BinaryTreeNode Find(int data)
         {
-            if (data == this.Data)
+            if (data == this.Value)
             {
                 return this;
             }
-            else if (data <= this.Data)
+            else if (data <= this.Value)
             {
                 return Left != null ? Left.Find(data) : null;
             }
-            else if (data > this.Data)
+            else if (data > this.Value)
             {
                 return Right != null ? Right.Find(data) : null;
             }
@@ -133,7 +151,7 @@ namespace TWL_Algorithms_Samples.Tree
         public void InsertInOrder(int data)
         {
             // Console.WriteLine("BTN InsertInOrder");
-            if (data <= this.Data)
+            if (data <= this.Value)
             {
                 if (Left == null)
                 {
@@ -186,7 +204,7 @@ namespace TWL_Algorithms_Samples.Tree
         public void InsertInOrderMain(int data)
         {
             Console.WriteLine("BTN InsertInOrder");
-            if (data <= this.Data)
+            if (data <= this.Value)
             {
                 if (Left == null)
                 {

@@ -10,6 +10,63 @@ namespace TWL_Algorithms_Samples.Arrays
         }
     }
 
+    public class Array_Q1_02_Check_For_Permutations : IQuestion
+    {
+        public void Run()
+        {
+            StringUtility.CheckIfStringsArePermutaion_Run();
+        }
+    }
+
+    public class Array_Q1_03 : IQuestion
+    {
+        public void Run()
+        {
+        }
+    }
+
+    public class Array_Q1_04 : IQuestion
+    {
+        public void Run()
+        {
+        }
+    }
+
+    public class Array_Q1_05 : IQuestion
+    {
+        public void Run()
+        {
+        }
+    }
+
+    public class Array_Q1_06 : IQuestion
+    {
+        public void Run()
+        {
+        }
+    }
+
+    public class Array_Q1_07 : IQuestion
+    {
+        public void Run()
+        {
+        }
+    }
+
+    public class Array_Q1_08 : IQuestion
+    {
+        public void Run()
+        {
+        }
+    }
+
+    public class Array_Q1_09 : IQuestion
+    {
+        public void Run()
+        {
+        }
+    }
+
     public class ArrayQuestions : IQuestion
     {
         public void Run()

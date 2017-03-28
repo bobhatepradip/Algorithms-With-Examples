@@ -407,7 +407,7 @@ namespace TWL_Algorithms_Samples.Arrays
                 Matrix_Display(matrix);
             }
 
-            private void Matrix_Rotate(int[][] matrix)
+            public void Matrix_Rotate(int[][] matrix)
             {
                 int n = matrix.Length;
                 for (var layer = 0; layer < n / 2; ++layer)
@@ -672,7 +672,7 @@ namespace TWL_Algorithms_Samples.Arrays
                 Console.WriteLine(MatricesAreEqual(matrix1, matrix2) ? "Equal" : "Not Equal");
             }
 
-            private int[][] CloneMatrix(int[][] matrix)
+            public int[][] CloneMatrix(int[][] matrix)
             {
                 var clone = new int[matrix.Length][];
 
@@ -689,7 +689,7 @@ namespace TWL_Algorithms_Samples.Arrays
                 return clone;
             }
 
-            private bool MatricesAreEqual(int[][] matrix1, int[][] matrix2)
+            public bool MatricesAreEqual(int[][] matrix1, int[][] matrix2)
             {
                 if (matrix1.Length != matrix2.Length || matrix1[0].Length != matrix2[0].Length)
                 {
@@ -710,7 +710,7 @@ namespace TWL_Algorithms_Samples.Arrays
                 return true;
             }
 
-            private void NullifyColumn(int[][] matrix, int col)
+            public void NullifyColumn(int[][] matrix, int col)
             {
                 for (var i = 0; i < matrix.Length; i++)
                 {
@@ -718,7 +718,7 @@ namespace TWL_Algorithms_Samples.Arrays
                 }
             }
 
-            private void NullifyRow(int[][] matrix, int row)
+            public void NullifyRow(int[][] matrix, int row)
             {
                 for (var j = 0; j < matrix[0].Length; j++)
                 {
@@ -726,7 +726,7 @@ namespace TWL_Algorithms_Samples.Arrays
                 }
             }
 
-            private void SetZeros(int[][] matrix)
+            public void SetZeros(int[][] matrix)
             {
                 var row = new bool[matrix.Length];
                 var column = new bool[matrix[0].Length];
@@ -766,7 +766,7 @@ namespace TWL_Algorithms_Samples.Arrays
                 }
             }
 
-            private void SetZeros2(int[][] matrix)
+            public void SetZeros2(int[][] matrix)
             {
                 Matrix_Display(matrix, $"matrix2 ");
                 var firstRowHasZero = false;

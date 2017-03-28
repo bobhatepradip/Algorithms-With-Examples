@@ -215,6 +215,232 @@ namespace TWL_Algorithms_Samples.LinkedList
             }
         }
 
+        public void DeleteDups_Run()
+        {
+            Console.WriteLine($"{this.GetType().FullName}.{System.Reflection.MethodBase.GetCurrentMethod().Name}");
+            var first = new MyLinkedListNodeDoubly(0, null, null);
+            var originalList = first;
+            var second = first;
+
+            for (var i = 1; i < 8; i++)
+            {
+                second = new MyLinkedListNodeDoubly(i % 2, null, null);
+                first.SetNext(second);
+                second.SetPrevious(first);
+                first = second;
+            }
+            originalList.PrintForward("originalList");
+
+            var list1 = originalList.CloneLinkedListNodeDoubly();
+            var list2 = originalList.Clone();
+            var list3 = originalList.Clone();
+            var list4 = originalList.Clone();
+
+            DeleteDups_UsingDictionary(list1);
+            DeleteDups_UsingTwoPointer(list2);
+            //DeleteDupsC_InProgress(list3);
+            //DeleteDupsC2_InProgress(list4);
+        }
+
+        /// <summary>
+        /// Delete dups using additional memory (e.g. Hash table or Dictionary)
+        /// </summary>
+        /// <param name="head"></param>
+        public void DeleteDups_UsingDictionary(MyLinkedListNodeDoubly head)
+        {
+            Console.WriteLine($"{this.GetType().FullName}.{System.Reflection.MethodBase.GetCurrentMethod().Name}\n");
+            head.PrintForward("List-Before:");
+            var dictionaryTable = new Dictionary<int, bool>();
+            MyLinkedListNodeDoubly previous = null;
+
+            while (head != null)
+            {
+                if (dictionaryTable.ContainsKey((int)head.Data))
+                {
+                    if (previous != null)
+                    {
+                        previous.Next = head.Next;
+                    }
+                }
+                else
+                {
+                    dictionaryTable.Add((int)head.Data, true);
+                    previous = head;
+                }
+
+                head = (MyLinkedListNodeDoubly)head.Next;
+            }
+
+            Console.WriteLine($"dictionaryTable =[{string.Join(", ", dictionaryTable.Keys)}]");
+
+            if (head != null)
+            {
+                head.PrintForward("List-After\n");
+            }
+
+            Console.WriteLine("-------------------------------------------------------");
+        }
+
+        public void DeleteDups_UsingTwoPointer(MyLinkedListNode head)
+        {
+            Console.WriteLine($"{this.GetType().FullName}.{System.Reflection.MethodBase.GetCurrentMethod().Name}\n");
+            head.PrintForward("List-Before:");
+
+            int tapB = 0;
+            if (head == null) return;
+
+            var current = head;
+
+            while (current != null)
+            {
+                /* Remove all future nodes that have the same value */
+                var runner = current;
+
+                while (runner.Next != null)
+                {
+                    tapB++;
+                    Console.WriteLine($"current.Data '{current.Data}' runner.Next.Data: '{runner.Next.Data}'");
+
+                    if (runner.Next.Data.Equals(current.Data))
+                    {
+                        Console.WriteLine($"Removing runner '{runner.Next.Data}'");
+                        runner.Next = runner.Next.Next;
+                        head.PrintForward();
+                    }
+                    else
+                    {
+                        runner = runner.Next;
+                    }
+                }
+                current = current.Next;
+            }
+            head.PrintForward("List-After\n");
+            Console.WriteLine("-------------------------------------------------------");
+        }
+
+        public void DeleteDupsC_InProgress(MyLinkedListNode head)
+        {
+            int tabC = 0;
+            head.PrintForward("List-Before\n");
+            Console.WriteLine($"{this.GetType().FullName}.{System.Reflection.MethodBase.GetCurrentMethod().Name}\n");
+
+            if (head == null) return;
+
+            var previous = head;
+            //Next element
+            var current = previous.Next;
+
+            while (current != null)
+            {
+                // Look backwards for dups, and remove any that you see.
+                var runner = head;
+
+                head.PrintForward();
+                current.PrintForward();
+                runner.PrintForward();
+
+                while (runner != current && current != null)
+                {
+                    runner.PrintForward();
+
+                    tabC++;
+                    Console.WriteLine($"@@current.Data '{current.Data}' runner.Data: '{runner.Data}'");
+                    if (runner.Data.Equals(current.Data))
+                    {
+                        head.PrintForward();
+                        current.PrintForward();
+                        previous.PrintForward();
+                        //Console.WriteLine($"@@Removing current '{current.Data}'");
+                        //urrent = current.Next;
+
+                        var temp = current.Next;
+                        previous.Next = temp;
+                        current = temp;
+                        //Console.WriteLine($"***Inner current {current.PrintForward()}");
+                        //previous = current;
+                        //current = temp;
+                        /* We know we can't have more than one dup preceding
+                         * our element since it would have been removed
+                         * earlier. */
+                        //break;
+                        //Console.WriteLine($"{head.PrintForward()}");
+                    }
+
+                    runner = runner.Next;
+                    runner.PrintForward();
+                }
+
+                /* If runner == current, then we didn�t find any duplicate
+                 * elements in the previous for loop.  We then need to
+                 * increment current.
+                 * If runner != current, then we must have hit the �break�
+                 * condition, in which case we found a dup and current has
+                 * already been incremented.*/
+                if (runner == current)
+                {
+                    head.PrintForward();
+                    previous.PrintForward();
+                    current.PrintForward();
+                    runner.PrintForward();
+                    previous = current;
+                    current = current.Next;
+                    previous.PrintForward();
+                    //Console.WriteLine($"@@@current {current.PrintForward()}");
+                }
+            }
+            head.PrintForward("List-After\n");
+            Console.WriteLine("-------------------------------------------------------");
+        }
+
+        public void DeleteDupsC2_InProgress(MyLinkedListNode head)
+        {
+            int tapC = 0;
+            head.PrintForward("List-Before\n");
+            Console.WriteLine($"{this.GetType().FullName}.{System.Reflection.MethodBase.GetCurrentMethod().Name}\n");
+
+            if (head == null) return;
+
+            var previous = head;
+            var current = previous.Next;
+
+            while (current != null)
+            {
+                // Look backwards for dups, and remove any that you see.
+                var runner = head;
+
+                while (runner != current)
+                {
+                    tapC++;
+
+                    if (runner.Data == current.Data)
+                    {
+                        var temp = current.Next;
+                        previous.Next = temp;
+                        current = temp;
+                        /* We know we can't have more than one dup preceding
+                         * our element since it would have been removed
+                         * earlier. */
+                        break;
+                    }
+                    runner = runner.Next;
+                }
+
+                /* If runner == current, then we didn�t find any duplicate
+                 * elements in the previous for loop.  We then need to
+                 * increment current.
+                 * If runner != current, then we must have hit the �break�
+                 * condition, in which case we found a dup and current has
+                 * already been incremented.*/
+                if (runner == current)
+                {
+                    previous = current;
+                    current = current.Next;
+                }
+            }
+            head.PrintForward("List-After\n");
+            Console.WriteLine("-------------------------------------------------------");
+        }
+
         public void MeargeList_Run()
         {
             int[] firstVals = { 1, 3, 6, 8 };
@@ -311,46 +537,15 @@ namespace TWL_Algorithms_Samples.LinkedList
             var swapedList = SwapPairsAlertnatly(testLinkedList);
             swapedList.PrintForward("swapedList");
         }
-
         public class CheckIfPalindrome : IQuestion
         {
-            public void Run()
-            {
-                const int length = 10;
-                var nodes = new MyLinkedListNodeDoubly[length];
-
-                for (var i = 0; i < length; i++)
-                {
-                    nodes[i] = new MyLinkedListNodeDoubly(i >= length / 2 ? length - i - 1 : i, null, null);
-                }
-
-                for (var i = 0; i < length; i++)
-                {
-                    if (i < length - 1)
-                    {
-                        nodes[i].SetNext(nodes[i + 1]);
-                    }
-
-                    if (i > 0)
-                    {
-                        nodes[i].SetPrevious(nodes[i - 1]);
-                    }
-                }
-                // nodes[length - 2].data = 9; // Uncomment to ruin palindrome
-
-                var head = nodes[0];
-                head.PrintForward("Original:");
-                Console.WriteLine("\nIsPalindrome: " + IsPalindrome_UsingRecursionMain(head));
-                Console.WriteLine("\nIsPalindrome2: " + IsPalindrome_UsingStack(head));
-            }
-
             /// <summary>
             /// ****NW:Compare first vs last
             /// </summary>
             /// <param name="head"></param>
             /// <param name="length"></param>
             /// <returns></returns>
-            private Result IsPalindrome_UsingRecursion(MyLinkedListNode head, int length)
+            public Result IsPalindrome_UsingRecursion(MyLinkedListNode head, int length)
             {
                 if (head == null || length == 0)
                 {
@@ -385,7 +580,7 @@ namespace TWL_Algorithms_Samples.LinkedList
                 return res;
             }
 
-            private bool IsPalindrome_UsingRecursionMain(MyLinkedListNode head)
+            public bool IsPalindrome_UsingRecursionMain(MyLinkedListNode head)
             {
                 var size = 0;
                 var node = head;
@@ -401,7 +596,7 @@ namespace TWL_Algorithms_Samples.LinkedList
                 return palindrome.result;
             }
 
-            private bool IsPalindrome_UsingStack(MyLinkedListNode head)
+            public bool IsPalindrome_UsingStack(MyLinkedListNode head)
             {
                 var fast = head;
                 var slow = head;
@@ -438,7 +633,36 @@ namespace TWL_Algorithms_Samples.LinkedList
                 return true;
             }
 
-            private class Result
+            public void Run()
+            {
+                const int length = 10;
+                var nodes = new MyLinkedListNodeDoubly[length];
+
+                for (var i = 0; i < length; i++)
+                {
+                    nodes[i] = new MyLinkedListNodeDoubly(i >= length / 2 ? length - i - 1 : i, null, null);
+                }
+
+                for (var i = 0; i < length; i++)
+                {
+                    if (i < length - 1)
+                    {
+                        nodes[i].SetNext(nodes[i + 1]);
+                    }
+
+                    if (i > 0)
+                    {
+                        nodes[i].SetPrevious(nodes[i - 1]);
+                    }
+                }
+                // nodes[length - 2].data = 9; // Uncomment to ruin palindrome
+
+                var head = nodes[0];
+                head.PrintForward("Original:");
+                Console.WriteLine("\nIsPalindrome: " + IsPalindrome_UsingRecursionMain(head));
+                Console.WriteLine("\nIsPalindrome2: " + IsPalindrome_UsingStack(head));
+            }
+            public class Result
             {
                 public MyLinkedListNode Node;
                 public bool result;
@@ -453,37 +677,7 @@ namespace TWL_Algorithms_Samples.LinkedList
 
         public class Q2_04_Partition : IQuestion
         {
-            public void Run()
-            {
-                /* Create linked list */
-                int[] vals = { 1, 3, 7, 5, 2, 9, 4 };
-                var head = new MyLinkedListNodeDoubly(vals[0], null, null);
-                var current = head;
-
-                for (var i = 1; i < vals.Length; i++)
-                {
-                    current = new MyLinkedListNodeDoubly(vals[i], null, current);
-                }
-                head.PrintForward("Original:");
-
-                var head2 = head.Clone();
-                var head3 = head.Clone();
-                var head4 = head.Clone();
-
-                /* Partition */
-                var h = Partition(head, 5);
-                var h2 = Partition2(head2, 5);
-                var h3 = Partition3(head3, 5);
-                var h4 = Partition4(head4, 5);
-
-                /* Print Result */
-                h.PrintForward("Partition:");
-                h2.PrintForward("Partition2");
-                h3.PrintForward("Partition3");
-                h4.PrintForward("Partition4");
-            }
-
-            private MyLinkedListNode Partition(MyLinkedListNode node, int pivot)
+            public MyLinkedListNode Partition(MyLinkedListNode node, int pivot)
             {
                 MyLinkedListNode beforeStart = null;
                 MyLinkedListNode beforeEnd = null;
@@ -536,7 +730,7 @@ namespace TWL_Algorithms_Samples.LinkedList
                 return beforeStart;
             }
 
-            private MyLinkedListNode Partition2(MyLinkedListNode node, int pivot)
+            public MyLinkedListNode Partition2(MyLinkedListNode node, int pivot)
             {
                 MyLinkedListNode beforeStart = null;
                 MyLinkedListNode afterStart = null;
@@ -579,7 +773,7 @@ namespace TWL_Algorithms_Samples.LinkedList
                 return head;
             }
 
-            private MyLinkedListNode Partition3(MyLinkedListNode listHead, int pivot)
+            public MyLinkedListNode Partition3(MyLinkedListNode listHead, int pivot)
             {
                 var leftList = new MyLinkedListNodeDoubly(); // empty temp node to not have an IF inside the loop
                 var rightList = new MyLinkedListNodeDoubly(pivot, null, null);
@@ -611,7 +805,7 @@ namespace TWL_Algorithms_Samples.LinkedList
                 return finalList;
             }
 
-            private MyLinkedListNode Partition4(MyLinkedListNode listHead, int pivot)
+            public MyLinkedListNode Partition4(MyLinkedListNode listHead, int pivot)
             {
                 MyLinkedListNode leftSubList = null;
                 MyLinkedListNode rightSubList = null;
@@ -650,6 +844,36 @@ namespace TWL_Algorithms_Samples.LinkedList
                 leftSubList.Next = rightSubListHead;
 
                 return listHead;
+            }
+
+            public void Run()
+            {
+                /* Create linked list */
+                int[] vals = { 1, 3, 7, 5, 2, 9, 4 };
+                var head = new MyLinkedListNodeDoubly(vals[0], null, null);
+                var current = head;
+
+                for (var i = 1; i < vals.Length; i++)
+                {
+                    current = new MyLinkedListNodeDoubly(vals[i], null, current);
+                }
+                head.PrintForward("Original:");
+
+                var head2 = head.Clone();
+                var head3 = head.Clone();
+                var head4 = head.Clone();
+
+                /* Partition */
+                var h = Partition(head, 5);
+                var h2 = Partition2(head2, 5);
+                var h3 = Partition3(head3, 5);
+                var h4 = Partition4(head4, 5);
+
+                /* Print Result */
+                h.PrintForward("Partition:");
+                h2.PrintForward("Partition2");
+                h3.PrintForward("Partition3");
+                h4.PrintForward("Partition4");
             }
         }
 
@@ -741,271 +965,9 @@ namespace TWL_Algorithms_Samples.LinkedList
             }
         }
 
-        public class Remove_Dups : IQuestion
-        {
-            private int _tapB = 0;
-            private int _tapC = 0;
-
-            public void Run()
-            {
-                Console.WriteLine($"{this.GetType().FullName}.{System.Reflection.MethodBase.GetCurrentMethod().Name}");
-                var first = new MyLinkedListNodeDoubly(0, null, null);
-                var originalList = first;
-                var second = first;
-
-                for (var i = 1; i < 8; i++)
-                {
-                    second = new MyLinkedListNodeDoubly(i % 2, null, null);
-                    first.SetNext(second);
-                    second.SetPrevious(first);
-                    first = second;
-                }
-                originalList.PrintForward("originalList");
-
-                var list1 = originalList.CloneLinkedListNodeDoubly();
-                var list2 = originalList.Clone();
-                var list3 = originalList.Clone();
-
-                //DeleteDups_UsingDictionary(list1);
-                //DeleteDupsB(list2);
-                DeleteDupsC2(list3);
-
-                //Console.WriteLine(_tapB);
-                //Console.WriteLine(_tapC);
-            }
-
-            /// <summary>
-            /// Delete dups using additional memory (e.g. Hash table or Dictionary)
-            /// </summary>
-            /// <param name="head"></param>
-            private void DeleteDups_UsingDictionary(MyLinkedListNodeDoubly head)
-            {
-                head.PrintForward("List-Before\n");
-                Console.WriteLine($"{this.GetType().FullName}.{System.Reflection.MethodBase.GetCurrentMethod().Name}\n");
-                var table = new Dictionary<int, bool>();
-                MyLinkedListNodeDoubly previous = null;
-
-                while (head != null)
-                {
-                    if (table.ContainsKey((int)head.Data))
-                    {
-                        if (previous != null)
-                        {
-                            previous.Next = head.Next;
-                        }
-                    }
-                    else
-                    {
-                        table.Add((int)head.Data, true);
-                        previous = head;
-                    }
-
-                    head = (MyLinkedListNodeDoubly)head.Next;
-                }
-                head.PrintForward("List-After\n");
-                Console.WriteLine("-------------------------------------------------------");
-            }
-
-            private void DeleteDupsB(MyLinkedListNode head)
-            {
-                head.PrintForward("List-Before\n");
-                Console.WriteLine($"{this.GetType().FullName}.{System.Reflection.MethodBase.GetCurrentMethod().Name}\n");
-                if (head == null) return;
-
-                var current = head;
-
-                while (current != null)
-                {
-                    /* Remove all future nodes that have the same value */
-                    var runner = current;
-
-                    while (runner.Next != null)
-                    {
-                        Tap(0);
-                        Console.WriteLine($"current.Data '{current.Data}' runner.Next.Data: '{runner.Next.Data}'");
-
-                        if (runner.Next.Data.Equals(current.Data))
-                        {
-                            Console.WriteLine($"Removing runner '{runner.Next.Data}'");
-                            runner.Next = runner.Next.Next;
-                            head.PrintForward();
-                        }
-                        else
-                        {
-                            runner = runner.Next;
-                        }
-                    }
-                    current = current.Next;
-                }
-                head.PrintForward("List-After\n");
-                Console.WriteLine("-------------------------------------------------------");
-            }
-
-            private void DeleteDupsC(MyLinkedListNode head)
-            {
-                head.PrintForward("List-Before\n");
-                Console.WriteLine($"{this.GetType().FullName}.{System.Reflection.MethodBase.GetCurrentMethod().Name}\n");
-
-                if (head == null) return;
-
-                var previous = head;
-                //Next element
-                var current = previous.Next;
-
-                while (current != null)
-                {
-                    // Look backwards for dups, and remove any that you see.
-                    var runner = head;
-
-                    head.PrintForward();
-                    current.PrintForward();
-                    runner.PrintForward();
-
-                    while (runner != current && current != null)
-                    {
-                        runner.PrintForward();
-
-                        Tap(1);
-                        Console.WriteLine($"@@current.Data '{current.Data}' runner.Data: '{runner.Data}'");
-                        if (runner.Data.Equals(current.Data))
-                        {
-                            head.PrintForward();
-                            current.PrintForward();
-                            previous.PrintForward();
-                            //Console.WriteLine($"@@Removing current '{current.Data}'");
-                            //urrent = current.Next;
-
-                            var temp = current.Next;
-                            previous.Next = temp;
-                            current = temp;
-                            //Console.WriteLine($"***Inner current {current.PrintForward()}");
-                            //previous = current;
-                            //current = temp;
-                            /* We know we can't have more than one dup preceding
-                             * our element since it would have been removed
-                             * earlier. */
-                            //break;
-                            //Console.WriteLine($"{head.PrintForward()}");
-                        }
-
-                        runner = runner.Next;
-                        runner.PrintForward();
-                    }
-
-                    /* If runner == current, then we didn�t find any duplicate
-                     * elements in the previous for loop.  We then need to
-                     * increment current.
-                     * If runner != current, then we must have hit the �break�
-                     * condition, in which case we found a dup and current has
-                     * already been incremented.*/
-                    if (runner == current)
-                    {
-                        head.PrintForward();
-                        previous.PrintForward();
-                        current.PrintForward();
-                        runner.PrintForward();
-                        previous = current;
-                        current = current.Next;
-                        previous.PrintForward();
-                        //Console.WriteLine($"@@@current {current.PrintForward()}");
-                    }
-                }
-                head.PrintForward("List-After\n");
-                Console.WriteLine("-------------------------------------------------------");
-            }
-
-            private void DeleteDupsC2(MyLinkedListNode head)
-            {
-                head.PrintForward("List-Before\n");
-                Console.WriteLine($"{this.GetType().FullName}.{System.Reflection.MethodBase.GetCurrentMethod().Name}\n");
-
-                if (head == null) return;
-
-                var previous = head;
-                var current = previous.Next;
-
-                while (current != null)
-                {
-                    // Look backwards for dups, and remove any that you see.
-                    var runner = head;
-
-                    while (runner != current)
-                    {
-                        Tap(1);
-
-                        if (runner.Data == current.Data)
-                        {
-                            var temp = current.Next;
-                            previous.Next = temp;
-                            current = temp;
-                            /* We know we can't have more than one dup preceding
-                             * our element since it would have been removed
-                             * earlier. */
-                            break;
-                        }
-                        runner = runner.Next;
-                    }
-
-                    /* If runner == current, then we didn�t find any duplicate
-                     * elements in the previous for loop.  We then need to
-                     * increment current.
-                     * If runner != current, then we must have hit the �break�
-                     * condition, in which case we found a dup and current has
-                     * already been incremented.*/
-                    if (runner == current)
-                    {
-                        previous = current;
-                        current = current.Next;
-                    }
-                }
-                head.PrintForward("List-After\n");
-                Console.WriteLine("-------------------------------------------------------");
-            }
-
-            private void Tap(int i)
-            {
-                if (i == 0)
-                {
-                    _tapB++;
-                }
-                else
-                {
-                    _tapC++;
-                }
-            }
-        }
-
         public class Return_Kth_To_Last : IQuestion
         {
-            public void Run()
-            {
-                //int[] nthCounts = new int[] { 1, 2, 9, 10, 11,12 };
-                int[] nthCounts = new int[] { 1 };
-                nthCounts.Print("Get Positions:");
-                var head = GetLinkedListSingly_Random(10, 0, 10);
-                head.PrintForward("\nLink List:");
-                var node = head;
-                foreach (int nth in nthCounts)
-                {
-                    int i = 0;
-                    NthToLastR1(head, nth);
-                    node = NthToLastR2(head, nth, ref i);
-                    node = NthToLastR3(head, nth);
-
-                    if (node != null)
-                    {
-                        Console.WriteLine("***" + nth + "th to last node is " + node.Data);
-                    }
-                    else
-                    {
-                        Console.WriteLine($"***Null.  n='{nth}' is out of bounds.");
-                    }
-
-                    Console.WriteLine("-----------------------------------------------------------");
-                }
-            }
-
-            private MyLinkedListNode NthToLast(MyLinkedListNode head, int n)
+            public MyLinkedListNode NthToLast(MyLinkedListNode head, int n)
             {
                 var p1 = head;
                 var p2 = head;
@@ -1038,7 +1000,7 @@ namespace TWL_Algorithms_Samples.LinkedList
                 return p1;
             }
 
-            private int NthToLastR1(MyLinkedListNode head, int n)
+            public int NthToLastR1(MyLinkedListNode head, int n)
             {
                 if (head != null)
                 {
@@ -1064,7 +1026,7 @@ namespace TWL_Algorithms_Samples.LinkedList
                 return k;
             }
 
-            private MyLinkedListNode NthToLastR2(MyLinkedListNode head, int n, ref int i)
+            public MyLinkedListNode NthToLastR2(MyLinkedListNode head, int n, ref int i)
             {
                 if (head == null)
                 {
@@ -1082,7 +1044,7 @@ namespace TWL_Algorithms_Samples.LinkedList
                 return node;
             }
 
-            private MyLinkedListNode NthToLastR3(MyLinkedListNode head, int k)
+            public MyLinkedListNode NthToLastR3(MyLinkedListNode head, int k)
             {
                 head.PrintForward("@");
                 var result = NthToLastR3Helper(head, k);
@@ -1106,7 +1068,7 @@ namespace TWL_Algorithms_Samples.LinkedList
             //    Console.WriteLine($"n='{n}' k='{k}'");
             //    return k;
             //}
-            private Result NthToLastR3Helper(MyLinkedListNode head, int k)
+            public Result NthToLastR3Helper(MyLinkedListNode head, int k)
             {
                 if (head == null)
                 {
@@ -1134,7 +1096,34 @@ namespace TWL_Algorithms_Samples.LinkedList
                 return result;
             }
 
-            internal class Result
+            public void Run()
+            {
+                //int[] nthCounts = new int[] { 1, 2, 9, 10, 11,12 };
+                int[] nthCounts = new int[] { 1 };
+                nthCounts.Print("Get Positions:");
+                var head = GetLinkedListSingly_Random(10, 0, 10);
+                head.PrintForward("\nLink List:");
+                var node = head;
+                foreach (int nth in nthCounts)
+                {
+                    int i = 0;
+                    NthToLastR1(head, nth);
+                    node = NthToLastR2(head, nth, ref i);
+                    node = NthToLastR3(head, nth);
+
+                    if (node != null)
+                    {
+                        Console.WriteLine("***" + nth + "th to last node is " + node.Data);
+                    }
+                    else
+                    {
+                        Console.WriteLine($"***Null.  n='{nth}' is out of bounds.");
+                    }
+
+                    Console.WriteLine("-----------------------------------------------------------");
+                }
+            }
+            public class Result
             {
                 public Result(MyLinkedListNode node, int count)
                 {
@@ -1146,7 +1135,7 @@ namespace TWL_Algorithms_Samples.LinkedList
                 public MyLinkedListNode Node { get; set; }
             }
 
-            //private LinkedListNode NthToLastR1(LinkedListNode head, int n)
+            //public LinkedListNode NthToLastR1(LinkedListNode head, int n)
             //{
             //    if (head != null)
             //    {
@@ -1165,7 +1154,7 @@ namespace TWL_Algorithms_Samples.LinkedList
         {
             #region First Part
 
-            private MyLinkedListNode AddLists(MyLinkedListNode list1, MyLinkedListNode list2, int carry)
+            public MyLinkedListNode AddLists(MyLinkedListNode list1, MyLinkedListNode list2, int carry)
             {
                 if (list1 == null && list2 == null && carry == 0)
                 {
@@ -1197,7 +1186,7 @@ namespace TWL_Algorithms_Samples.LinkedList
                 return result;
             }
 
-            private int LinkedListToInt(MyLinkedListNode node)
+            public int LinkedListToInt(MyLinkedListNode node)
             {
                 int value = 0;
 
@@ -1213,7 +1202,7 @@ namespace TWL_Algorithms_Samples.LinkedList
 
             #region Followup
 
-            private MyLinkedListNode AddLists2(MyLinkedListNode list1, MyLinkedListNode list2)
+            public MyLinkedListNode AddLists2(MyLinkedListNode list1, MyLinkedListNode list2)
             {
                 var len1 = Length(list1);
                 var len2 = Length(list2);
@@ -1240,7 +1229,7 @@ namespace TWL_Algorithms_Samples.LinkedList
                 }
             }
 
-            private PartialSum AddListsHelper(MyLinkedListNode list1, MyLinkedListNode list2)
+            public PartialSum AddListsHelper(MyLinkedListNode list1, MyLinkedListNode list2)
             {
                 if (list1 == null && list2 == null)
                 {
@@ -1263,7 +1252,7 @@ namespace TWL_Algorithms_Samples.LinkedList
                 return sum;
             }
 
-            private MyLinkedListNode insertBefore(MyLinkedListNode list, int data)
+            public MyLinkedListNode insertBefore(MyLinkedListNode list, int data)
             {
                 var listD = (MyLinkedListNodeDoubly)list;
                 var node = new MyLinkedListNodeDoubly(data, null, null);
@@ -1277,7 +1266,7 @@ namespace TWL_Algorithms_Samples.LinkedList
                 return node;
             }
 
-            private int Length(MyLinkedListNode l)
+            public int Length(MyLinkedListNode l)
             {
                 if (l == null)
                 {
@@ -1289,7 +1278,7 @@ namespace TWL_Algorithms_Samples.LinkedList
                 }
             }
 
-            private int linkedListToInt(MyLinkedListNode node)
+            public int linkedListToInt(MyLinkedListNode node)
             {
                 int value = 0;
 
@@ -1302,7 +1291,7 @@ namespace TWL_Algorithms_Samples.LinkedList
                 return value;
             }
 
-            private MyLinkedListNode PadList(MyLinkedListNode listNode, int padding)
+            public MyLinkedListNode PadList(MyLinkedListNode listNode, int padding)
             {
                 var head = (MyLinkedListNodeDoubly)listNode;
 
@@ -1317,7 +1306,7 @@ namespace TWL_Algorithms_Samples.LinkedList
                 return head;
             }
 
-            private class PartialSum
+            public class PartialSum
             {
                 public int Carry = 0;
                 public MyLinkedListNode Sum = null;

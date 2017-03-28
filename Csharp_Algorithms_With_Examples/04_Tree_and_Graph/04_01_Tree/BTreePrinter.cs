@@ -16,7 +16,7 @@ namespace TWL_Algorithms_Samples.Tree
             PrintNodeInternal(new List<BinaryTreeNode>() { root }, 1, maxLevel);
         }
 
-        private static bool IsAllElementsNull<T>(IEnumerable<T> list)
+        public static bool IsAllElementsNull<T>(IEnumerable<T> list)
         {
             foreach (object o in list)
             {
@@ -27,7 +27,7 @@ namespace TWL_Algorithms_Samples.Tree
             return true;
         }
 
-        private static int MaxLevel(BinaryTreeNode node)
+        public static int MaxLevel(BinaryTreeNode node)
         {
             if (node == null)
                 return 0;
@@ -35,7 +35,7 @@ namespace TWL_Algorithms_Samples.Tree
             return Math.Max(BTreePrinter.MaxLevel(node.Left), BTreePrinter.MaxLevel(node.Right)) + 1;
         }
 
-        private static void PrintNodeInternal(List<BinaryTreeNode> nodes, int level, int maxLevel)
+        public static void PrintNodeInternal(List<BinaryTreeNode> nodes, int level, int maxLevel)
         {
             if (nodes.Count == 0 || BTreePrinter.IsAllElementsNull(nodes))
                 return;
@@ -52,7 +52,7 @@ namespace TWL_Algorithms_Samples.Tree
             {
                 if (node != null)
                 {
-                    Console.Write(node.Data);
+                    Console.Write(node.Value);
                     newNodes.Add(node.Left);
                     newNodes.Add(node.Right);
                 }
@@ -99,7 +99,7 @@ namespace TWL_Algorithms_Samples.Tree
             PrintNodeInternal(newNodes, level + 1, maxLevel);
         }
 
-        private static void PrintWhitespaces(int count)
+        public static void PrintWhitespaces(int count)
         {
             string padding = string.Format("{0}", count);
             padding = "{0," + padding + "}";

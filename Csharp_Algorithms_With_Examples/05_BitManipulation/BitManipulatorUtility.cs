@@ -77,6 +77,7 @@ namespace TWL_Algorithms_Samples.BitManipulation
             int mask = leftClearanceBit | rightClearanceBit;
             return (number & mask);
         }
+
         /// <summary>
         /// clear all right to ith position
         /// </summary>
@@ -139,7 +140,7 @@ namespace TWL_Algorithms_Samples.BitManipulation
             return (number & mask) | (value << 1);
         }
 
-        private int SingleNumber_UsingXOR(int[] numbers)
+        public int SingleNumber_UsingXOR(int[] numbers)
         {
             int result = 0;
             for (int i = 0; i < numbers.Length; i++)
@@ -156,7 +157,7 @@ namespace TWL_Algorithms_Samples.BitManipulation
                 Console.WriteLine(UpdateBits(100, 10, 2, 6));
             }
 
-            private static int UpdateBits(int n, int m, int i, int j)
+            public static int UpdateBits(int n, int m, int i, int j)
             {
                 /* Create a mask to clear bits i  through j in n */
                 /* Example i = 2, j = 4. Result should be 11100011.
@@ -202,7 +203,7 @@ namespace TWL_Algorithms_Samples.BitManipulation
                 }
             }
 
-            private string PrintBinary(double number)
+            public string PrintBinary(double number)
             {
                 if (number >= 1 || number <= 0)
                 {
@@ -237,7 +238,7 @@ namespace TWL_Algorithms_Samples.BitManipulation
                 return binary.ToString();
             }
 
-            private string PrintBinary2(double number)
+            public string PrintBinary2(double number)
             {
                 if (number >= 1 || number <= 0)
                 {

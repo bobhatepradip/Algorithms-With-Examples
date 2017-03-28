@@ -16,6 +16,177 @@ namespace TWL_Algorithms_Samples.Arrays.Strings
                 new string[]{"camera", "macera"},
             };
 
+        /// <summary>
+        /// Requires no additional memory if used proper sorting algorithms (-which does not require additional memory)
+        /// </summary>
+        /// <param name="str1"></param>
+        /// <param name="str2"></param>
+        /// <returns></returns>
+        public static bool CheckIfStringsArePermutaion_1_UsingSort(string str1, string str2)
+        {
+            AssortedMethods.PrintType(type: typeof(StringUtility), methodName: nameof(CheckIfStringsArePermutaion_1_UsingSort));
+
+            if (str1.Length != str2.Length)
+            {
+                Console.WriteLine($"Length of '{str1}' does not match with {str2}");
+                return false;
+            }
+
+            var originalAsArray = str1.ToCharArray();
+
+            // Array.Sort Is Default Implementaion.
+            // It should be implementted using quick sort see sorting.cs for quick sort exampled
+            Array.Sort(originalAsArray);
+            //Console.WriteLine($"'{str1}' after sort {new string(originalAsArray)}");
+            str1 = new string(originalAsArray);
+
+            var valueToTestAsArray = str2.ToCharArray();
+
+            // Array.Sort Is Default Implementaion.
+            // It should be implementted using quick sort see sorting.cs for quick sort exampled
+            Array.Sort(valueToTestAsArray);
+            //Console.WriteLine($"'{str2}' after sort {new string(valueToTestAsArray)}");
+            str2 = new string(valueToTestAsArray);
+
+            Console.WriteLine($" Is '{str1}' and {str2} are permutaion-{str1.Equals(str2)}");
+            //Console.WriteLine("===================================================================================");
+            return str1.Equals(str2);
+        }
+
+        /// <summary>
+        /// Requires additional memory to store identical counts
+        /// assumbed it has only ASCII charectes
+        /// </summary>
+        /// <param name="str1"></param>
+        /// <param name="str2"></param>
+        /// <returns></returns>
+        public static bool CheckIfStringsArePermutaion_2_UsingIdenticalCharecterCount(string str1, string str2)
+        {
+            AssortedMethods.PrintType(type: typeof(StringUtility), methodName: nameof(CheckIfStringsArePermutaion_2_UsingIdenticalCharecterCount));
+
+            if (str1.Length != str2.Length)
+            {
+                Console.WriteLine($"Length of '{str1}' does not match with {str2}");
+                return false;
+            }
+
+            var letters = new int[256];
+            var originalAsArray = str1.ToCharArray();
+            originalAsArray.Print($"'{str1}'- original.ToCharArray():");
+
+            foreach (var character in originalAsArray)
+            {
+                letters[character]++;
+                //Console.WriteLine($"character -'{character}'; letters[character]-'{letters[character]}'");
+            }
+
+            //letters.Print($"'{str1}'-");
+
+            var valueToTestAsArray = str2.ToCharArray();
+            valueToTestAsArray.Print($"'{str2}'- valueToTest.ToCharArray():");
+            foreach (var character in valueToTestAsArray)
+            {
+                letters[character]--;
+
+                //why it is -1 vs 0 condition?
+                if (letters[character] < 0)
+                {
+                    Console.WriteLine($"character== {character}, letters[character] = {letters[character]} : (letters[character] < 0 ) = {letters[character] < 0}");
+                    return false;
+                }
+            }
+
+            Console.WriteLine($" Is '{str1}' and {str2} are permutaion- True");
+            Console.WriteLine("===================================================================================");
+
+            return true;
+        }
+
+        /// <summary>
+        /// Used for unicodes charctes
+        /// </summary>
+        /// <param name="str1"></param>
+        /// <param name="str2"></param>
+        /// <returns></returns>
+        public static bool CheckIfStringsArePermutaion_3_UsingHashtable(string str1, string str2)
+        {
+            AssortedMethods.PrintType(type: typeof(StringUtility), methodName: nameof(CheckIfStringsArePermutaion_3_UsingHashtable));
+            if (str1.Length != str2.Length)
+            {
+                //Console.WriteLine($"Length of '{str1}' does not match with {str2}");
+                return false;
+            }
+
+            Hashtable hashtable = new Hashtable();
+            var originalAsArray = str1.ToCharArray();
+            originalAsArray.Print($"'{str1}'- original.ToCharArray():");
+
+            foreach (var character in originalAsArray)
+            {
+                if (hashtable.ContainsKey(character))
+                {
+                    hashtable[character] = (int)hashtable[character] + 1;
+                }
+                else
+                {
+                    hashtable.Add(character, 1);
+                }
+                //Console.WriteLine($"character -'{character}'; letters[character]-'{letters[character]}'");
+            }
+
+            var str2AsArray = str2.ToCharArray();
+            str2AsArray.Print($"'{str2}'- valueToTest.ToCharArray():");
+            foreach (var character in str2AsArray)
+            {
+                if (hashtable.ContainsKey(character))
+                {
+                    hashtable[character] = (int)hashtable[character] - 1;
+                }
+                else
+                {
+                    Console.WriteLine($"character= '{character}' does not exists in Hashtable");
+                    return false;
+                }
+
+                //why it is -1 vs 0 condition?
+                if ((int)hashtable[character] < 0)
+                {
+                    Console.WriteLine($"character== {character}, (int)hashtable[character] = {(int)hashtable[character]} : (letters[character] < 0 ) = {(int)hashtable[character] < 0}");
+                    return false;
+                }
+            }
+
+            Console.WriteLine($" Is '{str1}' and {str2} are permutaion= true");
+            Console.WriteLine("===================================================================================");
+
+            return true;
+        }
+
+        public static void CheckIfStringsArePermutaion_Run()
+        {
+            string[][] pairs =             {
+                new string[]{"apple", "papel"},
+                new string[]{"carrot", "tarroc"},
+                new string[]{"hello", "llloh"},
+                new string[]{ "lol", "lol" },
+               new string[]{ "lol", "LOL" },
+               new string[]{ "abc", "def" },
+               new string[]{ "xyz", "abcd" }
+            };
+
+            foreach (var pair in pairs)
+            {
+                var word1 = pair[0];
+                var word2 = pair[1];
+                Console.WriteLine($"*****************************************************************");
+                Console.WriteLine($"Check for permutations '{word1}' and '{word2}' ");
+                Console.WriteLine($"{word1}, {word2}: \n" +
+                     $"CheckIfStringsArePermutaion_1_UsingSort={CheckIfStringsArePermutaion_1_UsingSort(word1, word2)} \n" +
+                     $"CheckIfStringsArePermutaion_2_UsingIdenticalCharecterCount={CheckIfStringsArePermutaion_2_UsingIdenticalCharecterCount(word1, word2)} \n" +
+                     $"CheckIfStringsArePermutaion_3_UsingHashtable={CheckIfStringsArePermutaion_3_UsingHashtable(word1, word2)}");
+            }
+        }
+
         public static bool IsRotation(String s1, String s2)
         {
             var string1Length = s1.Length;
@@ -48,8 +219,191 @@ namespace TWL_Algorithms_Samples.Arrays.Strings
             }
         }
 
+        /// <summary>
+        /// Where bit traker 'checker' will store/set bit for each charecter
+        /// and when upon 1&1 it indiacate that charecter already exists.
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static bool IsUniqueChars_UsingBitTracker(string str)
+        {
+            string prefix = "IsUniqueChars_UsingBitTracker: ";
+            Console.WriteLine($"{prefix} str={str}");
+            if (str.Length > 256)
+            {
+                return false;
+            }
+            var checker = 0;
+            for (var i = 0; i < str.Length; i++)
+            {
+                var val = str[i] - 'a';
+                Console.WriteLine($"{prefix} str[i]=" + str[i]);
+                //Console.WriteLine($"{prefix}  val= (str[i] - 'a') = {str[i] - 'a'} =" + val);
+                Console.WriteLine($"{prefix}  checker= {checker} [{AssortedMethods.ToFullBinarystring(checker)}]");
+                Console.WriteLine($"{prefix}  (1 << val)=(1 [{AssortedMethods.ToFullBinarystring(1)}] << {val}) = {(1 << val)} [{AssortedMethods.ToFullBinarystring((1 << val))}]");
+                Console.WriteLine($"{prefix}  (checker & (1 << val)) > 0 = [{AssortedMethods.ToFullBinarystring(checker)}] & [{AssortedMethods.ToFullBinarystring((1 << val))}] = [{AssortedMethods.ToFullBinarystring((checker & (1 << val)))}] > 0 = " + ((checker & (1 << val)) > 0));
+                if ((checker & (1 << val)) > 0)
+                {
+                    Console.WriteLine($"{prefix} Return False");
+                    return false;
+                }
+                Console.WriteLine($"{prefix}  checker |= (1 << val) =  [{AssortedMethods.ToFullBinarystring(checker | (1 << val))}]" + (checker | (1 << val)));
+                checker |= (1 << val);
+            }
+            return true;
+        }
+
+        public static bool IsUniqueChars_UsingExtraCharecterArray(String str)
+        {
+            string prefix = "IsUniqueChars_UsingExtraCharecterArray: ";
+
+            Console.WriteLine($"{prefix} str={str}");
+            if (str.Length > 256)
+            {
+                return false;
+            }
+            //charecter tracer checks if charecter processed before
+            var charSet = new bool[256];
+            for (var i = 0; i < str.Length; i++)
+            {
+                int val = str[i];
+                Console.WriteLine($"{prefix} str[i]=" + str[i]);
+                Console.WriteLine($"{prefix} val=" + val);
+                Console.WriteLine($"{prefix} charSet[val]=" + charSet[val]);
+                //Check if charecter already exist in charSet if yes then return false
+                if (charSet[val])
+                {
+                    return false;
+                }
+                charSet[val] = true;
+            }
+            return true;
+        }
+
+        public static void PrintFrequencyOfCharecters_UsingArray(string testString)
+        {
+            Console.WriteLine($"PrintFrequency_UsingArray('{testString}'):");
+
+            char[] str = testString.ToCharArray();
+
+            int[] freq = new int[128];
+            for (int i = 0; i < str.Length; i++)
+            {
+                freq[str[i] - 'a']++;
+            }
+            for (int i = 0; i < 128; i++)
+            {
+                if (freq[i] > 0)
+                {
+                    Console.WriteLine("PrintFrequency_UsingArray:[" + (char)((char)i + 'a') + "] = " + freq[i]);
+                }
+            }
+        }
+
+        //        int atoi(const char* str) {
+        //    int sign = 1, base = 0, i = 0;
+        //    while (str[i] == ' ') { i++; }
+        //    if (str[i] == '-' || str[i] == '+') {
+        //        sign = 1 - 2 * (str[i++] == '-');
+        //    }
+        //    while (str[i] >= '0' && str[i] <= '9') {
+        //        if (base >  INT_MAX / 10 || (base == INT_MAX / 10 && str[i] - '0' > 7)) {
+        //            if (sign == 1) return INT_MAX;
+        //            else return INT_MIN;
+        //        }
+        //        base  = 10 * base + (str[i++] - '0');
+        //    }
+        //    return base * sign;
+        //}
+        public static void PrintFrequencyOfCharecters_UsingHashtable(string testString)
+        {
+            Console.WriteLine($"PrintFrequency_UsingHashtable('{testString}'):");
+
+            char[] str = testString.ToCharArray();
+
+            Hashtable freq = new Hashtable();
+            for (int i = 0; i < str.Length; i++)
+            {
+                if (freq.ContainsKey(str[i]))
+                {
+                    freq[str[i]] = (int)freq[str[i]] + 1;
+                }
+                else
+                {
+                    freq.Add(str[i], 1);
+                }
+            }
+            foreach (DictionaryEntry dectionaryEntry in freq)
+            {
+                Console.WriteLine("PrintFrequency_UsingHashtable: [" + dectionaryEntry.Key + "] = " + dectionaryEntry.Value);
+            }
+        }
+
+        public string Compression(string str)
+        {
+            var size = CompressionCount(str);
+
+            if (size >= str.Length)
+            {
+                return str;
+            }
+
+            var sb = new StringBuilder();
+            var last = str[0];
+            var count = 1;
+
+            for (var i = 1; i < str.Length; i++)
+            {
+                if (str[i] == last)
+                {
+                    count++;
+                }
+                else
+                {
+                    sb.Append(last);
+                    sb.Append(count);
+                    last = str[i];
+                    count = 1;
+                }
+            }
+            sb.Append(last);
+            sb.Append(count);
+
+            return sb.ToString();
+        }
+
         public void Compression_Run()
         {
+        }
+
+        public int CompressionCount(string str)
+        {
+            if (string.IsNullOrEmpty(str))
+            {
+                return 0;
+            }
+
+            var last = str[0];
+            var size = 0;
+            var count = 0;
+
+            for (var i = 1; i < str.Length; i++)
+            {
+                if (str[i] == last)
+                {
+                    count++;
+                }
+                else
+                {
+                    last = str[i];
+                    size += 1 + string.Format("{0}", count).Length;
+                    count = 1;
+                }
+            }
+
+            size += 1 + string.Format("{0}", count).Length;
+            Console.WriteLine($"CompressionCount for '{str}({str.Length})' is {size}");
+            return size;
         }
 
         public void IsAnagram_Run()
@@ -261,7 +615,7 @@ namespace TWL_Algorithms_Samples.Arrays.Strings
         public void Run()
         {
             //IsUniqueChars_Run();
-            //IsPermutation_Run();
+            //CheckIfStringsArePermutaion_Run();
             //URLEncoding_Run();
             //Compression_Run();
             //new Palindrome_Permutation().Run();
@@ -294,304 +648,7 @@ namespace TWL_Algorithms_Samples.Arrays.Strings
             }
         }
 
-        public void URLEncoding_Run()
-        {
-            const string input = "abc d e f";
-            string encodedURL = URLEncoding_ReplaceSpaces(input, input.Length);
-            Console.WriteLine("{0} -> {1}", input, encodedURL);
-        }
-
-        public void Void()
-        { }
-
-        /// <summary>
-        /// Where bit traker 'checker' will store/set bit for each charecter
-        /// and when upon 1&1 it indiacate that charecter already exists.
-        /// </summary>
-        /// <param name="str"></param>
-        /// <returns></returns>
-        private static bool IsUniqueChars_UsingBitTracker(string str)
-        {
-            string prefix = "IsUniqueChars_UsingBitTracker: ";
-            Console.WriteLine($"{prefix} str={str}");
-            if (str.Length > 256)
-            {
-                return false;
-            }
-            var checker = 0;
-            for (var i = 0; i < str.Length; i++)
-            {
-                var val = str[i] - 'a';
-                Console.WriteLine($"{prefix} str[i]=" + str[i]);
-                //Console.WriteLine($"{prefix}  val= (str[i] - 'a') = {str[i] - 'a'} =" + val);
-                Console.WriteLine($"{prefix}  checker= {checker} [{AssortedMethods.ToFullBinarystring(checker)}]");
-                Console.WriteLine($"{prefix}  (1 << val)=(1 [{AssortedMethods.ToFullBinarystring(1)}] << {val}) = {(1 << val)} [{AssortedMethods.ToFullBinarystring((1 << val))}]");
-                Console.WriteLine($"{prefix}  (checker & (1 << val)) > 0 = [{AssortedMethods.ToFullBinarystring(checker)}] & [{AssortedMethods.ToFullBinarystring((1 << val))}] = [{AssortedMethods.ToFullBinarystring((checker & (1 << val)))}] > 0 = " + ((checker & (1 << val)) > 0));
-                if ((checker & (1 << val)) > 0)
-                {
-                    Console.WriteLine($"{prefix} Return False");
-                    return false;
-                }
-                Console.WriteLine($"{prefix}  checker |= (1 << val) =  [{AssortedMethods.ToFullBinarystring(checker | (1 << val))}]" + (checker | (1 << val)));
-                checker |= (1 << val);
-            }
-            return true;
-        }
-
-        private static bool IsUniqueChars_UsingExtraCharecterArray(String str)
-        {
-            string prefix = "IsUniqueChars_UsingExtraCharecterArray: ";
-
-            Console.WriteLine($"{prefix} str={str}");
-            if (str.Length > 256)
-            {
-                return false;
-            }
-            //charecter tracer checks if charecter processed before
-            var charSet = new bool[256];
-            for (var i = 0; i < str.Length; i++)
-            {
-                int val = str[i];
-                Console.WriteLine($"{prefix} str[i]=" + str[i]);
-                Console.WriteLine($"{prefix} val=" + val);
-                Console.WriteLine($"{prefix} charSet[val]=" + charSet[val]);
-                //Check if charecter already exist in charSet if yes then return false
-                if (charSet[val])
-                {
-                    return false;
-                }
-                charSet[val] = true;
-            }
-            return true;
-        }
-
-        private static void PrintFrequencyOfCharecters_UsingArray(string testString)
-        {
-            Console.WriteLine($"PrintFrequency_UsingArray('{testString}'):");
-
-            char[] str = testString.ToCharArray();
-
-            int[] freq = new int[128];
-            for (int i = 0; i < str.Length; i++)
-            {
-                freq[str[i] - 'a']++;
-            }
-            for (int i = 0; i < 128; i++)
-            {
-                if (freq[i] > 0)
-                {
-                    Console.WriteLine("PrintFrequency_UsingArray:[" + (char)((char)i + 'a') + "] = " + freq[i]);
-                }
-            }
-        }
-
-        //        int atoi(const char* str) {
-        //    int sign = 1, base = 0, i = 0;
-        //    while (str[i] == ' ') { i++; }
-        //    if (str[i] == '-' || str[i] == '+') {
-        //        sign = 1 - 2 * (str[i++] == '-');
-        //    }
-        //    while (str[i] >= '0' && str[i] <= '9') {
-        //        if (base >  INT_MAX / 10 || (base == INT_MAX / 10 && str[i] - '0' > 7)) {
-        //            if (sign == 1) return INT_MAX;
-        //            else return INT_MIN;
-        //        }
-        //        base  = 10 * base + (str[i++] - '0');
-        //    }
-        //    return base * sign;
-        //}
-        private static void PrintFrequencyOfCharecters_UsingHashtable(string testString)
-        {
-            Console.WriteLine($"PrintFrequency_UsingHashtable('{testString}'):");
-
-            char[] str = testString.ToCharArray();
-
-            Hashtable freq = new Hashtable();
-            for (int i = 0; i < str.Length; i++)
-            {
-                if (freq.ContainsKey(str[i]))
-                {
-                    freq[str[i]] = (int)freq[str[i]] + 1;
-                }
-                else
-                {
-                    freq.Add(str[i], 1);
-                }
-            }
-            foreach (DictionaryEntry dectionaryEntry in freq)
-            {
-                Console.WriteLine("PrintFrequency_UsingHashtable: [" + dectionaryEntry.Key + "] = " + dectionaryEntry.Value);
-            }
-        }
-
-        private string Compression(string str)
-        {
-            var size = CompressionCount(str);
-
-            if (size >= str.Length)
-            {
-                return str;
-            }
-
-            var sb = new StringBuilder();
-            var last = str[0];
-            var count = 1;
-
-            for (var i = 1; i < str.Length; i++)
-            {
-                if (str[i] == last)
-                {
-                    count++;
-                }
-                else
-                {
-                    sb.Append(last);
-                    sb.Append(count);
-                    last = str[i];
-                    count = 1;
-                }
-            }
-            sb.Append(last);
-            sb.Append(count);
-
-            return sb.ToString();
-        }
-
-        private int CompressionCount(string str)
-        {
-            if (string.IsNullOrEmpty(str))
-            {
-                return 0;
-            }
-
-            var last = str[0];
-            var size = 0;
-            var count = 0;
-
-            for (var i = 1; i < str.Length; i++)
-            {
-                if (str[i] == last)
-                {
-                    count++;
-                }
-                else
-                {
-                    last = str[i];
-                    size += 1 + string.Format("{0}", count).Length;
-                    count = 1;
-                }
-            }
-
-            size += 1 + string.Format("{0}", count).Length;
-            Console.WriteLine($"CompressionCount for '{str}({str.Length})' is {size}");
-            return size;
-        }
-
-        private void IsPermutation_Run()
-        {
-            string[][] pairs =             {
-                new string[]{"apple", "papel"},
-                new string[]{"carrot", "tarroc"},
-                new string[]{"hello", "llloh"},
-                new string[]{ "lol", "lol" },
-               new string[]{ "lol", "LOL" },
-               new string[]{ "abc", "def" },
-               new string[]{ "xyz", "abcd" }
-            };
-
-            foreach (var pair in pairs)
-            {
-                var word1 = pair[0];
-                var word2 = pair[1];
-                //var result1 = IsPermutation_UsingSort(word1, word2);
-                var result2 = IsPermutation_UsingIdenticalCharecterCount(word1, word2);
-                //Console.WriteLine("{0}, {1}: {2} / {3}", word1, word2, result1, result2);
-            }
-        }
-
-        /// <summary>
-        /// Requires additional memory to store identical counts
-        /// </summary>
-        /// <param name="original"></param>
-        /// <param name="valueToTest"></param>
-        /// <returns></returns>
-        private bool IsPermutation_UsingIdenticalCharecterCount(string original, string valueToTest)
-        {
-            bool isPermutaion = true;
-            if (original.Length != valueToTest.Length)
-            {
-                Console.WriteLine($"Length of '{original}' does not match with {valueToTest}");
-                return false;
-            }
-
-            var letters = new int[256];
-            var originalAsArray = original.ToCharArray();
-            originalAsArray.Print($"'{original}'- original.ToCharArray():");
-
-            foreach (var character in originalAsArray)
-            {
-                letters[character]++;
-                //Console.WriteLine($"character -'{character}'; letters[character]-'{letters[character]}'");
-            }
-
-            letters.Print($"'{original}'-");
-
-            var valueToTestAsArray = valueToTest.ToCharArray();
-            valueToTestAsArray.Print($"'{valueToTest}'- valueToTest.ToCharArray():");
-            foreach (var character in valueToTestAsArray)
-            {
-                letters[character]--;
-
-                //why it is -1 vs 0 condition?
-                if (letters[character] < 0)
-                {
-                    Console.WriteLine($"character== {character}, letters[character] = {letters[character]} : (letters[character] < 0 ) = {letters[character] < 0}");
-                    isPermutaion = false;
-                    break;
-                }
-            }
-
-            Console.WriteLine($" Is '{original}' and {valueToTest} are permutaion-{original.Equals(valueToTest)}");
-            Console.WriteLine("===================================================================================");
-
-            return isPermutaion;
-        }
-
-        /// <summary>
-        /// Requires no additional memory if used proper sorting algorithms (-which does not require additional memory)
-        /// </summary>
-        /// <param name="original"></param>
-        /// <param name="valueToTest"></param>
-        /// <returns></returns>
-        private bool IsPermutation_UsingSort(string original, string valueToTest)
-        {
-            if (original.Length != valueToTest.Length)
-            {
-                Console.WriteLine($"Length of '{original}' does not match with {valueToTest}");
-                return false;
-            }
-
-            var originalAsArray = original.ToCharArray();
-
-            // Array.Sort Is Default Implementaion.
-            // It should be implementted using quick sort see sorting.cs for quick sort exampled
-            Array.Sort(originalAsArray);
-            Console.WriteLine($"'{original}' after sort {new string(originalAsArray)}");
-            original = new string(originalAsArray);
-
-            var valueToTestAsArray = valueToTest.ToCharArray();
-
-            // Array.Sort Is Default Implementaion.
-            // It should be implementted using quick sort see sorting.cs for quick sort exampled
-            Array.Sort(valueToTestAsArray);
-            Console.WriteLine($"'{valueToTest}' after sort {new string(valueToTestAsArray)}");
-            valueToTest = new string(valueToTestAsArray);
-
-            Console.WriteLine($" Is '{original}' and {valueToTest} are permutaion-{original.Equals(valueToTest)}");
-            Console.WriteLine("===================================================================================");
-            return original.Equals(valueToTest);
-        }
-        private char[] URLEncoding_ReplaceSpaces(char[] input, int length)
+        public char[] URLEncoding_ReplaceSpaces(char[] input, int length)
         {
             var spaceCount = 0;
 
@@ -627,11 +684,21 @@ namespace TWL_Algorithms_Samples.Arrays.Strings
             return output;
         }
 
-        private string URLEncoding_ReplaceSpaces(string input, int length)
+        public string URLEncoding_ReplaceSpaces(string input, int length)
         {
             char[] output = URLEncoding_ReplaceSpaces(input.ToCharArray(), length);
             return new string(output);
         }
+
+        public void URLEncoding_Run()
+        {
+            const string input = "abc d e f";
+            string encodedURL = URLEncoding_ReplaceSpaces(input, input.Length);
+            Console.WriteLine("{0} -> {1}", input, encodedURL);
+        }
+
+        public void Void()
+        { }
 
         public class Palindrome_Permutation : IQuestion
         {

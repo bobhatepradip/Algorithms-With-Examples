@@ -1,7 +1,9 @@
-﻿namespace TWL_Algorithms_Samples.Tree
+﻿using TWL_Algorithms_Samples.Graph;
+
+namespace TWL_Algorithms_Samples.Tree
 {
     public class Tree
     {
-        public TreeNode root;
+        public Node root;
     }
 }

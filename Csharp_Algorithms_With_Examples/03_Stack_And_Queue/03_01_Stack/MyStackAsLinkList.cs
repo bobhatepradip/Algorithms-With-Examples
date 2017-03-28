@@ -10,7 +10,7 @@ namespace TWL_Algorithms_Samples.Stack
             Create();
         }
 
-        private MyLinkedListNodeSingly linkListhead { get; set; }
+        public MyLinkedListNodeSingly linkListhead { get; set; }
 
         public override void Create()
         {

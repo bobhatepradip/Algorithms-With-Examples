@@ -60,11 +60,11 @@ namespace TWL_Algorithms_Samples.Tree
                 return false;
             }
 
-            if (root.Left == null && root.Right == null && sum - root.Data == 0)
+            if (root.Left == null && root.Right == null && sum - root.Value == 0)
             {
                 return true;
             }
-            return HasPathSum(root.Left, sum - root.Data) || HasPathSum(root.Right, sum - root.Data);
+            return HasPathSum(root.Left, sum - root.Value) || HasPathSum(root.Right, sum - root.Value);
         }
 
         public void HasPathSum_Run()
@@ -81,7 +81,7 @@ namespace TWL_Algorithms_Samples.Tree
         {
             if (p == null && q == null) return true;
             if (p == null || q == null) return false;
-            if (p.Data == q.Data)
+            if (p.Value == q.Value)
                 return IsSameTree(p.Left, q.Left) && IsSameTree(p.Right, q.Right);
             return false;
         }
@@ -117,7 +117,7 @@ namespace TWL_Algorithms_Samples.Tree
                 {
                     if (queue.Peek().Left != null) queue.Enqueue(queue.Peek().Left);
                     if (queue.Peek().Right != null) queue.Enqueue(queue.Peek().Right);
-                    subList.Add(queue.Dequeue().Data);
+                    subList.Add(queue.Dequeue().Value);
                 }
                 wrapList.Add(subList);
             }
@@ -157,7 +157,7 @@ namespace TWL_Algorithms_Samples.Tree
         {
             if (binaryTreeNode.Left != null)
             {
-                if (binaryTreeNode.Data < binaryTreeNode.Left.Data || !ValidateBinarySearchTree(binaryTreeNode.Left))
+                if (binaryTreeNode.Value < binaryTreeNode.Left.Value || !ValidateBinarySearchTree(binaryTreeNode.Left))
                 {
                     return false;
                 }
@@ -165,7 +165,7 @@ namespace TWL_Algorithms_Samples.Tree
 
             if (binaryTreeNode.Right != null)
             {
-                if (binaryTreeNode.Data >= binaryTreeNode.Right.Data || !ValidateBinarySearchTree(binaryTreeNode.Right))
+                if (binaryTreeNode.Value >= binaryTreeNode.Right.Value || !ValidateBinarySearchTree(binaryTreeNode.Right))
                 {
                     return false;
                 }
@@ -200,7 +200,7 @@ namespace TWL_Algorithms_Samples.Tree
             {
                 return false;
             }
-            if (prev != null && prev.Data >= node.Data)
+            if (prev != null && prev.Value >= node.Value)
             {
                 return false;
             }
@@ -213,7 +213,7 @@ namespace TWL_Algorithms_Samples.Tree
         /// </summary>
         /// <param name="node"></param>
         /// <returns></returns>
-        private static int MaxDepth(BinaryTreeNode node)
+        public static int MaxDepth(BinaryTreeNode node)
         {
             if (node == null)
             {
@@ -230,7 +230,7 @@ namespace TWL_Algorithms_Samples.Tree
         /// </summary>
         /// <param name="node"></param>
         /// <returns></returns>
-        private static int MaxDepth2(BinaryTreeNode node)
+        public static int MaxDepth2(BinaryTreeNode node)
         {
             if (node == null)
                 return 0;
@@ -238,11 +238,11 @@ namespace TWL_Algorithms_Samples.Tree
             return Math.Max(MaxDepth(node.Left), MaxDepth(node.Right)) + 1;
         }
 
-        private void BinaryTreePathsList(BinaryTreeNode root, String path, List<String> answer)
+        public void BinaryTreePathsList(BinaryTreeNode root, String path, List<String> answer)
         {
-            if (root.Left == null && root.Right == null) answer.Add(path + root.Data);
-            if (root.Left != null) BinaryTreePathsList(root.Left, path + root.Data + "->", answer);
-            if (root.Right != null) BinaryTreePathsList(root.Right, path + root.Data + "->", answer);
+            if (root.Left == null && root.Right == null) answer.Add(path + root.Value);
+            if (root.Left != null) BinaryTreePathsList(root.Left, path + root.Value + "->", answer);
+            if (root.Right != null) BinaryTreePathsList(root.Right, path + root.Value + "->", answer);
         }
     }
 }

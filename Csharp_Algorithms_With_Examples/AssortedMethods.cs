@@ -6,7 +6,7 @@ namespace TWL_Algorithms_Samples
 {
     public class AssortedMethods
     {
-        private static readonly Random RandomIntNumbers = new Random();
+        public static readonly Random RandomIntNumbers = new Random();
 
         public static string ArrayToString(int[] array)
         {
@@ -563,7 +563,7 @@ namespace TWL_Algorithms_Samples
                 "eye",
                 "values",
                 "union",
-                "private",
+                "public",
                 "alone",
                 "black",
                 "required",
@@ -2094,9 +2094,17 @@ namespace TWL_Algorithms_Samples
             }
         }
 
-        public static void PrintType(object obj)
+        public static void PrintType(object obj = null, Type type = null, string methodName = "")
         {
-            Console.WriteLine(string.Format("// Executing: {0}", obj.GetType().ToString()));
+            if (obj != null)
+            {
+                Console.WriteLine(string.Format("// Executing: {0}", obj.GetType().ToString()));
+            }
+            else if (type != null && !string.IsNullOrEmpty(methodName))
+            {
+                Console.WriteLine($"{type.FullName}.{methodName}");
+                // Console.WriteLine($"{type.GetType().FullName}***{type.GetType().FullName}.{System.Reflection.MethodBase.GetCurrentMethod().Name}");
+            }
             Console.WriteLine("// ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ---- ----");
         }
 

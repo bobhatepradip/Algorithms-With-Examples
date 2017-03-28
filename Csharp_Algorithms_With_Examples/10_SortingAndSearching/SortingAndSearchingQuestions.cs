@@ -1,6 +1,76 @@
 ﻿namespace TWL_Algorithms_Samples.SortingAndSearching
 {
-    public class SortingAndSearching_Q1_00 : IQuestion
+    public class SortingAndSearching_Q10_01 : IQuestion
+    {
+        public void Run()
+        {
+        }
+    }
+
+    public class SortingAndSearching_Q10_02 : IQuestion
+    {
+        public void Run()
+        {
+        }
+    }
+
+    public class SortingAndSearching_Q10_03 : IQuestion
+    {
+        public void Run()
+        {
+        }
+    }
+
+    public class SortingAndSearching_Q10_04 : IQuestion
+    {
+        public void Run()
+        {
+        }
+    }
+
+    public class SortingAndSearching_Q10_05 : IQuestion
+    {
+        public void Run()
+        {
+        }
+    }
+
+    public class SortingAndSearching_Q10_06 : IQuestion
+    {
+        public void Run()
+        {
+        }
+    }
+
+    public class SortingAndSearching_Q10_07 : IQuestion
+    {
+        public void Run()
+        {
+        }
+    }
+
+    public class SortingAndSearching_Q10_08 : IQuestion
+    {
+        public void Run()
+        {
+        }
+    }
+
+    public class SortingAndSearching_Q10_09 : IQuestion
+    {
+        public void Run()
+        {
+        }
+    }
+
+    public class SortingAndSearching_Q10_10 : IQuestion
+    {
+        public void Run()
+        {
+        }
+    }
+
+    public class SortingAndSearching_Q10_11 : IQuestion
     {
         public void Run()
         {
@@ -11,7 +81,7 @@
     {
         public void Run()
         {
-            new SortingAndSearching_Q1_00().Run();
+            new SortingAndSearching_Q10_01().Run();
         }
     }
 }

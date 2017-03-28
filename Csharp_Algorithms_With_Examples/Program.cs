@@ -11,7 +11,7 @@ using TWL_Algorithms_Samples.Tree;
 
 internal class Program
 {
-    private static void Main(string[] args)
+    public static void Main(string[] args)
     {
         Console.WriteLine("======================================================================");
         //UtilityTester();
@@ -22,7 +22,7 @@ internal class Program
         Console.ReadKey();
     }
 
-    private static void QuestionsAndSolutionsByChapters()
+    public static void QuestionsAndSolutionsByChapters()
     {
         var chapters = new[]
             {
@@ -55,22 +55,91 @@ internal class Program
             Console.WriteLine("Press Enter to continue..");
             //Console.ReadLine();
         }
-
-        Console.WriteLine(string.Format("{0}{1}", Environment.NewLine, Environment.NewLine));
-        Console.WriteLine("Press [Enter] to quit");
-        Console.ReadLine();
     }
 
-    private static void QuestionsAndSolutionsByNumbers()
+    public static void QuestionsAndSolutionsByNumbers()
     {
         var questionsSetByNumbers = new[]
             {
-                //// Chapters
+                //new IQuestion[] {
+                //    new Array_Q1_01_Is_String_Has_Unique_Chars(),
+                //    new LinkedList_Q2_01_Remove_Duplicates(),
+                //    new StackAndQueue_Q3_01(),
+                //    new TreeAndGraph_Q1_01_Route_Beetween_Nodes(),
+                //    new BitManipulation_Q5_01(),
+                //    new SortingAndSearching_Q10_01(),
+                //},
                 new IQuestion[] {
-                    new Array_Q1_01_Is_String_Has_Unique_Chars(),
+                    new Array_Q1_02_Check_For_Permutations(),
+                    //new LinkedList_Q2_02(),
+                    //new StackAndQueue_Q3_02(),
+                    //new TreeAndGraph_Q4_02(),
+                    //new BitManipulation_Q5_02(),
+                    //new SortingAndSearching_Q10_02(),
                 },
-                //new IQuestion[] { new Q2_01_Remove_Dups(), new Q2_02_Return_Kth_To_Last(), new Q2_03_Delete_Middle_Node(), new Q2_04_Partition(), new Q2_05_Sum_Lists(), new Q2_06_Palindrome(), new Q2_07_Intersection(), new Q2_08_Loop_Detection() },
-            };
+                // new IQuestion[] {
+                //    new Array_Q1_03(),
+                //    new LinkedList_Q2_03(),
+                //    new StackAndQueue_Q3_03(),
+                //    new TreeAndGraph_Q4_03(),
+                //    new BitManipulation_Q5_03(),
+                //    new SortingAndSearching_Q10_03(),
+                //},
+                // new IQuestion[] {
+                //    new Array_Q1_04(),
+                //    new LinkedList_Q2_04(),
+                //    new StackAndQueue_Q3_04(),
+                //    new TreeAndGraph_Q4_04(),
+                //    new BitManipulation_Q5_04(),
+                //    new SortingAndSearching_Q10_04(),
+                //},
+                // new IQuestion[] {
+                //    new Array_Q1_05(),
+                //    new LinkedList_Q2_05(),
+                //    new StackAndQueue_Q3_05(),
+                //    new TreeAndGraph_Q4_05(),
+                //    new BitManipulation_Q5_05(),
+                //    new SortingAndSearching_Q10_05(),
+                //},
+                // new IQuestion[] {
+                //    new Array_Q1_06(),
+                //    new LinkedList_Q2_06(),
+                //    new StackAndQueue_Q3_06(),
+                //    new TreeAndGraph_Q4_06(),
+                //    new BitManipulation_Q5_06(),
+                //    new SortingAndSearching_Q10_06(),
+                //},
+                // new IQuestion[] {
+                //    new Array_Q1_07(),
+                //    new LinkedList_Q2_07(),
+                //    new TreeAndGraph_Q4_07(),
+                //    new BitManipulation_Q5_07(),
+                //    new SortingAndSearching_Q10_07(),
+                //},
+                // new IQuestion[] {
+                //    new Array_Q1_08(),
+                //    new LinkedList_Q2_08(),
+                //    new TreeAndGraph_Q4_08(),
+                //    new BitManipulation_Q5_08(),
+                //    new SortingAndSearching_Q10_08(),
+                //},
+                // new IQuestion[] {
+                //    new Array_Q1_09(),
+                //    new TreeAndGraph_Q4_09(),
+                //    new SortingAndSearching_Q10_09(),
+                //},
+                // new IQuestion[] {
+                //    new TreeAndGraph_Q4_10(),
+                //    new SortingAndSearching_Q10_10(),
+                //},
+                // new IQuestion[] {
+                //    new TreeAndGraph_Q4_11(),
+                //    new SortingAndSearching_Q10_11(),
+                //},
+                //  new IQuestion[] {
+                //    new TreeAndGraph_Q4_12(),
+                //},
+                };
 
         foreach (var questionsSet in questionsSetByNumbers)
         {
@@ -85,13 +154,9 @@ internal class Program
             Console.WriteLine("Press Enter to continue..");
             //Console.ReadLine();
         }
-
-        Console.WriteLine(string.Format("{0}{1}", Environment.NewLine, Environment.NewLine));
-        Console.WriteLine("Press [Enter] to quit");
-        Console.ReadLine();
     }
 
-    private static void UtilityTester()
+    public static void UtilityTester()
     {
         new ArrayUtility().Run();
         new LinkedListUtility().Run();

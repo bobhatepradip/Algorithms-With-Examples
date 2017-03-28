@@ -13,7 +13,7 @@ namespace TWL_Algorithms_Samples.SortingAndSearching
 
         public class Q10_10_Rank_from_Stream : IQuestion
         {
-            private static RankNode root = null;
+            public static RankNode root = null;
 
             public static void Track(int number)
             {
@@ -337,7 +337,7 @@ namespace TWL_Algorithms_Samples.SortingAndSearching
         {
             public class BitSet
             {
-                private int[] bitset;
+                public int[] bitset;
 
                 public BitSet(int size)
                 {
@@ -569,9 +569,9 @@ namespace TWL_Algorithms_Samples.SortingAndSearching
 
         public class Q10_02_Group_Anagrams : IQuestion
         {
-            private class AnagramComparator : IComparer
+            public class AnagramComparator : IComparer
             {
-                private string SortChars(string s)
+                public string SortChars(string s)
                 {
                     char[] content = s.ToCharArray();
                     Array.Sort<char>(content);
@@ -584,14 +584,14 @@ namespace TWL_Algorithms_Samples.SortingAndSearching
                 }
             }
 
-            private string SortChars(string s)
+            public string SortChars(string s)
             {
                 char[] content = s.ToCharArray();
                 Array.Sort<char>(content);
                 return new string(content);
             }
 
-            private void Sort(string[] array)
+            public void Sort(string[] array)
             {
                 Dictionary<string, LinkedList<string>> hash = new Dictionary<string, LinkedList<string>>();
 

@@ -2,6 +2,6 @@
 {
     public class Graph
     {
-        public GraphNode[] nodes;
+        public Node[] nodes;
     }
 }

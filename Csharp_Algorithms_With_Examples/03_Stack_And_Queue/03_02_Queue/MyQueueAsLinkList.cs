@@ -5,8 +5,8 @@ namespace TWL_Algorithms_Samples.Queue
 {
     public class MyQueueAsLinkList : MyQueue
     {
-        private MyLinkedListNodeSingly insertNode;
-        private MyLinkedListNodeSingly removeNode;
+        public MyLinkedListNodeSingly insertNode;
+        public MyLinkedListNodeSingly removeNode;
 
         public MyQueueAsLinkList()
         {

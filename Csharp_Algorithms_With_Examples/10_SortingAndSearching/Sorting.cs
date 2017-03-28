@@ -51,7 +51,7 @@ namespace TWL_Algorithms_Samples.SortingAndSearching
                 }
             }
 
-            private static void MaxHeapify(int[] array, int index, int heapSize, int low)
+            public static void MaxHeapify(int[] array, int index, int heapSize, int low)
             {
                 array.Print("\n");
                 int left = (index + 1) * 2 - 1;
@@ -74,7 +74,7 @@ namespace TWL_Algorithms_Samples.SortingAndSearching
                 }
             }
 
-            //private void DownHeap(int[] array, int i, int n, int lo)
+            //public void DownHeap(int[] array, int i, int n, int lo)
             //{
             //    Object d = keys.GetValue(lo + i - 1);
             //    Object dt = (items != null) ? items.GetValue(lo + i - 1) : null;
