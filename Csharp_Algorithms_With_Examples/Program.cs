@@ -8,6 +8,8 @@ using TWL_Algorithms_Samples.Queue;
 using TWL_Algorithms_Samples.SortingAndSearching;
 using TWL_Algorithms_Samples.Stack;
 using TWL_Algorithms_Samples.Tree;
+using TWL_Algorithms_Samples.TreeAndGraph;
+using TWL_Algorithms_Samples.StackAndQueue;
 
 internal class Program
 {
@@ -70,10 +72,10 @@ internal class Program
                 //    new SortingAndSearching_Q10_01(),
                 //},
                 new IQuestion[] {
-                    new Array_Q1_02_Check_For_Permutations(),
-                    new LinkedList_Q2_02_Return_Kth_To_Last(),
+                    //new Array_Q1_02_Check_For_Permutations(),
+                    //new LinkedList_Q2_02_Return_Kth_To_Last(),
                     //new StackAndQueue_Q3_02(),
-                    //new TreeAndGraph_Q4_02(),
+                    //new TreeAndGraph_Q4_02_CreateMinimalTree(),
                     //new BitManipulation_Q5_02(),
                     //new SortingAndSearching_Q10_02(),
                 },

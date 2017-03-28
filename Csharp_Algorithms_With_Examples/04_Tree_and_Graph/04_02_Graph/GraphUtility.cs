@@ -14,7 +14,7 @@
         {
         }
 
-        public void IsRouteExistInDirectedGrapht(Graph graph, Node startNode, Node endNode)
+        public void IsRouteExistInDirectedGrapht(Graph graph, GraphNode startNode, GraphNode endNode)
         {
         }
     }

@@ -4,6 +4,6 @@ namespace TWL_Algorithms_Samples.Tree
 {
     public class Tree
     {
-        public Node root;
+        public TreeNode root;
     }
 }

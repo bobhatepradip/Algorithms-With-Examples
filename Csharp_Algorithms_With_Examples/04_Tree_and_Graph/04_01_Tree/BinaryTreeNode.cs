@@ -14,7 +14,7 @@ namespace TWL_Algorithms_Samples.Tree
         {
            // Value = val;
             Size = 1;
-            Childrens = new Graph.Node[2];
+            Childrens = new TreeNode[2];
         }
 
         public BinaryTreeNode Left

@@ -2,7 +2,7 @@
 
 namespace TWL_Algorithms_Samples.Tree
 {
-    public class TreeNode : Node
+    public class TreeNode : GraphNode
     {
         public TreeNode(int val) : base(val)
         {

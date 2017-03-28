@@ -1,4 +1,6 @@
-﻿namespace TWL_Algorithms_Samples.TreeAndGraph
+﻿using TWL_Algorithms_Samples.Arrays;
+using TWL_Algorithms_Samples.Tree;
+namespace TWL_Algorithms_Samples.TreeAndGraph
 {
     public class TreeAndGraph_Q1_01_Route_Beetween_Nodes : IQuestion
     {
@@ -7,10 +9,19 @@
         }
     }
 
-    public class TreeAndGraph_Q4_02 : IQuestion
+    /// <summary>
+    /// Minimal Tree = BST with minmanl height
+    /// </summary>
+    public class TreeAndGraph_Q4_02_CreateMinimalTree : IQuestion
     {
         public void Run()
-        {
+        {            
+            TreeNode treeNode = TreeUtility.CreateMinimalBinarySearchTree(TreeUtility.arraySorted_UniqueElements);
+            //((BinarySearchTreeNode)treeNode).Print();
+
+            TreeUtility.arraySorted_UniqueElements.Print("Input for CreateMinimalBinarySearchTree:");
+            var binarySearchTree2 = BinarySearchTreeNode.CreateMinimalBinarySearchTree(TreeUtility.arraySorted_UniqueElements);            
+            binarySearchTree2.Print();
         }
     }
 

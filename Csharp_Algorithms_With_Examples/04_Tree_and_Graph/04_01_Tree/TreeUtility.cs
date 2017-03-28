@@ -6,9 +6,31 @@ namespace TWL_Algorithms_Samples.Tree
 {
     public class TreeUtility
     {
-        public int[] arraySample = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };//
+        public static int[] arraySorted_UniqueElements = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };//
         public BinarySearchTreeNode currentBinarySearchTreeNode;
         public BinaryTreeNode currentBinaryTreeNode;
+
+        public static TreeNode CreateMinimalBinarySearchTree(int[] array)
+        {
+            array.Print("Input:");
+            return CreateMinimalBinarySearchTree(array, 0, array.Length - 1);
+        }
+
+        public static TreeNode CreateMinimalBinarySearchTree(int[] array, int startIndex, int endIndex)
+        {
+            if (endIndex < startIndex)
+            {
+                return null;
+            }
+
+            var midIndex = (startIndex + endIndex) / 2;
+            TreeNode treeNode = new TreeNode(array[midIndex]);
+            treeNode.Childrens = new TreeNode[2];
+            treeNode.Childrens[(int)ChildernType.Left] = CreateMinimalBinarySearchTree(array, startIndex, midIndex - 1);
+            treeNode.Childrens[(int)ChildernType.Right] = CreateMinimalBinarySearchTree(array, midIndex + 1, endIndex);
+            return treeNode;
+        }
+
 
         public void BinarySearchTreeCreation_Run()
         {
@@ -19,19 +41,19 @@ namespace TWL_Algorithms_Samples.Tree
             */
             //arraySample.Reverse();
 
-            var binarySearchTree2 = BinarySearchTreeNode.CreateMinimalBinarySearchTree(arraySample);
-            arraySample.Print("Input for CreateMinimalBinarySearchTree:");
+            var binarySearchTree2 = BinarySearchTreeNode.CreateMinimalBinarySearchTree(arraySorted_UniqueElements);
+            arraySorted_UniqueElements.Print("Input for CreateMinimalBinarySearchTree:");
             binarySearchTree2.Print();
             Console.WriteLine($"CheckIfBinaryTreeIsBinarySearchTree ={ValidateBinarySearchTree(binarySearchTree2)}");
 
-            var binarySearchTree3 = BinarySearchTreeNode.CreateMinimalBinarySearchTree(arraySample, 0, 4);
-            arraySample.Print("\nInput CreateMinimalBinarySearchTree(arr, start, end):", 0, 4);
+            var binarySearchTree3 = BinarySearchTreeNode.CreateMinimalBinarySearchTree(arraySorted_UniqueElements, 0, 4);
+            arraySorted_UniqueElements.Print("\nInput CreateMinimalBinarySearchTree(arr, start, end):", 0, 4);
             binarySearchTree3.Print();
         }
 
         public void BinaryTreeCreation_Run()
         {
-            var binaryTree = BinaryTreeNode.Create_FromArray_InsertInOrder(arraySample);
+            var binaryTree = BinaryTreeNode.Create_FromArray_InsertInOrder(arraySorted_UniqueElements);
             var binaryTree2 = BinaryTreeNode.Create_Random(10, 0, 9);
             binaryTree2.Print();
             Console.WriteLine($"CheckIfBinaryTreeIsBinarySearchTree ={ValidateBinarySearchTree(binaryTree2)}");
@@ -69,8 +91,8 @@ namespace TWL_Algorithms_Samples.Tree
 
         public void HasPathSum_Run()
         {
-            var binarySearchTree = BinarySearchTreeNode.CreateMinimalBinarySearchTree(arraySample);
-            arraySample.Print("Input for CreateMinimalBinarySearchTree:");
+            var binarySearchTree = BinarySearchTreeNode.CreateMinimalBinarySearchTree(arraySorted_UniqueElements);
+            arraySorted_UniqueElements.Print("Input for CreateMinimalBinarySearchTree:");
             binarySearchTree.Print();
             int sum = 8;
             int sum2 = 4;
@@ -126,8 +148,8 @@ namespace TWL_Algorithms_Samples.Tree
 
         public void LevelOrder_Run()
         {
-            var sampleBinaryTree = BinaryTreeNode.Create_FromArray_InsertInOrder(arraySample);
-            arraySample.Print("Input:");
+            var sampleBinaryTree = BinaryTreeNode.Create_FromArray_InsertInOrder(arraySorted_UniqueElements);
+            arraySorted_UniqueElements.Print("Input:");
             sampleBinaryTree.Print();
             var tesm = LevelOrder(sampleBinaryTree);
         }
@@ -141,8 +163,8 @@ namespace TWL_Algorithms_Samples.Tree
 
         public void Run()
         {
-            currentBinarySearchTreeNode = BinarySearchTreeNode.CreateMinimalBinarySearchTree(arraySample);
-            currentBinaryTreeNode = BinaryTreeNode.Create_FromArray_InsertInOrder(arraySample);
+            currentBinarySearchTreeNode = BinarySearchTreeNode.CreateMinimalBinarySearchTree(arraySorted_UniqueElements);
+            currentBinaryTreeNode = BinaryTreeNode.Create_FromArray_InsertInOrder(arraySorted_UniqueElements);
             //BinaryTreeCreation_Run();
             //BinarySearchTreeCreation_Run();
             //LevelOrder_Run();
