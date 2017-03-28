@@ -537,6 +537,7 @@ namespace TWL_Algorithms_Samples.LinkedList
             var swapedList = SwapPairsAlertnatly(testLinkedList);
             swapedList.PrintForward("swapedList");
         }
+
         public class CheckIfPalindrome : IQuestion
         {
             /// <summary>
@@ -662,6 +663,7 @@ namespace TWL_Algorithms_Samples.LinkedList
                 Console.WriteLine("\nIsPalindrome: " + IsPalindrome_UsingRecursionMain(head));
                 Console.WriteLine("\nIsPalindrome2: " + IsPalindrome_UsingStack(head));
             }
+
             public class Result
             {
                 public MyLinkedListNode Node;
@@ -1000,54 +1002,45 @@ namespace TWL_Algorithms_Samples.LinkedList
                 return p1;
             }
 
-            public int NthToLastR1(MyLinkedListNode head, int n)
+            public int NthToLast_1_Recurssive_InternalCounter(MyLinkedListNode head, int n)
             {
-                if (head != null)
-                {
-                    head.PrintForward($"***n='{n}'");
-                }
-
                 if (n == 0 || head == null)
                 {
                     return 0;
                 }
-
-                var k = NthToLastR1(head.Next, n) + 1;
-
+                Console.WriteLine($"head.Data='{head.Data}' n='{n}'");
+                var k = NthToLast_1_Recurssive_InternalCounter(head.Next, n) + 1;
                 if (k == n)
                 {
-                    Console.WriteLine(n + "th to last node is " + head.Data);
+                    Console.WriteLine($"{n}th to last node is { head.Data} ");
                 }
-                //else
-                //{
-                //    Console.WriteLine($"Null.  n='{n}' is out of bounds.");
-                //}
-                Console.WriteLine($"n='{n}' k='{k}'");
+                Console.WriteLine($"*** n='{n}' k='{k}'");
                 return k;
             }
 
-            public MyLinkedListNode NthToLastR2(MyLinkedListNode head, int n, ref int i)
+            public MyLinkedListNode NthToLast_2_Recurssive_ExternalCounter(MyLinkedListNode head, int n, ref int i)
             {
                 if (head == null)
                 {
                     return null;
                 }
-
-                var node = NthToLastR2(head.Next, n, ref i);
+                Console.WriteLine($"head.Data='{head.Data}' n='{n}' i='{i}'");
+                var node = NthToLast_2_Recurssive_ExternalCounter(head.Next, n, ref i);
                 i = i + 1;
+                Console.WriteLine($"***head.Data='{head.Data}' n='{n}' i='{i}' node.Data='{node.NodeValue()}'");
 
                 if (i == n)
                 {
+                    Console.WriteLine($"{n}th element is '{head.Data}'");
                     return head;
                 }
-
                 return node;
             }
 
-            public MyLinkedListNode NthToLastR3(MyLinkedListNode head, int k)
+            public MyLinkedListNode NthToLast_3_Recurssive_ExternalCounterAndNode(MyLinkedListNode head, int k)
             {
-                head.PrintForward("@");
-                var result = NthToLastR3Helper(head, k);
+                //head.PrintForward("@");
+                var result = NthToLast_3_Recurssive_ExternalCounterAndNode_Helper(head, k);
 
                 if (result != null)
                 {
@@ -1057,31 +1050,15 @@ namespace TWL_Algorithms_Samples.LinkedList
                 return null;
             }
 
-            //    if (k == n)
-            //    {
-            //        Console.WriteLine(n + "th to last node is " + head.Data);
-            //    }
-            //    //else
-            //    //{
-            //    //    Console.WriteLine($"Null.  n='{n}' is out of bounds.");
-            //    //}
-            //    Console.WriteLine($"n='{n}' k='{k}'");
-            //    return k;
-            //}
-            public Result NthToLastR3Helper(MyLinkedListNode head, int k)
+            public Result NthToLast_3_Recurssive_ExternalCounterAndNode_Helper(MyLinkedListNode head, int k)
             {
                 if (head == null)
                 {
                     return new Result(null, 0);
                 }
-                else
-                {
-                    head.PrintForward("@**");
-                }
-
-                var result = NthToLastR3Helper(head.Next, k);
-
-                head.PrintForward($"@*** k='{k}' result.Count='{result.Count}' result.Node='{result.Node}'");
+                head.PrintForward($"*** k='{k}'  result.Node='{head.NodeValue()}'");
+                var result = NthToLast_3_Recurssive_ExternalCounterAndNode_Helper(head.Next, k);
+                head.PrintForward($"*** k='{k}' result.Count='{result.Count}' result.Node='{result.Node.NodeValue()}'");
 
                 if (result.Node == null)
                 {
@@ -1089,6 +1066,7 @@ namespace TWL_Algorithms_Samples.LinkedList
 
                     if (result.Count == k)
                     {
+                        Console.WriteLine($"{k}th element is '{head.Data}'");
                         result.Node = head;
                     }
                 }
@@ -1096,33 +1074,54 @@ namespace TWL_Algorithms_Samples.LinkedList
                 return result;
             }
 
+            public MyLinkedListNode NthToLast_4_Iterative_TwoPointers(MyLinkedListNode head, int n)
+            {
+                if (head == null)
+                {
+                    return null;
+                }
+                MyLinkedListNode p2KthElementPointer = head;
+                MyLinkedListNode p1RunnerPointer = head;
+                //setting p2RunnerPointer to kth postion from begining
+                for (int i = 0; i < n; i++)
+                {
+                    if (p1RunnerPointer == null)
+                    {
+                        Console.WriteLine("Out of bound");
+                        return null;
+                    }
+                    p1RunnerPointer = p1RunnerPointer.Next;
+                }
+                // traveser both pointer till end of p2RunnerPointer
+                while (p1RunnerPointer != null)
+                {
+                    p1RunnerPointer = p1RunnerPointer.Next;
+                    p2KthElementPointer = p2KthElementPointer.Next;
+                }
+                return p2KthElementPointer;
+            }
+
             public void Run()
             {
-                //int[] nthCounts = new int[] { 1, 2, 9, 10, 11,12 };
-                int[] nthCounts = new int[] { 1 };
+                int[] nthCounts = new int[] { 1, 3 }; //, 2, 9, 10, 11,12
                 nthCounts.Print("Get Positions:");
-                var head = GetLinkedListSingly_Random(10, 0, 10);
+                var head = GetLinkedListSingly_Serial(0, 10);
                 head.PrintForward("\nLink List:");
-                var node = head;
+
                 foreach (int nth in nthCounts)
                 {
                     int i = 0;
-                    NthToLastR1(head, nth);
-                    node = NthToLastR2(head, nth, ref i);
-                    node = NthToLastR3(head, nth);
-
-                    if (node != null)
-                    {
-                        Console.WriteLine("***" + nth + "th to last node is " + node.Data);
-                    }
-                    else
-                    {
-                        Console.WriteLine($"***Null.  n='{nth}' is out of bounds.");
-                    }
-
-                    Console.WriteLine("-----------------------------------------------------------");
+                    Console.WriteLine($"NthToLast_1_Recurssive_InternalCounter: {NthToLast_1_Recurssive_InternalCounter(head, nth)}");
+                    AssortedMethods.PrintLine('-');
+                    Console.WriteLine($"NthToLast_2_Recurssive_ExternalCounter: {NthToLast_2_Recurssive_ExternalCounter(head, nth, ref i).NodeValue()}");
+                    AssortedMethods.PrintLine('-');
+                    Console.WriteLine($"NthToLast_3_Recurssive_ExternalCounterAndNode{NthToLast_3_Recurssive_ExternalCounterAndNode(head, nth).NodeValue()}");
+                    AssortedMethods.PrintLine('-');
+                    Console.WriteLine($"NthToLast_4_Iterative_TwoPointers{NthToLast_4_Iterative_TwoPointers(head, nth).NodeValue()}");
+                    AssortedMethods.PrintLine('=');
                 }
             }
+
             public class Result
             {
                 public Result(MyLinkedListNode node, int count)

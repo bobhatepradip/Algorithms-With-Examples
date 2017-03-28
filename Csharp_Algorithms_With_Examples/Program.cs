@@ -71,7 +71,7 @@ internal class Program
                 //},
                 new IQuestion[] {
                     new Array_Q1_02_Check_For_Permutations(),
-                    //new LinkedList_Q2_02(),
+                    new LinkedList_Q2_02_Return_Kth_To_Last(),
                     //new StackAndQueue_Q3_02(),
                     //new TreeAndGraph_Q4_02(),
                     //new BitManipulation_Q5_02(),

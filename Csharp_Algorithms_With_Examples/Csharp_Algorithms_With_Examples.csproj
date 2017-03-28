@@ -43,10 +43,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="02_LinkedList\LinkedListExtensions.cs" />
     <Compile Include="02_LinkedList\LinkedListQuestions.cs" />
     <Compile Include="01_Array\ArrayQuestions.cs" />
     <Compile Include="01_Array\01_01_Arrays\ArrayUtility.cs" />
     <Compile Include="01_Array\01_01_Arrays\ArrayExtensions.cs" />
+    <Compile Include="03_Stack_And_Queue\03_01_Stack\MyStackGeneric.cs" />
+    <Compile Include="03_Stack_And_Queue\03_02_Queue\MyQueueGeneric.cs" />
     <Compile Include="03_Stack_And_Queue\StackAndQueueQuestions.cs" />
     <Compile Include="04_Tree_and_Graph\04_01_Tree\BinarySearchTreeNode.cs" />
     <Compile Include="04_Tree_and_Graph\04_01_Tree\BTreePrinter.cs" />

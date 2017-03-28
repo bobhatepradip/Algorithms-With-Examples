@@ -1,4 +1,6 @@
-﻿namespace TWL_Algorithms_Samples.LinkedList
+﻿using static TWL_Algorithms_Samples.LinkedList.LinkedListUtility;
+
+namespace TWL_Algorithms_Samples.LinkedList
 {
     public class LinkedList_Q2_01_Remove_Duplicates : IQuestion
     {
@@ -8,10 +10,11 @@
         }
     }
 
-    public class LinkedList_Q2_02 : IQuestion
+    public class LinkedList_Q2_02_Return_Kth_To_Last : IQuestion
     {
         public void Run()
         {
+            new Return_Kth_To_Last().Run();
         }
     }
 

@@ -2066,6 +2066,33 @@ namespace TWL_Algorithms_Samples
         //    return buffer.ToString();
         //}
 
+        public static void PrintLine(char ch, string header = "")
+        {
+            switch (ch)
+            {
+                case '-':
+                    Console.WriteLine($"--------------------------------------{header}--------------------------------------");
+                    break;
+
+                case '=':
+                    Console.WriteLine($"======================================{header}=======================================");
+                    break;
+
+                case '*':
+                    Console.WriteLine($"**************************************{header}***************************************");
+                    break;
+
+                case '.':
+                    Console.WriteLine($"......................................{header}.......................................");
+                    break;
+
+                default:
+                    Console.WriteLine($"--------------------------------------{header}--------------------------------------");
+
+                    break;
+            }
+        }
+
         public static void PrintIntArray(int[] array)
         {
             for (int i = 0; i < array.Length; i++)
