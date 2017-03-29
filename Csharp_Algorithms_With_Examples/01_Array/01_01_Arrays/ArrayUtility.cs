@@ -354,6 +354,7 @@ namespace TWL_Algorithms_Samples.Arrays
             int searchIndex = RotatedArray_Search(a, 0, a.Length - 1, searchInput);
             Console.WriteLine($"\nIndex of {searchInput} in array is {searchIndex}");
         }
+
         public void Run()
         {
             //new Peaks_and_Valleys().Run();
@@ -368,6 +369,7 @@ namespace TWL_Algorithms_Samples.Arrays
             //RotateArray_Run();
             //PartitionSortedArray_Run();
         }
+
         public int[] TwoSumInSortedArray(int[] num, int target)
         {
             num.Print("input:");

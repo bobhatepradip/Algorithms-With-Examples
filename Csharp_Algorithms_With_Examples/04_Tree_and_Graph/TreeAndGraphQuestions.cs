@@ -1,8 +1,16 @@
 ﻿using TWL_Algorithms_Samples.Arrays;
 using TWL_Algorithms_Samples.Tree;
+
 namespace TWL_Algorithms_Samples.TreeAndGraph
 {
-    public class TreeAndGraph_Q1_01_Route_Beetween_Nodes : IQuestion
+    public class TreeAndGraph_Q4_00 : IQuestion
+    {
+        public void Run()
+        {
+        }
+    }
+
+    public class TreeAndGraph_Q4_01_Route_Beetween_Nodes : IQuestion
     {
         public void Run()
         {
@@ -15,12 +23,12 @@ namespace TWL_Algorithms_Samples.TreeAndGraph
     public class TreeAndGraph_Q4_02_CreateMinimalTree : IQuestion
     {
         public void Run()
-        {            
+        {
             TreeNode treeNode = TreeUtility.CreateMinimalBinarySearchTree(TreeUtility.arraySorted_UniqueElements);
             //((BinarySearchTreeNode)treeNode).Print();
 
             TreeUtility.arraySorted_UniqueElements.Print("Input for CreateMinimalBinarySearchTree:");
-            var binarySearchTree2 = BinarySearchTreeNode.CreateMinimalBinarySearchTree(TreeUtility.arraySorted_UniqueElements);            
+            var binarySearchTree2 = BinarySearchTreeNode.CreateMinimalBinarySearchTree(TreeUtility.arraySorted_UniqueElements);
             binarySearchTree2.Print();
         }
     }
@@ -92,14 +100,6 @@ namespace TWL_Algorithms_Samples.TreeAndGraph
     {
         public void Run()
         {
-        }
-    }
-
-    public class TreeAndGraphQuestions : IQuestion
-    {
-        public void Run()
-        {
-            new TreeAndGraph_Q1_01_Route_Beetween_Nodes().Run();
         }
     }
 }

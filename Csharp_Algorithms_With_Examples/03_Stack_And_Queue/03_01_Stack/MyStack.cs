@@ -15,6 +15,7 @@
         public abstract void Print();
 
         public abstract void Push(object obj);
+
         public abstract int Size();
     }
 }

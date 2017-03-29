@@ -31,7 +31,6 @@ namespace TWL_Algorithms_Samples.Tree
             return treeNode;
         }
 
-
         public void BinarySearchTreeCreation_Run()
         {
             /* Will take a look at at when get time

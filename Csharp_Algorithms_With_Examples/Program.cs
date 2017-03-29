@@ -7,9 +7,9 @@ using TWL_Algorithms_Samples.LinkedList;
 using TWL_Algorithms_Samples.Queue;
 using TWL_Algorithms_Samples.SortingAndSearching;
 using TWL_Algorithms_Samples.Stack;
+using TWL_Algorithms_Samples.StackAndQueue;
 using TWL_Algorithms_Samples.Tree;
 using TWL_Algorithms_Samples.TreeAndGraph;
-using TWL_Algorithms_Samples.StackAndQueue;
 
 internal class Program
 {
@@ -63,6 +63,14 @@ internal class Program
     {
         var questionsSetByNumbers = new[]
             {
+            new IQuestion[] {
+                    new Array_Q1_00(),
+                    new LinkedList_Q2_00(),
+                    new StackAndQueue_Q3_00(),
+                    new TreeAndGraph_Q4_00(),
+                    new BitManipulation_Q5_00(),
+                    new SortingAndSearching_Q10_00(),
+                },
                 //new IQuestion[] {
                 //    new Array_Q1_01_Is_String_Has_Unique_Chars(),
                 //    new LinkedList_Q2_01_Remove_Duplicates(),

@@ -2,6 +2,13 @@
 
 namespace TWL_Algorithms_Samples.Arrays
 {
+    public class Array_Q1_00 : IQuestion
+    {
+        public void Run()
+        {
+        }
+    }
+
     public class Array_Q1_01_Is_String_Has_Unique_Chars : IQuestion
     {
         public void Run()

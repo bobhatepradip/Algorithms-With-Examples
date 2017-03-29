@@ -1,5 +1,12 @@
 ﻿namespace TWL_Algorithms_Samples.StackAndQueue
 {
+    public class StackAndQueue_Q3_00 : IQuestion
+    {
+        public void Run()
+        {
+        }
+    }
+
     public class StackAndQueue_Q3_01 : IQuestion
     {
         public void Run()

@@ -4,15 +4,16 @@ using TWL_Algorithms_Samples.Arrays;
 
 namespace TWL_Algorithms_Samples.Tree
 {
-    enum ChildernType
+    internal enum ChildernType
     {
         Left, Right
     }
+
     public class BinaryTreeNode : TreeNode
     {
         public BinaryTreeNode(int val) : base(val)
         {
-           // Value = val;
+            // Value = val;
             Size = 1;
             Childrens = new TreeNode[2];
         }

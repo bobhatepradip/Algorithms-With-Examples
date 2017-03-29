@@ -1,5 +1,12 @@
 ﻿namespace TWL_Algorithms_Samples.BitManipulation
 {
+    public class BitManipulation_Q5_00 : IQuestion
+    {
+        public void Run()
+        {
+        }
+    }
+
     public class BitManipulation_Q5_01 : IQuestion
     {
         public void Run()

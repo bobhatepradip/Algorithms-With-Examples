@@ -2,6 +2,13 @@
 
 namespace TWL_Algorithms_Samples.LinkedList
 {
+    public class LinkedList_Q2_00 : IQuestion
+    {
+        public void Run()
+        {
+        }
+    }
+
     public class LinkedList_Q2_01_Remove_Duplicates : IQuestion
     {
         public void Run()

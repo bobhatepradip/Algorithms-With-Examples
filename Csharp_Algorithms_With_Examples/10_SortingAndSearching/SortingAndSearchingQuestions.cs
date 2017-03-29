@@ -1,5 +1,12 @@
 ﻿namespace TWL_Algorithms_Samples.SortingAndSearching
 {
+    public class SortingAndSearching_Q10_00 : IQuestion
+    {
+        public void Run()
+        {
+        }
+    }
+
     public class SortingAndSearching_Q10_01 : IQuestion
     {
         public void Run()
