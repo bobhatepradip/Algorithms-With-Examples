@@ -14,10 +14,11 @@
         }
     }
 
-    public class BitManipulation_Q5_02 : IQuestion
+    public class BitManipulation_Q5_02_PrintBinaryToString : IQuestion
     {
         public void Run()
         {
+            BitManipulationUtility.PrintBinaryToString_Run();
         }
     }
 

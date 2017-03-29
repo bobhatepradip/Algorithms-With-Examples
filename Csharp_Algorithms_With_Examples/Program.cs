@@ -61,16 +61,16 @@ internal class Program
 
     public static void QuestionsAndSolutionsByNumbers()
     {
-        var questionsSetByNumbers = new[]
-            {
-            new IQuestion[] {
+        var dummy = new IQuestion[] {
                     new Array_Q1_00(),
                     new LinkedList_Q2_00(),
                     new StackAndQueue_Q3_00(),
                     new TreeAndGraph_Q4_00(),
                     new BitManipulation_Q5_00(),
                     new SortingAndSearching_Q10_00(),
-                },
+                };
+        var questionsSetByNumbers = new[]
+            {           
                 //new IQuestion[] {
                 //    new Array_Q1_01_Is_String_Has_Unique_Chars(),
                 //    new LinkedList_Q2_01_Remove_Duplicates(),
@@ -82,9 +82,9 @@ internal class Program
                 new IQuestion[] {
                     //new Array_Q1_02_Check_For_Permutations(),
                     //new LinkedList_Q2_02_Return_Kth_To_Last(),
-                    //new StackAndQueue_Q3_02(),
+                    //new StackAndQueue_Q3_02_StackWithMinFunction(),
                     //new TreeAndGraph_Q4_02_CreateMinimalTree(),
-                    //new BitManipulation_Q5_02(),
+                    new BitManipulation_Q5_02_PrintBinaryToString(),
                     //new SortingAndSearching_Q10_02(),
                 },
                 // new IQuestion[] {
