@@ -83,6 +83,7 @@ namespace TWL_Algorithms_Samples.Tree
                     //Console.WriteLine($"queue={queue.Peek().Data}");
                     //treeNode.Print();
                 }
+                root.Print();
 
                 return root;
             }

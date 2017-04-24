@@ -26,5 +26,27 @@
         {
             return ch >= 'A' && ch <= 'Z' ? (char)(ch + 'a' - 'A') : ch;
         }
+
+        public static bool IsUpperCase(this char ch)
+        {
+            return (ch >= 'A' && ch <= 'Z');
+        }
+
+        public static bool IsLowerCase(this char ch)
+        {
+            return (ch >= 'A' && ch <= 'Z');
+        }
+
+        public static char ToUpperCase(this char ch)
+        {
+            //32 = (int)char.GetNumericValue('a') - (int)char.GetNumericValue('A') == (97-65)
+            return IsLowerCase(ch) ? (char)((int)char.GetNumericValue(ch) - 32) : ch;
+        }
+
+        public static char ToLowerCase(this char ch)
+        {
+            //32 = (int)char.GetNumericValue('a') - (int)char.GetNumericValue('A') == (97-65)
+            return IsUpperCase(ch) ? (char)((int)char.GetNumericValue(ch) + 32) : ch;
+        }
     }
 }

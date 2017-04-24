@@ -7,8 +7,6 @@
             //RunBasicOperations();
         }
 
-        
-
         public void RunBasicOperations()
         {
             MyStackAsLinkList stackAsLinkList = new MyStackAsLinkList();

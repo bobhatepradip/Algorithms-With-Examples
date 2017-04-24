@@ -5,6 +5,7 @@
         public GraphNode[] Childrens;
         public string Name;
         public int Value;
+        public bool MarkAsVisited;
 
         public GraphNode(int val) //: base(val)
         {

@@ -72,14 +72,13 @@ namespace TWL_Algorithms_Samples.LinkedList
         /// <returns></returns>
         public static MyLinkedListNode CycleFindBeginning(MyLinkedListNode head)
         {
-            var walker = head;
             var runner = CycleExistsReturnRunner(head);
             if (runner != null)
             {
                 /* Move slow to Head. Keep fast at Meeting Point. Each are k steps
                 /* from the Loop Start. If they move at the same pace, they must
                  * meet at Loop Start. */
-                walker = head;
+                var walker = head;
 
                 while (walker != runner)
                 {
@@ -476,10 +475,12 @@ namespace TWL_Algorithms_Samples.LinkedList
             while (head != null)
             {
                 //head.PrintForward("head");
+                //Updating pointer
                 MyLinkedListNode nextNode = head.Next;
                 head.Next = newHead;
 
                 //Link to New node
+                //Moving both heads
                 newHead = head;
                 head = nextNode;
                 //newHead.PrintForward("newHead");

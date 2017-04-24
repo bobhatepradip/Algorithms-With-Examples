@@ -51,98 +51,30 @@ namespace TWL_Algorithms_Samples.BitManipulation
             return (number & mask);
         }
 
-        public static string PrintBinary(double number)
-        {
-            if (number >= 1 || number <= 0)
-            {
-                return "ERROR";
-            }
-
-            var binary = new StringBuilder();
-            binary.Append(".");
-
-            while (number > 0)
-            {
-                /* Setting a limit on length: 32 characters */
-                if (binary.Length > 32)
-                {
-                    return "ERROR";
-                }
-
-                var r = number * 2;
-
-                if (r >= 1)
-                {
-                    binary.Append(1);
-                    number = r - 1;
-                }
-                else
-                {
-                    binary.Append(0);
-                    number = r;
-                }
-            }
-
-            return binary.ToString();
-        }
-        public static string PrintBinary2(double number)
-        {
-            if (number >= 1 || number <= 0)
-            {
-                return "ERROR";
-            }
-
-            var binary = new StringBuilder();
-            var frac = 0.5;
-            binary.Append(".");
-
-            while (number > 0)
-            {
-                /* Setting a limit on length: 32 characters */
-                if (binary.Length >= 32)
-                {
-                    return "ERROR";
-                }
-                if (number >= frac)
-                {
-                    binary.Append(1);
-                    number -= frac;
-                }
-                else
-                {
-                    binary.Append(0);
-                }
-                frac /= 2;
-            }
-
-            return binary.ToString();
-        }
         public static void PrintBinaryToString_Run()
         {
             double number = 0.125;
-            Console.WriteLine($"double number ='{number}' Binary Representation ='{ PrintBinaryToString_UsingMultiplicationBy2(number)}' ");
-            Console.WriteLine($"double number ='{number}' Binary Representation ='{ PrintBinaryToString_UsingProgressveFraction(number)}' ");
-            Console.WriteLine($"double number ='{number}' Binary Representation ='{ PrintBinary(number)}' ");
-            Console.WriteLine($"double number ='{number}' Binary Representation ='{ PrintBinary2(number)}' ");
-
-            //new Q5_02_Binary_to_String().Run();
-            var binaryString = PrintBinaryToString_UsingProgressveFraction(.125);
-            Console.WriteLine(binaryString);
+            int bits = 32;//try for both 32 and 64
+            Console.WriteLine($"double number ='{number}' Binary Representation ='{ PrintBinaryToString_UsingMultiplicationBy2(number, bits)}' ");
+            Console.WriteLine($"double number ='{number}' Binary Representation ='{ PrintBinaryToString_UsingProgressveFraction(number, bits)}' ");
+            AssortedMethods.PrintLine('=', "Print for 0-999 only if no error");
 
             for (var i = 0; i < 1000; i++)
             {
                 var num = i / 1000.0;
-                var binary = PrintBinaryToString_UsingMultiplicationBy2(num);
-                var binary2 = PrintBinaryToString_UsingProgressveFraction(num);
-                var binary11 = PrintBinary(num);
-                var binary12 = PrintBinary2(num);
+                var binary = PrintBinaryToString_UsingMultiplicationBy2(num, bits);
+                var binary2 = PrintBinaryToString_UsingProgressveFraction(num, bits);
 
-                if (!binary.Contains("ERROR") || !binary2.Contains("ERROR") || !binary11.Contains("ERROR") || !binary12.Contains("ERROR"))
+                if (!binary.Contains("ERROR") || !binary2.Contains("ERROR"))
                 {
-                    Console.WriteLine(num + " : " + binary + " " + binary2 + " " + binary11 + " " + binary12);
+                    Console.WriteLine($"number={num} : " +
+                        $"PrintBinaryToString_UsingMultiplicationBy2={binary} " +
+                        $"PrintBinaryToString_UsingProgressveFraction {binary2}");
+                    AssortedMethods.PrintLine('-');
                 }
             }
         }
+
         /// <summary>
         /// Multiplying number by 2 and cuparing  it to 1
         /// </summary>
@@ -159,7 +91,7 @@ namespace TWL_Algorithms_Samples.BitManipulation
             while (doubleNumber > 0)
             {
                 //setting up bit limit
-                if (strBuilder.Length > bits)
+                if (strBuilder.Length >= bits)
                 {
                     return string.Format("ERROR - {0} bits", bits);
                 }
@@ -173,15 +105,15 @@ namespace TWL_Algorithms_Samples.BitManipulation
                 }
                 else
                 {
-                    nextNumber = doubleNumber;
+                    doubleNumber = nextNumber;
                     strBuilder.Append(0);
                 }
-
             }
             return strBuilder.ToString();
         }
+
         /// <summary>
-        /// Comparting number to .5--> 0.25, ... 
+        /// Comparting number to .5--> 0.25, ...
         /// </summary>
         /// <param name="doubleNumber"></param>
         /// <param name="bits"></param>
@@ -197,7 +129,7 @@ namespace TWL_Algorithms_Samples.BitManipulation
             while (doubleNumber > 0)
             {
                 //setting up bit limit
-                if (strBuilder.Length > bits)
+                if (strBuilder.Length >= bits)
                 {
                     return string.Format("ERROR - {0} bits", bits);
                 }
@@ -215,6 +147,7 @@ namespace TWL_Algorithms_Samples.BitManipulation
 
             return strBuilder.ToString();
         }
+
         /// <summary>
         /// clear all left to ith position
         /// </summary>

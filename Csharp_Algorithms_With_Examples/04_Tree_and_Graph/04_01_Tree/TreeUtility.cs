@@ -6,7 +6,7 @@ namespace TWL_Algorithms_Samples.Tree
 {
     public class TreeUtility
     {
-        public static int[] arraySorted_UniqueElements = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };//
+        public static int[] arraySorted_UniqueElements = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 };//
         public BinarySearchTreeNode currentBinarySearchTreeNode;
         public BinaryTreeNode currentBinaryTreeNode;
 
@@ -39,6 +39,14 @@ namespace TWL_Algorithms_Samples.Tree
             Console.WriteLine($"CheckIfBinaryTreeIsBinarySearchTree ={CheckIfBinaryTreeIsBinarySearchTree((BinaryTreeNode)binarySearchTree)}");
             */
             //arraySample.Reverse();
+
+            var binarySearchTree2_1 = BinarySearchTreeNode.CreateMinimalBinarySearchTree(new int[] { 1, 2, 3, 4 });
+            binarySearchTree2_1.Print();
+            Console.WriteLine($"CheckIfBinaryTreeIsBinarySearchTree ={ValidateBinarySearchTree(binarySearchTree2_1)}");
+
+            var binarySearchTree2_2 = BinarySearchTreeNode.CreateMinimalBinarySearchTree(new int[] { 1, 2, 3, 4, 5 });
+            binarySearchTree2_2.Print();
+            Console.WriteLine($"CheckIfBinaryTreeIsBinarySearchTree ={ValidateBinarySearchTree(binarySearchTree2_1)}");
 
             var binarySearchTree2 = BinarySearchTreeNode.CreateMinimalBinarySearchTree(arraySorted_UniqueElements);
             arraySorted_UniqueElements.Print("Input for CreateMinimalBinarySearchTree:");
@@ -162,10 +170,10 @@ namespace TWL_Algorithms_Samples.Tree
 
         public void Run()
         {
-            currentBinarySearchTreeNode = BinarySearchTreeNode.CreateMinimalBinarySearchTree(arraySorted_UniqueElements);
-            currentBinaryTreeNode = BinaryTreeNode.Create_FromArray_InsertInOrder(arraySorted_UniqueElements);
+            //currentBinarySearchTreeNode = BinarySearchTreeNode.CreateMinimalBinarySearchTree(arraySorted_UniqueElements);
+            //currentBinaryTreeNode = BinaryTreeNode.Create_FromArray_InsertInOrder(arraySorted_UniqueElements);
             //BinaryTreeCreation_Run();
-            //BinarySearchTreeCreation_Run();
+            BinarySearchTreeCreation_Run();
             //LevelOrder_Run();
             //MaxDepth_Run();
             //IsSameTree_Run();
@@ -261,7 +269,10 @@ namespace TWL_Algorithms_Samples.Tree
 
         public void BinaryTreePathsList(BinaryTreeNode root, String path, List<String> answer)
         {
-            if (root.Left == null && root.Right == null) answer.Add(path + root.Value);
+            if (root.Left == null && root.Right == null)
+            {
+                answer.Add(path + root.Value);
+            };
             if (root.Left != null) BinaryTreePathsList(root.Left, path + root.Value + "->", answer);
             if (root.Right != null) BinaryTreePathsList(root.Right, path + root.Value + "->", answer);
         }

@@ -16,9 +16,9 @@ internal class Program
     public static void Main(string[] args)
     {
         Console.WriteLine("======================================================================");
-        //UtilityTester();
+        UtilityTester();
         //QuestionsAndSolutionsByChapters();
-        QuestionsAndSolutionsByNumbers();
+        //QuestionsAndSolutionsByNumbers();
         Console.WriteLine("======================================================================");
         Console.WriteLine("Press any key to quit");
         Console.ReadKey();
@@ -70,7 +70,7 @@ internal class Program
                     new SortingAndSearching_Q10_00(),
                 };
         var questionsSetByNumbers = new[]
-            {           
+            {
                 //new IQuestion[] {
                 //    new Array_Q1_01_Is_String_Has_Unique_Chars(),
                 //    new LinkedList_Q2_01_Remove_Duplicates(),
@@ -84,8 +84,8 @@ internal class Program
                     //new LinkedList_Q2_02_Return_Kth_To_Last(),
                     //new StackAndQueue_Q3_02_StackWithMinFunction(),
                     //new TreeAndGraph_Q4_02_CreateMinimalTree(),
-                    new BitManipulation_Q5_02_PrintBinaryToString(),
-                    //new SortingAndSearching_Q10_02(),
+                    //new BitManipulation_Q5_02_PrintBinaryToString(),
+                    //new SortingAndSearching_Q10_02_Group_Anagrams(),
                 },
                 // new IQuestion[] {
                 //    new Array_Q1_03(),
@@ -173,7 +173,7 @@ internal class Program
         new StackUtility().Run();
         new QueueUtility().Run();
         new StringUtility().Run();
-        new BitManipulationUtility().Run();
+        //new BitManipulationUtility().Run();
         new Sorting().Run();
         new SortingAndSearchingUtility().Run();
         new TreeUtility().Run();

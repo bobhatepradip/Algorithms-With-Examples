@@ -185,9 +185,105 @@ namespace TWL_Algorithms_Samples.Arrays
         {
             int[] arrayPartitionData = new int[] { 10, 90, 65, 45, 35, 70, 50, 40, 15, 100, 80 };
             int[] arrayPartitionRange = new int[] { 0, 25, 50, 75, 100 };
-            PartitionSortedArray(arrayPartitionData, 0, arrayPartitionData.Length - 1, arrayPartitionRange, 0, arrayPartitionRange.Length - 1);
+            // PartitionSortedArray(arrayPartitionData, 0, arrayPartitionData.Length - 1, arrayPartitionRange, 0, arrayPartitionRange.Length - 1);
             arrayPartitionData.Print("");
         }
+
+        void QuickSort(int[] arr, int left, int right)
+        {
+            int index = QuickSortPartition(arr, left, right);
+            //Sort left half
+            if (left < index - 1)
+            {
+                QuickSort(arr, left, index - 1);
+            }
+            //Sort right half
+            if (index < right)
+            {
+                QuickSort(arr, index, right);
+            }
+
+        }
+
+        int QuickSortPartition(int[] arr, int left, int right)
+        {
+            //Pick Pivote Point
+            int pivoteValue = arr[(left + right) / 2];
+            while (left <= right)
+            {
+                //Find element on left that should be on right
+                while (arr[left] < pivoteValue) left++;
+                //Find element on right that should be on left
+                while (arr[left] < pivoteValue) left++;
+                //Swap elements, and move left and right indices
+                if (left < right)
+                {
+                    //swaps elements Swap(arr, left, right);
+                    arr.Swap(left, right);
+                    left++;
+                    right--;
+                }
+            }
+            return left;
+        }
+
+
+        void MeargeSort(int[] arr)
+        {
+            int[] helper = new int[arr.Length];
+            MergeSort(arr, helper, 0, arr.Length);
+        }
+
+        void MergeSort(int[] arr, int[] helper, int low, int high)
+        {
+            if (low < high)
+            {
+                int middle = (low + high) / 2;
+                MergeSort(arr, helper, low, middle);
+                MergeSort(arr, helper, low, middle);
+                Merge(arr, helper, low, middle, high);
+            }
+        }
+
+        void Merge(int[] arr, int[] helper, int low, int middle, int high)
+        {
+            //Copy both halves into a helper array
+            for (int i=low; i<=high; i++)
+            {
+                helper[i] = arr[i];
+            }
+
+            int helperLeft = low;
+            int helperRight = middle + 1;
+            int current = low;
+            /*
+             Iterate through helper arry. Compare the left and riht half, Copying back
+             the smaller element from the two halves into the original array.
+             */
+            while (helperLeft<= middle && helperRight<= high)
+            {
+                if (helper[helperLeft]<= helper[helperRight]) {
+                    arr[current] = helper[helperLeft];
+                    helperLeft++;
+                }
+                //If right element is small than left element
+                else
+                {
+                    arr[current] = helper[helperRight];
+                    helperRight++;
+                }
+                current++;
+            }
+
+            //Copy the rest of the left side of the arry inot the target array
+            int remaining = middle - helperLeft;
+            for (int i=0; i<= remaining; i++)
+            {
+                arr[current + i] = helper[helperLeft + i];
+            }
+        }
+
+
 
         /// <summary>
         /// given [1,2,3,4], return [24,12,8,6].
@@ -264,6 +360,7 @@ namespace TWL_Algorithms_Samples.Arrays
         {
             Reverse(nums, 0, nums.Length - 1);
             Reverse(nums, 0, nums.Length - k - 1);
+            //This should be Reverse(nums, k, (nums.Length  - k)- 1);
             Reverse(nums, nums.Length - k, nums.Length - 1);
         }
 
@@ -367,7 +464,7 @@ namespace TWL_Algorithms_Samples.Arrays
             //TwoSumInSortedArray(new int[] { 1, 2, 7, 11, 15 }, 9);
             //ProductAllExceptSelf(new int[] { 1, 2, 3, 4 });
             //RotateArray_Run();
-            //PartitionSortedArray_Run();
+            PartitionSortedArray_Run();
         }
 
         public int[] TwoSumInSortedArray(int[] num, int target)

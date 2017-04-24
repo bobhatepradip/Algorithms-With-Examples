@@ -14,10 +14,11 @@
         }
     }
 
-    public class SortingAndSearching_Q10_02 : IQuestion
+    public class SortingAndSearching_Q10_02_Group_Anagrams : IQuestion
     {
         public void Run()
         {
+            new SortingAndSearchingUtility.Q10_02_Group_Anagrams().Run();
         }
     }
 

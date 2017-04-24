@@ -79,6 +79,7 @@ namespace TWL_Algorithms_Samples.Tree
 
         public static BinarySearchTreeNode CreateMinimalBinarySearchTree(int[] array)
         {
+            array.Print("Input Array:");
             return CreateMinimalBinarySearchTree(array, 0, array.Length - 1);
         }
 

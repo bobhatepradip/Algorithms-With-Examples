@@ -1,5 +1,4 @@
-﻿using TWL_Algorithms_Samples.BitManipulation;
-namespace TWL_Algorithms_Samples.StackAndQueue
+﻿namespace TWL_Algorithms_Samples.StackAndQueue
 {
     public class StackAndQueue_Q3_00 : IQuestion
     {
@@ -15,14 +14,14 @@ namespace TWL_Algorithms_Samples.StackAndQueue
             AssortedMethods.PrintType(type: typeof(StackAndQueue_Q3_01));
         }
     }
+
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public class StackAndQueue_Q3_02_StackWithMinFunction : IQuestion
     {
         public void Run()
         {
-           
         }
     }
 
