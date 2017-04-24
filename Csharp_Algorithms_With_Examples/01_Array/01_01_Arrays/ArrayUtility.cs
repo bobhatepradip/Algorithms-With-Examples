@@ -189,7 +189,7 @@ namespace TWL_Algorithms_Samples.Arrays
             arrayPartitionData.Print("");
         }
 
-        void QuickSort(int[] arr, int left, int right)
+        private void QuickSort(int[] arr, int left, int right)
         {
             int index = QuickSortPartition(arr, left, right);
             //Sort left half
@@ -202,10 +202,9 @@ namespace TWL_Algorithms_Samples.Arrays
             {
                 QuickSort(arr, index, right);
             }
-
         }
 
-        int QuickSortPartition(int[] arr, int left, int right)
+        private int QuickSortPartition(int[] arr, int left, int right)
         {
             //Pick Pivote Point
             int pivoteValue = arr[(left + right) / 2];
@@ -227,14 +226,13 @@ namespace TWL_Algorithms_Samples.Arrays
             return left;
         }
 
-
-        void MeargeSort(int[] arr)
+        private void MeargeSort(int[] arr)
         {
             int[] helper = new int[arr.Length];
             MergeSort(arr, helper, 0, arr.Length);
         }
 
-        void MergeSort(int[] arr, int[] helper, int low, int high)
+        private void MergeSort(int[] arr, int[] helper, int low, int high)
         {
             if (low < high)
             {
@@ -245,10 +243,10 @@ namespace TWL_Algorithms_Samples.Arrays
             }
         }
 
-        void Merge(int[] arr, int[] helper, int low, int middle, int high)
+        private void Merge(int[] arr, int[] helper, int low, int middle, int high)
         {
             //Copy both halves into a helper array
-            for (int i=low; i<=high; i++)
+            for (int i = low; i <= high; i++)
             {
                 helper[i] = arr[i];
             }
@@ -260,9 +258,10 @@ namespace TWL_Algorithms_Samples.Arrays
              Iterate through helper arry. Compare the left and riht half, Copying back
              the smaller element from the two halves into the original array.
              */
-            while (helperLeft<= middle && helperRight<= high)
+            while (helperLeft <= middle && helperRight <= high)
             {
-                if (helper[helperLeft]<= helper[helperRight]) {
+                if (helper[helperLeft] <= helper[helperRight])
+                {
                     arr[current] = helper[helperLeft];
                     helperLeft++;
                 }
@@ -277,13 +276,11 @@ namespace TWL_Algorithms_Samples.Arrays
 
             //Copy the rest of the left side of the arry inot the target array
             int remaining = middle - helperLeft;
-            for (int i=0; i<= remaining; i++)
+            for (int i = 0; i <= remaining; i++)
             {
                 arr[current + i] = helper[helperLeft + i];
             }
         }
-
-
 
         /// <summary>
         /// given [1,2,3,4], return [24,12,8,6].

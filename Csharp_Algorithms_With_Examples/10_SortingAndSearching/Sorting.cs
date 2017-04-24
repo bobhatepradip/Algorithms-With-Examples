@@ -103,7 +103,7 @@ namespace TWL_Algorithms_Samples.SortingAndSearching
 
         internal class QuickSort
         {
-            internal static int Partition(int[] array, int left, int right)
+            internal static int QuickSortPartition(int[] array, int left, int right)
             {
                 //pick pivote point
                 int pivote = array[(left + right) / 2];
@@ -111,20 +111,22 @@ namespace TWL_Algorithms_Samples.SortingAndSearching
                 while (left <= right)
                 {
                     array.Print("Sub Array:", left, right);
+                    //Find element on left that should be on right
                     while (array[left] < pivote)
                     {
                         left++;
                         left.Print("Left:\n");
                     }
-
+                    //Find element on right that should be on left
                     while (array[right] > pivote)
                     {
                         right--;
                         right.Print("Right:\n");
                     }
-
+                    //Swap elements, and move left and right indices
                     if (left <= right)
                     {
+                        //swaps elements Swap(arr, left, right);
                         array.Swap(left, right);
                         array.Print($"Swap left-{left} right-{right}");
                         left++;
@@ -136,17 +138,78 @@ namespace TWL_Algorithms_Samples.SortingAndSearching
                 return left;
             }
 
-            internal static void Sort(int[] array, int left, int right)
+            internal static void Sort(int[] arr, int left, int right)
             {
-                array.Print("Input:", left, right);
-                int index = Partition(array, left, right);
+                arr.Print("Input:", left, right);
+                int index = QuickSortPartition(arr, left, right);
+                //Sort left half
                 if (left < index - 1)
                 {
-                    Sort(array, left, index - 1);
+                    Sort(arr, left, index - 1);
                 }
+                //Sort right half
                 if (index < right)
                 {
-                    Sort(array, index, right);
+                    Sort(arr, index, right);
+                }
+            }
+        }
+
+        internal class MergeSort
+        {
+            private void Sort(int[] arr)
+            {
+                int[] helper = new int[arr.Length];
+                Sort(arr, helper, 0, arr.Length);
+            }
+
+            private void Sort(int[] arr, int[] helper, int low, int high)
+            {
+                if (low < high)
+                {
+                    int middle = (low + high) / 2;
+                    Sort(arr, helper, low, middle);
+                    Sort(arr, helper, low, middle);
+                    Merge(arr, helper, low, middle, high);
+                }
+            }
+
+            private void Merge(int[] arr, int[] helper, int low, int middle, int high)
+            {
+                //Copy both halves into a helper array
+                for (int i = low; i <= high; i++)
+                {
+                    helper[i] = arr[i];
+                }
+
+                int helperLeft = low;
+                int helperRight = middle + 1;
+                int current = low;
+                /*
+                 Iterate through helper arry. Compare the left and riht half, Copying back
+                 the smaller element from the two halves into the original array.
+                 */
+                while (helperLeft <= middle && helperRight <= high)
+                {
+                    if (helper[helperLeft] <= helper[helperRight])
+                    {
+                        arr[current] = helper[helperLeft];
+                        helperLeft++;
+                    }
+                    //If right element is small than left element
+                    else
+                    {
+                        arr[current] = helper[helperRight];
+                        helperRight++;
+                    }
+                    current++;
+                }
+
+                //Copy the rest of the left side of the arry inot the target array
+                int remaining = middle - helperLeft;
+                for (int i = 0; i <= remaining; i++)
+                {
+                    arr[current + i] = helper[helperLeft + i];
                 }
             }
         }
