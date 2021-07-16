@@ -16,7 +16,10 @@ internal class Program
     public static void Main(string[] args)
     {
         Console.WriteLine("======================================================================");
-        UtilityTester();
+        int input = 1774;
+        Console.WriteLine("{0} : In:{1} Out:{2}", "BitManipulationUtility.FlipBitsToWin_Run", input, BitManipulationUtility.FlipBitsToWin_Run(input));
+       //;
+        //UtilityTester();
         //QuestionsAndSolutionsByChapters();
         //QuestionsAndSolutionsByNumbers();
         Console.WriteLine("======================================================================");

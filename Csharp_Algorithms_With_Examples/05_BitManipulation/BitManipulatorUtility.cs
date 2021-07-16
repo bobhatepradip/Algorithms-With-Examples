@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Text;
 using TWL_Algorithms_Samples.Arrays;
 
@@ -41,6 +42,75 @@ namespace TWL_Algorithms_Samples.BitManipulation
                 Console.WriteLine("***********************************************************");
             }
         }
+
+        internal static int FlipBitsToWin_Run(int n)
+        {
+            return LogesstSequence(n);
+        }
+
+        internal static int LogesstSequence(int n)
+        {
+            if (n==-1) return int.MaxValue;
+
+            System.Collections.ArrayList sequences = GetAlternatingSequnces(n);
+
+            return FindLogestSequest(sequences);
+
+            //return 0;
+        }
+
+        private static System.Collections.ArrayList GetAlternatingSequnces(int n)
+        {
+            ArrayList sequences = new ArrayList();
+            int searchingFor = 0;
+            int counter = 0;
+
+            for (int i=0; i<4*8; i++) // Interger.Byte*8
+            {
+                if ((n&1)!= searchingFor)
+                {
+                    sequences.Add(counter);
+                    searchingFor = n & 1;//Flip 1 to 0 and 0 to 1
+                    counter = 0;
+                }
+                counter++;
+                var nBefore = AssortedMethods.ToFullBinarystring(n);
+                var nAfter = AssortedMethods.ToFullBinarystring((n >> 1));
+                n =( n >> 1);
+            }
+            return sequences;
+            //throw new NotImplementedException();
+        }
+
+        private static int FindLogestSequest(ArrayList seq)
+        {
+            int maxSeq = 1;
+
+            for (int i = 0; i < seq.Count; i += 2)
+            {
+                int zeroSeq = (int)seq[i];
+                int onesSeqRight = i - 1 >= 0 ? (int)seq[i - 1] : 0;
+                int onesSeqLeft = i + 1 <= seq.Count ? (int)seq[i + 1] : 0;
+
+                int thisSeq = 0;
+                if (zeroSeq == 1)//can merge
+                {
+                    thisSeq = onesSeqLeft + 1 + onesSeqRight;
+                }
+                else if (zeroSeq > 1)//just add a zeor to either side
+                {
+                    thisSeq = 1 + Math.Max(onesSeqRight, onesSeqLeft);
+                }
+                else if (zeroSeq == 0)//No zero, but take either side
+                {
+                    thisSeq = Math.Max(onesSeqRight, onesSeqLeft);
+                }
+                maxSeq = Math.Max(thisSeq, maxSeq);
+            }
+                return maxSeq;
+        }
+
+       
 
         public int ClearBit(int number, int i)
         {

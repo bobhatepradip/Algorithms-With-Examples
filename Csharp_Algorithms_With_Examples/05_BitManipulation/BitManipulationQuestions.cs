@@ -22,10 +22,11 @@
         }
     }
 
-    public class BitManipulation_Q5_03 : IQuestion
+    public class BitManipulation_Q5_03_FlipBitsToWin : IQuestion
     {
         public void Run()
         {
+            int output=BitManipulationUtility.FlipBitsToWin_Run(1775);
         }
     }
 
